@@ -1,0 +1,36 @@
+﻿@model JeCenterWeb.Models.StudentNotifications
+
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="posts-section">
+
+    <div class="post-bar" style="padding:25px;">
+
+<div class="card card-primary card-outline" style="direction:rtl;">
+    <div class="card-body p-0">
+        <div class="card-header">
+            <h3 class="card-title">   @Model.GNotifications.NotiTitel  </h3>
+
+            <div class="card-tools">
+                @*  <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i class="fas fa-chevron-left"></i></a> *@
+                <a asp-action="Index" asp-controller="Notifications" asp-area="learning" class="btn btn-primary"><i class="fa fa-arrow-right"></i>&nbsp;&nbsp;<i class="fa fa-bell"></i></a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="mailbox-read-info">
+                <h5> @Model.GNotifications.NotiTitel</h5>
+                <h6>
+                    <span class="mailbox-read-time float-right"> @Convert.ToDateTime(Model.CreatedDate).ToString("yyyy-MM-dd") - @Convert.ToDateTime(Model.CreatedDate).ToString("t") </span>
+                </h6>
+            </div>
+            <div class="mailbox-read-message">
+                @Html.Raw(Model.GNotifications.NotificationNote)
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>

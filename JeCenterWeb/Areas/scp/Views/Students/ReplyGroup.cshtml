@@ -1,0 +1,65 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentGroup>
+
+@{
+    ViewData["Title"] = "Student Group";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+
+
+<div class="row">
+
+    <div class="col-md-4 text-center">
+        <h5> المحفظة : @ViewData["Balance"] L.E</h5>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+    </div>
+
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CGroups.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CGroups.TeacherName)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.CGroups.GroupName
+                </td>
+                <td>
+                    @item.CGroups.TeacherName
+                </td>
+                <td>
+                    @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+                    {
+                        <form asp-action="DeleteGroup" asp-route-id="@item.StudentGroupId" method="post">
+                            <input type="submit" value="-" class="btn btn-danger" asp-action="DeleteGroup" asp-route-id="@item.StudentGroupId" method="post" />
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

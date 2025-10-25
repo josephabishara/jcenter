@@ -1,0 +1,151 @@
+﻿@model JeCenterWeb.Models.ViewModel.EditGroupViewModel
+
+@{
+    ViewData["Title"] = "تعديل مجموعة";
+}
+<div class="row">
+    <div class="col-4">
+        <a class="btn btn-outline-info" asp-action="RoomsByDate" asp-route-date="@ViewData["date"]">
+            جدول القاعات
+        </a>
+    </div>
+    <div class="col-4">
+        <h5>
+            <strong> يوم : </strong> @ViewData["date"] <br />  <input name="CrrDate" type="hidden" value="@ViewData["date"]" />
+        </h5>
+    </div>
+    <div class="col-4">
+        @ViewData["GroupName"]
+    </div>
+</div>
+<br />
+
+<form asp-action="EditGroup" method="post">
+
+
+    <div class="row">
+        <div class="col-6">
+            <input type="hidden" asp-for="date" />
+            <input type="hidden" asp-for="GroupId" />
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="RoomId" class="control-label"></label>
+                        <select asp-for="RoomId" class="form-control select2-search" asp-items="ViewBag.RoomId">
+                            <option value="0">أختار  القاعة</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="SessionStart" class="control-label"></label>
+                        <input asp-for="SessionStart" type="time" class="form-control" placeholder="من " />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="SessionEnd" class="control-label"></label>
+                        <input asp-for="SessionEnd" type="time" class="form-control" placeholder="الى" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="TeacherFee" class="control-label"></label>
+                        <input asp-for="TeacherFee" class="form-control text-center" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="CenterFee" class="control-label"></label>
+                        <input asp-for="CenterFee" class="form-control text-center" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="ServiceFee" class="control-label"></label>
+                        <input asp-for="ServiceFee" class="form-control text-center" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="lectureno" class="control-label"></label>
+                        <select asp-for="lectureno" class="form-control select2-search">
+                            <option value="1">الاولى</option>
+                            <option value="2">الثانية</option>
+                            <option value="3">الثالثة</option>
+                            <option value="4">الرابعة</option>
+                            <option value="5">الخامسة</option>
+                            <option value="6">السادسة</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <br />
+                        <label> اظهار للطلبة :  </label>
+                        <input name="Active" asp-for="Active" type="checkbox" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <input type="submit" value="تعديل المجموعة" class="btn btn-info btn-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<br />
+
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">
+        حذف المجموعة
+    </button>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"> حذف المجموعة  </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                    يترتب على حذف المجموعة كثير من الاحداث منها حذف الجدول وافراغ القاعة من الحجز في نفس 
+                    <br />
+                    اذا وجد أيضاً حجوزات سوف يتم استرجاعها يدوياً
+                        <br /><br /><br />
+                        <strong class="text-danger"> هل انت متأكد من حذف المجموعة ؟ </strong>
+
+                    </p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <form asp-action="DeleteGroup" asp-route-id="@Model.GroupId" method="post">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="hidden" name="@Model.GroupId" />
+                                        <input type="submit" value=" حذف المجموعة" class="btn btn-danger" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@if (User.IsInRole("AdminSettings"))
+{
+
+
+}

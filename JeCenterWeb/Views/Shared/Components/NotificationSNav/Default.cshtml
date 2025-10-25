@@ -1,0 +1,18 @@
+﻿<li>
+    @if (Convert.ToInt64(ViewData["noticount"]) > 0)
+    {
+        <a asp-action="Index" asp-controller="Notifications" asp-area="learning" class="not-box-open">
+            <span>
+                <i class="fa fa-bell"></i>
+            </span>
+            اشعار  @ViewData["noticount"]
+        </a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="Notifications" asp-area="learning">
+            <span><i class="fa fa-bell-o"></i></span>
+            الاشعارات
+        </a>
+    }
+</li>

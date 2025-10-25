@@ -1,0 +1,29 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ApplicationUser>
+
+
+
+<div class="card-body">
+    <div class="callout callout-success">
+    <h5 class="text-success">  <i class="fa fa-users"></i>  أختار المدرس لرؤية المجموعات  </h5>
+    </div>
+</div>
+<br />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-4">
+            <a asp-action="GroupTeacher" asp-route-id="@item.Id" style="text-decoration:none;color:black;">
+                <div class="info-box">
+                    <span class="info-box-icon">
+                      @*   <img src="~/@item.imgurl" height="65"> *@
+                        <h5 class="info-box-number">@item.CGroups.Count</h5>
+                    </span>
+                    <div class="info-box-content">
+                        <h4 class="info-box-text"> @item.FullName </h4>
+                      
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

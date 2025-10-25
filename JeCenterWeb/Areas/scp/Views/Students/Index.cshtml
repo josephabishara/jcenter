@@ -1,0 +1,33 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Student";
+}
+<div class="row">
+    <div class="col-2">
+        <a class="btn btn-info btn-block" asp-action="Create">إضافة </a>
+    </div>
+    <div class="col-2">
+        @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+        {
+            <a class="btn btn-warning btn-block" asp-action="StudentsDiscount"> حاصلين علي خصم </a>
+
+        }
+
+    </div>
+    <div class="col-2">
+    </div>
+    <div class="col-6">
+        <form asp-action="SearchActiveByWord" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input name="word" class="form-control" placeholder="بحث" value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-4">
+                    <input type="submit" value="بحث" class="btn btn-info btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />

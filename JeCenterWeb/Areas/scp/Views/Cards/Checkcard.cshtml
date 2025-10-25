@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Check Card";
+}
+
+<form asp-action="Checkcard" method="get">
+    <div class="row">
+        <div class="col-8">
+            <input name="word" class="form-control" placeholder="بحث" value="@ViewData["CurrentFilter"]" />
+        </div>
+        <div class="col-4">
+            <input type="submit" value="أستعلام" class="btn btn-primary btn-block" />
+        </div>
+    </div>
+</form>
+<br />
+
+<div class="col-md-6">
+    <div class="card card-default">
+        <div class="card-body">
+            <div class="@ViewData["ilabel"]">
+                <h5> @ViewData["iheader"] </h5>
+
+                <p>
+                    @Html.Raw(ViewBag.iparagraph)
+                  
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

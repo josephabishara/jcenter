@@ -1,0 +1,97 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.FinancialJournalEntryLineViewModel>
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-4">
+                <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+            </div>
+            <div class="col-4">
+                <h5><i class="fa fa-dollar-sign"></i>  المحفظة : @ViewData["Balance"]</h5>
+            </div>
+            <div class="col-4">
+                <h5>   @ViewData["journaldate"]</h5>
+            </div>
+        </div>
+        <form asp-action="DetailsDay" asp-controller="Financial" asp-area="scp" method="get">
+            <div class="row">
+                <input class="form-control text-left" name="id" value="@ViewData["id"]" hidden="hidden" />
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">من</label>
+                        <input class="form-control text-left" name="Fromdate" type="date" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="control-label">الى</label>
+                        <input class="form-control text-left" name="Todate" type="date" />
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label class="control-label text-white">.</label>
+                        <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:150px">
+                @Html.DisplayNameFor(model => model.JournalEntryDate)
+            </th>
+            <th style="width:100px">
+                توقيت
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th style="width:70px">
+                @Html.DisplayNameFor(model => model.Debit)
+            </th>
+            <th style="width:70px">
+                @Html.DisplayNameFor(model => model.Credit)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.JournalEntryDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                </td>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @item.Notes
+                </td>
+                <td>
+                    @item.Debit
+                </td>
+                <td>
+                    @item.Credit
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

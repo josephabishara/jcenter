@@ -1,0 +1,63 @@
+﻿@model JeCenterWeb.Models.ViewModels.CPEditBlogsViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BlogsId" />
+           
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="BlogTitle" class="control-label"></label>
+                        <input asp-for="BlogTitle" class="form-control" />
+                        <span asp-validation-for="BlogTitle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BlogDiscretion" class="control-label"></label>
+                        <input asp-for="BlogDiscretion" class="form-control" />
+                        <span asp-validation-for="BlogDiscretion" class="text-danger"></span>
+                    </div>
+                </div>
+              
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="Paragraph" class="control-label"></label>
+                <textarea id="textarea" asp-for="Paragraph" placeholder="Blog Content" style="direction:rtl !important;"></textarea>
+                <script src="~/lib/tinymce/tinymce.min.js"></script>
+                <script>
+                    tinymce.init({
+                        selector: '#textarea', plugins: "tooltip print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern", toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat', height: "200", paste_data_images: true
+                    });
+
+                </script>
+
+                <span asp-validation-for="Paragraph" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="BlogDate" class="control-label"></label>
+                        <input asp-for="BlogDate" class="form-control" />
+                        <span asp-validation-for="BlogDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />|
+                <a class="btn btn-Info" asp-action="Index">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

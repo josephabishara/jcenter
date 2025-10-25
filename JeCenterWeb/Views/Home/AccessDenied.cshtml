@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Access Denied Page";
+    Layout = "_Layout";
+}
+
+<div class="container" style="padding-top: 100px;">
+    <div class="jumbotron text-center">
+        <h1>
+            <i class="fa fa-lock"></i>
+        </h1>
+        <h1>
+            Access Denied
+        </h1>
+        <p>
+            ليس لديك صلاحية للوصول إلى هذه الصفحة.
+
+        </p>
+        <p>
+            إذا كان طلبك للوصول إلى صفحة لا يزال في انتظار الموافقة، يمكنك التواصل مع  مسؤول  الموقع.
+        </p>
+        <p>
+            <a class="btn btn-primary" asp-action="Index" asp-controller="Home">الصفحة الرئيسية</a>
+        </p>
+    </div>
+</div>

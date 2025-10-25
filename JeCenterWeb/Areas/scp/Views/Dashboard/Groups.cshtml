@@ -1,0 +1,108 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.DashboardGroups>
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (signInManager.IsSignedIn(User))
+{
+    @if (User.IsInRole("AdminSettings"))
+    {
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Custom Tabs -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">تقارير الخزينة</h3>
+                                <partial name="_dashboard" />
+                            </div>
+                            <div class="card-body">
+                                <div class="card-body table-responsive p-0" style="height:500px;overflow-y:scroll;">
+                                    <table class="table table-striped table-valign-middle">
+                                        <thead>
+                                            <tr>
+                                                <th> التاريخ </th>
+                                                <th> المدرس </th>
+                                                <th> المستخدم </th>
+                                                <th> التوقيت </th>
+                                                <th>المجموعة</th>
+                                                <th>عدد الطلبة</th>
+                                                <th> مستحق </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.PaidDate == null)
+                                                {
+                                                    item.PaidDate = new DateTime(1900, 1, 1);
+                                                }
+                                                DateTime? paidDate = item.PaidDate.Value;
+                                                string paidstring = string.Empty;
+                                                if (paidDate.Value.Date != new DateTime(1900, 1, 1))
+                                                {
+                                                    paidstring = paidDate.Value.ToString("T");
+                                                }
+                                                <tr>
+                                                    <td>@item.LectureDate.Date.ToString("yyyy-MM-dd") </td>
+                                                    <td>
+                                                        @item.TeacherName
+                                                    </td>
+                                                    <td>@item.UserName </td>
+                                                    <td>@paidstring </td>
+                                                    <td>@item.GroupName </td>
+                                                    <td>@item.Students </td>
+                                                    <td>@item.TeacherValue </td>
+
+                                                    <td>
+                                                        @if (item.Closed == true & item.Paided == true)
+                                                        {
+                                                            <strong class="text-success"> تم السداد </strong>
+                                                        }
+                                                        else if (item.Closed == true & item.Paided == false)
+                                                        {
+                                                            <strong class="text-warning">مغلقة وغير ممسددة</strong>
+                                                        }
+                                                        else if (item.Closed == false & item.Paided == false)
+                                                        {
+                                                            <strong class="text-danger"> غير مغلقة  </strong>
+                                                        }
+                                                        else
+                                                        {
+                                                            <strong class="text-warning"> ممسددة وغير مغلقة</strong>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    @if (User.IsInRole("PowerUser") || User.IsInRole("SuperUser"))
+    {
+        <div>
+            <img src="~/images/elra3ylogo150.png" alt="Elra3y Center" style="display: block;margin-left: auto;margin-right: auto;width: 40%;" />
+        </div>
+
+    }
+
+    @if (User.IsInRole("User"))
+    {
+        <div>
+            <img src="~/images/elra3ylogo1502.png" alt="Elra3y Center" style="display: block;margin-left: auto;margin-right: auto;width: 40%;" />
+        </div>
+
+    }
+
+}

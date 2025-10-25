@@ -1,0 +1,151 @@
+﻿@model JeCenterWeb.Models.ViewModel.CheckCouponViewModel
+@{
+    ViewData["Title"] = "Check Card";
+}
+
+<form asp-action="CanceledApproveCoupon" method="get">
+    <div class="row">
+        <div class="col-2">
+            <input name="id" class="form-control" placeholder="بحث" value="@ViewData["CurrentFilter"]" autofocus />
+        </div>
+        <div class="col-4">
+            <input type="submit" value="إلغاء الاعتماد" class="btn btn-danger btn-block" />
+        </div>
+    </div>
+</form>
+<br />
+
+
+<div class="col-md-">
+    <div class="card card-danger">
+        <div class="card-body">
+            <div class="@ViewData["ilabel"]">
+                <h5> @ViewData["iheader"] </h5>
+                @if (ViewData["Approved"].ToString() == "1")
+                {
+                    <i class="fa fa-calendar-check-o text-success" style="font-size:16pt"></i>
+                }
+                else
+                {
+                    <i class="fa fa-calendar-times-o text-danger" style="font-size:16pt"></i>
+                }
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.scheduleId)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.scheduleId)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.LectureType)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.LectureType)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.LectureName)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.LectureName)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.StudentName)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.StudentName)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Studentmobile)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Studentmobile)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.TeacherName)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.TeacherName)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.StudentIndex)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.StudentIndex)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Printed)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Printed)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.TeacherFee)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.TeacherFee)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.CenterFee)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.CenterFee)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.ServiceFee)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.ServiceFee)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.LecturePrice)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.LecturePrice)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Discount)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Discount)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.CenterDiscount)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.CenterDiscount)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.teacherDiscount)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.teacherDiscount)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.TeacherValue)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.TeacherValue)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.CenterValue)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.CenterValue)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Paided)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Paided)
+                    </dd>
+                    <dt class="col-sm-4">
+                        المستخدم
+                    </dt>
+                    <dd class="col-sm-8">
+                        @ViewData["iuser"]
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

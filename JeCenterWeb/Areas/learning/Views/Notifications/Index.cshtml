@@ -1,0 +1,73 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentNotifications>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<style>
+    a {
+        text-decoration: none;
+    }
+
+        a:hover, a:visited, a:link, a:active {
+            text-decoration: none;
+        }
+</style>
+<div class="posts-section">
+
+    <div class="post-bar" style="padding:25px;">
+<div class="card card-primary card-outline">
+    <div class="card-body p-0">
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:150px;" class="text-center">
+                            الوقت
+                        </th>
+                        <th style="width:200px;" class="text-center">
+                            التاريخ
+                        </th>
+                        <th class="text-right">
+                            @Html.DisplayNameFor(model => model.GNotifications.NotiTitel)
+                        </th>
+                        <th style="width:50px;" class="text-center">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        string txtclr = "color: #000 !important;";
+                        <tr>
+                            <td class="text-center">
+                                @Convert.ToDateTime(item.GNotifications.CreatedDate).ToString("t")
+                            </td>
+                            <td class="text-center">
+                                @Convert.ToDateTime(item.GNotifications.CreatedDate).ToString("yyyy-MM-dd")
+                            </td>
+                            <td class="mailbox-name text-right">
+                                <a asp-action="ReadNotification" asp-controller="Notifications" asp-area="learning" asp-route-id="@item.StudentNotificationId" style="@txtclr">  @item.GNotifications.NotiTitel </a>
+                            </td>
+                            <td class="text-center">
+                                @if (item.Seen == false)
+                                {
+                                    txtclr = "color: #0072c6 !important;font-weight:bolder;";
+                                }
+                                else
+                                {
+                                    <i class="fa fa-eye"></i>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+                                </div>
+                                </div>

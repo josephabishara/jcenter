@@ -1,0 +1,70 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CBranch>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/images/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/cp/dist/css/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="~/cp/dist/helppage.css" rel="stylesheet" />
+</head>
+<body style="background-image: url(images/library6.jpg) !important ;background-repeat: no-repeat;background-color: #F5E2DF;">
+    <section class="vh-100">
+        <div class="container h-custom">
+            <div class="row">
+                <img src="~/images/elra3ylogo150.png" style="width:150px;display: block;margin-left: auto;margin-right: auto;  width: 20%;" />
+            </div>
+
+            <div class="row d-flex justify-content-center align-items-center h-100" style="padding-top:15px;direction:rtl;">
+                
+                @foreach (var item in Model)
+                {
+                   
+                    string color = "#CFF4FC";
+                    string btn = "btn-info";
+                    string txt = "#055160";
+                    string txth = "text-info";
+
+                    if (item.BranchId == 2)
+                    {
+                        color = "#fff3cd";
+                        btn = "btn-warning";
+                        txt = "#8A5103";
+                        txth = "text-warning";
+                    }
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-header text-center  "  >
+                                <h3 style="color:@txt;text-shadow: 2px 2px 5px gray;">
+                                  @item.BranchName
+                                </h3>
+                            </div>
+                            <div class="card-body text-center" style="background-color:@color;">
+                                <i class="fa fa-bank " style="font-size:150pt;color:@txt"></i>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn  btn-block @btn" asp-action="SignInBranch" asp-route-id="@item.BranchId">تسجيل دخول</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+    <script src="~/cp/plugins/jquery/jquery.min.js"></script>
+</body>
+</html>

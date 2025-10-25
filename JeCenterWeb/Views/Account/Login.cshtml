@@ -1,0 +1,65 @@
+﻿@model JeCenterWeb.Models.ViewModel.LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/images/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="~/cp/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/cp/dist/css/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="~/cp/dist/helppage.css" rel="stylesheet" />
+</head>
+<body style="background-image: url(images/library6.jpg) !important ;background-repeat: no-repeat;background-color: #cccccc;">
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="padding-top:10px;">
+                <div class="col-md-6  col-lg-6  d-none d-md-block">
+                    <img src="~/images/student_login3.png" class="img-fluid  d-none d-md-block" alt=" login" />
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-4  col-sm-12 offset-xl-1" style="border:solid ;border-color: #fff ;border-radius:15px;background-color: rgba(200, 200, 200, 0.6);padding:50px;text-align:center;">
+                    <a href="/home"> <img src="~/images/elra3ylogo150.png" style="width:250px;" /></a>
+                    <br /><br />
+                    <form asp-action="Login">
+
+                        <div class="form-outline mb-4 text-right">
+                            <input asp-for="Mobile" class="form-control text-right" placeholder="الموبيل " />
+                        </div>
+                        <div class="form-outline mb-3 text-right">
+                            <input asp-for="Password" class="form-control text-right" placeholder="كلمة المرور" />
+                        </div>
+                      
+                        <div class="row text-center text-lg-start mt-4 pt-2">
+                            <div class="col-md-12">
+                                <input type="submit" value="تسجيل دخول" class="btn btn-primary btn-block text-center" />
+                            </div>
+                        </div>
+                    </form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <br />
+                    <div class="row text-center text-lg-start mt-4 pt-2">
+                        <div class="col-md-6">
+                            <a href="/register" class="btn btn-link text-center">حساب جديد</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-link text-center">  نسيت كلمة المرور </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="~/cp/plugins/jquery/jquery.min.js"></script>
+</body>
+</html>

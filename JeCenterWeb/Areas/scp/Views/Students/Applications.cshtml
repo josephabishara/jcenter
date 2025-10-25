@@ -1,0 +1,39 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentApplications>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+<a class="btn btn-primary" asp-route-id="@ViewData["id"]" asp-action="Subscribe" asp-controller="Students"> أشترك جديد</a>
+<br />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                @* <a asp-action="ChangePhysicalYear" asp-route-id="@item.ApplicationId">*@
+                <img class="card-img-top" src="~/@item.CPhases.imgurl" alt="@item.CPhases.PhaseName" style="width:100%;">
+                <div class="card-body">
+                    <h4 class="card-title"> @item.CPhases.PhaseName</h4>
+                    <p class="card-text">  @item.PhysicalYear.PhysicalyearName</p>
+                    <p>
+                        @if (item.Paided == false)
+                        {
+                            <strong class="text-danger">استمارة غير مدفوعة</strong>
+                        }
+                        else
+                        {
+                            <strong class="text-success"> استمارة مدفوعة </strong>
+                        }
+                    </p>
+                </div>
+                @* </a>*@
+            </div>
+        </div>
+    }
+</div>

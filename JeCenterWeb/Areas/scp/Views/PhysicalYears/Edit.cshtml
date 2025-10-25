@@ -1,0 +1,57 @@
+﻿@model JeCenterWeb.Models.PhysicalYear
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@* <form asp-action="Delete" asp-route-id="@Model.PhysicalyearId" method="post">
+    <input type="hidden" name="@Model.PhysicalyearId" />
+    <input type="submit" value="حذف" class="btn btn-danger" />
+</form> *@
+
+@if (Model.Active == true)
+{
+    <form asp-action="Change" asp-route-id="@Model.PhysicalyearId" method="post">
+        <input type="hidden" name="@Model.PhysicalyearId" />
+        <input type="submit" value=" ايقاف " class="btn btn-danger" />
+    </form>
+}
+else if (Model.Active == false)
+{
+    <form asp-action="Change" asp-route-id="@Model.PhysicalyearId" method="post">
+        <input type="hidden" name="@Model.PhysicalyearId" />
+        <input type="submit" value=" تشغيل  " class="btn btn-success" />
+    </form>
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PhysicalyearId" />
+            <div class="form-group">
+                <label asp-for="PhysicalyearName" class="control-label"></label>
+                <input asp-for="PhysicalyearName" class="form-control" />
+                <span asp-validation-for="PhysicalyearName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromDate" class="control-label"></label>
+                <input asp-for="FromDate" class="form-control" type="date" />
+                <span asp-validation-for="FromDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDate" class="control-label"></label>
+                <input asp-for="ToDate" class="form-control" type="date" />
+                <span asp-validation-for="ToDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-info" /> |
+                <a class="btn btn-dark" asp-action="Index"> رجوع </a>
+            </div>
+        </form>
+    </div>
+</div>
+

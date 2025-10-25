@@ -1,0 +1,136 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.RoomScheduleViewModel>
+@using JeCenterWeb.Models.ViewModel;
+<div class="row">
+    <div class="col-6">
+        <form asp-action="RoomsByDate" asp-controller="Schedule" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4">
+        <h4> جدول القاعات ليوم : @ViewData["date"]</h4>
+    </div>
+    <div class="col-2">
+        <a asp-action="RoomsPrint" asp-route-date="@ViewData["date"]" class="btn btn-outline-dark btn-lg btn-block"><i class="fa fa-print"> Print</i></a>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <table class="table table-sm">
+        <tr>
+            <th>
+                القاعة
+            </th>
+            <th style="width:20%">
+                المحاضرة الاولى
+            </th>
+            <th style="width:20%">
+                المحاضرة الثانية
+            </th>
+            <th style="width:20%">
+                المحاضرة الثالثة
+            </th>
+            <th style="width:20%">
+                المحاضرة الرابعة
+            </th>
+            <th style="width:20%">
+                المحاضرة الخامسة
+            </th>
+            <th style="width:20%">
+                المحاضرة السادسة
+            </th>
+            <th style="width:20%">
+                المحاضرة السابعة
+            </th>
+            <th style="width:20%">
+                المحاضرة الثامنة
+            </th>
+        </tr>
+       
+            @foreach (var item in Model)
+            { <tr>
+                <td>
+                    <h5> <a asp-action="AddGroup" asp-route-id="@item.Room.RoomId" asp-route-date="@ViewData["date"]" class="btn btn-dark">@item.Room.RoomName </a></h5>
+                    <p>@item.Room.Capacity</p>
+                </td>
+
+                @for (int i = 1; i < 9; i++)
+                {
+                    <td style="width:20%">
+                        @{
+                            List<RoomGroupReviewsExamsScheduleViewModel>
+                            list = new List<RoomGroupReviewsExamsScheduleViewModel>
+                            ();
+                            list = item.RoomGroupReviewsExamsScheduleViewModel.Where(r => r.LectureNo == i).ToList();
+                            if (list.Count > 0)
+                            {
+                                @foreach (var item2 in list)
+                                {
+
+                                    string style = "color: #0f5132;background-color: #d1e7dd;border-color: #badbcc;";
+                                    string url = "/scp/Schedule/EditGroup/" + item2.Id;
+                                    if (Convert.ToInt32(item2.Capacity) <= item2.Exist)
+                                    {
+                                        style = "color: #0f5132;background-color: lightgray;border-color: #badbcc;";
+                                        url = "/scp/Schedule/EditReview/" + item2.Id;
+                                    }
+                                    if (item2.TypeId == 1)
+                                    {
+                                        style = "color: #664d03;background-color: #fff3cd;border-color: #ffecb5;";
+                                        url = "/scp/Schedule/EditReview/" + item2.Id;
+                                        if (Convert.ToInt32(item2.Capacity) <= item2.Exist)
+                                        {
+                                            style = "color: #664d03;background-color: lightgray;border-color: #ffecb5;";
+                                            url = "/scp/Schedule/EditReview/" + item2.Id;
+                                        }
+                                    }
+                                    else if (item2.TypeId == 2)
+                                    {
+                                        style = "color: #842029;background-color: #f8d7da;border-color: #f5c2c7;";
+                                        url = "/scp/Schedule/EditReview/" + item2.Id;
+                                        if (Convert.ToInt32(item2.Capacity) <= item2.Exist)
+                                        {
+                                            style = "color: #842029;background-color: lightgray;border-color: #f5c2c7;";
+                                            url = "/scp/Schedule/EditReview/" + item2.Id;
+                                        }
+                                    }
+
+                                 
+                                        <a class="btn btn-block" style="@style" href="@url">
+                                            <h6>@item2.Titel </h6>
+                                            <h6>@item2.PhaseName</h6>
+                                            <p style="direction:ltr;">
+                                                @{
+                                                    DateTime start = new DateTime(item2.Date.Year, item2.Date.Month, item2.Date.Day, item2.SessionStart.Hours, item2.SessionStart.Minutes, item2.SessionStart.Seconds);
+                                                    DateTime end = new DateTime(item2.Date.Year, item2.Date.Month, item2.Date.Day, item2.SessionEnd.Hours, item2.SessionEnd.Minutes, item2.SessionEnd.Seconds);
+                                                }
+                                                من : @start.ToString("hh:mm") <br> الى : @end.ToString("hh:mm")
+                                            </p>
+                                            <p> العدد : @item2.Exist </p>
+                                        </a>
+                                }
+                            }
+                            else
+                            {
+                                    <a class="btn btn-block" asp-action="AddGroup" asp-route-id="@item.Room.RoomId" asp-route-date="@ViewData["date"]">
+                                        <h6>  متاحة </h6>
+                                        <p style="direction:ltr;">
+                                            .......................
+                                        </p>
+                                    </a>
+                            }
+                        }
+                    </td>
+                }
+            </tr>
+            }
+    </table>
+</div>
+<br />

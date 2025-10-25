@@ -1,0 +1,92 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentDiscount>
+
+@{
+    ViewData["Title"] = "Student Discount";
+}
+<div class="card-head clearfixr">
+    @{
+        int prv = Convert.ToInt32(ViewData["prvpag"]);
+    }
+
+    <a class="btn btn-primary" asp-route-page="@ViewData["nxtpag"]" asp-action="StudentsDiscount" asp-controller="Students" asp-area="scp">&laquo; التالي</a>
+    <a class="btn btn-primary" href="#">@ViewData["page"]</a>
+    @if (prv > 0)
+    {
+        <a class="btn btn-primary" asp-route-page="@ViewData["prvpag"]" asp-action="StudentsDiscount" asp-controller="Students" asp-area="scp">السابق &raquo; </a>
+    }
+</div>
+<br />
+<div class="row">
+    <div class="col-2">
+        <a class="btn btn-info btn-block" asp-action="Create">إضافة </a>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-warning btn-block" asp-action="StudentsDiscount"> حاصلين علي خصم </a>
+    </div>
+    <div class="col-2">
+    </div>
+    <div class="col-6">
+        <form asp-action="SearchActiveByWord" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input name="word" class="form-control" placeholder="بحث" value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-4">
+                    <input type="submit" value="بحث" class="btn btn-info btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<table class="table table-striped  text-center">
+    <thead>
+        <tr>
+            <th>
+                م
+            </th>
+            <th>
+                الطالب
+            </th>
+            <th>
+                المدرس
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.teacherDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CenterDiscount)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.StudentDiscountId
+                </td>
+                <td>
+                    <a class="btn" asp-action="BalanceByAccount" asp-route-id="@item.StudentId" target="_blank">   @item.FinancialAccount.AccountName </a>
+                </td>
+                <td>
+                    @item.Teacher.FullName
+                </td>
+                <td>
+                    @item.Discount
+                </td>
+                <td>
+                    @item.teacherDiscount
+                </td>
+                <td>
+                    @item.CenterDiscount
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

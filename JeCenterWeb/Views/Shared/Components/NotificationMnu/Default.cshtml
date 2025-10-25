@@ -1,0 +1,30 @@
+﻿   
+<ul class="navbar-nav ml-auto">
+    @if (Convert.ToInt64(ViewData["noticount"]) > 0)
+    {
+        <li class="nav-item">
+            <a asp-action="Notifications" asp-controller="Discuss" asp-area="scp" class="nav-link text-danger"   >
+                <i class="fa fa-bell mr-2"></i> @ViewData["noticount"] Notifications
+            </a>
+        </li>
+
+      
+    }
+    else
+    {
+        <li class="nav-item">
+            <a asp-action="Notifications" asp-controller="Discuss" asp-area="scp" class="nav-link text-info"   >
+                <i class="fa fa-bell mr-2"></i> @ViewData["notimessg"]
+            </a>
+        </li>
+    }
+</ul>
+
+ @if (Convert.ToInt64(ViewData["noticount"]) > 0)
+{
+    
+    <script>
+        window.alert( ' رجاء قرائة الأشعارات من  القائمة بأعلى الصفحة ' );
+    </script>
+
+}

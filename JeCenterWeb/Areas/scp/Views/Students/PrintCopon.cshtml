@@ -1,0 +1,66 @@
+﻿@model JeCenterWeb.Models.StudentLecture
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Print";
+}
+
+<style>
+    p {
+        margin: 0px !important;
+        /*  text-align:center; */
+    }
+
+    a:link {
+        text-decoration: none;
+    }
+
+    a:visited {
+        text-decoration: none;
+    }
+
+    div.relative {
+        position: relative;
+        /*  text-align: center; */
+    }
+
+    div.absolute {
+        position: absolute;
+        top: 90px;
+        /* text-align: center; */
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        opacity: 0.5;
+    }
+</style>
+
+
+<div id="div1" class="relative">
+   @*  <div class="absolute">
+        <img src="~/images/elra3ylogo1502.png" />
+    </div> *@
+    <a asp-action="Details" asp-controller="Students" asp-area="scp" asp-route-id="@ViewData["id"]">
+          <h2>سنتر الراعي </h2>
+    </a>
+
+    <p>
+        @ViewData["roomid"] -  @ViewData["LectNo"]
+    </p>
+    <p style="font-family:librebarcode39-regular;font-size:40pt;">
+        @ViewData["BarCode"]
+    </p>
+    <p>
+        @Model.StudentLectureId
+        <br />
+        <strong style="font-size:20pt;">@ViewData["disc"]</strong> @ViewData["StudentName"]  <br />
+        @ViewData["GropNam"] <br />
+        @ViewData["CS"]<br />
+        @ViewData["lbldate"] <br />
+       @ViewData["time"] <br />
+        @* رقم الطالب : @ViewData["StudentIndex"] *@
+    </p>
+</div>

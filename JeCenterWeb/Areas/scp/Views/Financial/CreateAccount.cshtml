@@ -1,0 +1,27 @@
+﻿@model JeCenterWeb.Models.FinancialAccount
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AccountName" class="control-label"></label>
+                <input asp-for="AccountName" class="form-control" />
+                <span asp-validation-for="AccountName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdvancedPermission"></label>
+                <input asp-for="AdvancedPermission" type="checkbox" />
+                <span asp-validation-for="AdvancedPermission" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="حقظ" class="btn btn-primary" /> |
+                <a class="btn btn-dark" asp-action="ChartOfAccounts"> رجوع </a>
+            </div>
+        </form>
+    </div>
+</div>

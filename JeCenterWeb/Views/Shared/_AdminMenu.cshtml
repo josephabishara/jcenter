@@ -1,0 +1,498 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+
+<!-- "AdminSettings", "PowerUser", "SuperUser", "User" -->
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @if (signInManager.IsSignedIn(User))
+        {
+            @if (User.IsInRole("AdminSettings"))
+            {
+
+                @* إعدادات الحسابات *@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cog  text-orange"></i>
+                        <p class="text-orange">
+                            إعدادات الحسابات
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="PhysicalYears" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-calendar nav-icon"></i>
+                                <p class="text-bold">السنوات الدراسية</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="ChartOfAccounts" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-bar-chart nav-icon"></i>
+                                <p> الدليل الحسابي </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Payments" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-money nav-icon"></i>
+                                <p>  المصاريف اليوم</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="PaymentsReturn" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-money nav-icon"></i>
+                                <p>  الأسترجعات </p>
+                            </a>
+                        </li>
+                     
+                        <li class="nav-item">
+                            <a asp-action="ApproveCoupon" asp-controller="Cards" asp-area="scp" class="nav-link">
+                                <i class="fa fa-calendar-check-o   nav-icon"></i>
+                                <p> اعتماد كوبون </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="CancelApproveCoupon" asp-controller="Cards" asp-area="scp" class="nav-link">
+                                <i class="fa fa-calendar-times-o  nav-icon"></i>
+                                <p>إلغاء اعتماد كوبون </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Discounts" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-user-minus nav-icon"></i>
+                                <p> تخفيضات الطلبة </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Employees" asp-area="scp" class="nav-link">
+                                <i class="fa fa-user-circle nav-icon"></i>
+                                <p> مستخدمين البرنامج</p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+                @* تقارير  الحسابات *@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-calculator text-success"></i>
+                        <p class="text-success">
+                            تقارير الحسابات
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Dashboard" asp-area="scp" class="nav-link">
+                                <i class="fa fa-desktop nav-icon"></i>
+                                <p> الرئيسية  </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Branches" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-home nav-icon"></i>
+                                <p> حسابات الفروع </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a asp-action="FinancialAccount" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-hand-holding nav-icon"></i>
+                                <p> حسابات المصاريف </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="TreasuryBalance" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-boxes nav-icon"></i>
+                                <p> حسابات الخزينة</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="TeachersBalance" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-users nav-icon"></i>
+                                <p> حسابات المدرسين</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Userbalance" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-box nav-icon"></i>
+                                <p> كشف حساب خزينة </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Teacherbalance" asp-controller="Financial" asp-area="scp" class="nav-link">
+                                <i class="fa fa-user nav-icon"></i>
+                                <p> كشف حساب مدرس   </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="TeacherScheduleReport" asp-controller="Teachers" asp-area="scp" class="nav-link">
+                                <i class="fa fa-user-clock nav-icon"></i>
+                                <p>  نقرير أداء مدرس   </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+            }
+            if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+            {
+                @* إدارة الموقع*@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-globe text-pink"></i>
+                        <p class="text-pink">
+                            إدارة الموقع
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Slider" asp-area="scp" class="nav-link">
+                                <i class="fa fa-image nav-icon"></i>
+                                <p> السلايدر </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Blogs" asp-area="scp" class="nav-link">
+                                <i class="fa fa-list-alt nav-icon"></i>
+                                <p> المقالات </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+            }
+            if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") )
+            {
+              
+                @* إدارة السنتر*@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-university text-info"></i>
+                        <p class="text-info">
+                            إدارة السنتر
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Branch" asp-area="scp" class="nav-link">
+                                <i class="fa fa-home nav-icon"></i>
+                                <p>الفروع</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Rooms" asp-area="scp" class="nav-link">
+                                <i class="fa fa-braille nav-icon"></i>
+                                <p>  القاعات </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="PhysicalYears" asp-area="scp" class="nav-link">
+                                <i class="fa fa-calendar nav-icon"></i>
+                                <p>السنوات الدراسية</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Departments" asp-area="scp" class="nav-link">
+                                <i class="fa fa-sitemap nav-icon"></i>
+                                <p>الإدارات</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Teachers" asp-area="scp" class="nav-link">
+                                <i class="fa fa-user-secret nav-icon"></i>
+                                <p> المدرسين</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Phases" asp-area="scp" class="nav-link">
+                                <i class="fa fa-graduation-cap nav-icon"></i>
+                                <p> المراحل </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Syllabus" asp-area="scp" class="nav-link">
+                                <i class="fa fa-book-open nav-icon"></i>
+                                <p> المناهج </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Discuss" asp-area="scp" class="nav-link">
+                                <i class="fa fa-send nav-icon"></i>
+                                <p> الإشعارت </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+               
+
+
+                @*إدارة المحاضرات*@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-chalkboard-teacher text-warning"></i>
+                        <p class="text-warning">
+                            إدارة المحاضرات
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a asp-action="Teachers" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                                <i class="fa fa-user-secret nav-icon"></i>
+                                <p> جدول المدرسين </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Rooms" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                                <i class="fa fa-braille nav-icon"></i>
+                                <p> جدول القاعات </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="ChooseTeacher" asp-controller="Teachers" asp-area="scp" class="nav-link">
+                                <i class="fa fa-users nav-icon"></i>
+                                <p> جدول المجموعات </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="ChooseTeacherReview" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                                <i class="fa fa-chalkboard-teacher nav-icon"></i>
+                                <p> جدول المراجعات </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="ChooseTeacherExam" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                                <i class="fa fa-pen nav-icon"></i>
+                                <p> جدول الامتحانات </p>
+                            </a>
+                        </li>
+                        @*    <li class="nav-item">
+                <a asp-action="NewCheckCoupon" asp-controller="Cards" asp-area="scp" class="nav-link">
+                <i class="fa fa-search nav-icon"></i>
+                <p> فحص كوبون </p>
+                </a>
+                </li> *@
+                    </ul>
+                </li>
+
+                @* خدمة الطلبة*@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-laptop text-danger"></i>
+                        <p class="text-danger">
+                            خدمة الطلبة
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Students" asp-area="scp" class="nav-link">
+                                <i class="fa fa-restroom nav-icon"></i>
+                                <p>الطلبة</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Newimages" asp-controller="Students" asp-area="scp" class="nav-link">
+                                <i class="fa fa-file-image-o nav-icon"></i>
+                                <p>اعتماد صور الطلبة</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="NewCheckCoupon" asp-controller="Cards" asp-area="scp" class="nav-link">
+                                <i class="fa fa-search nav-icon"></i>
+                                <p> فحص كوبون </p>
+                            </a>
+                        </li>
+                     
+
+                    </ul>
+                </li>
+
+                @*  الخزينة*@
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-archive text-primary"></i>
+                        <p class="text-primary">
+                            الخزينة
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                                <i class="fa fa-newspaper nav-icon"></i>
+                                <p>كشف حساب الخزنة</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Expenses" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                                <i class="fa fa-suitcase nav-icon"></i>
+                                <p> مصروفات من الخزنة</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Payment" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                                <i class="fa fa-users nav-icon"></i>
+                                <p> صرف للمدرسين  </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Transformation" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                                <i class="fa fa-arrow-circle-right nav-icon"></i>
+                                <p>   توريد لخزنة  </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Receipt" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                                <i class="fa fa-arrow-circle-left nav-icon"></i>
+                                <p>  استلام من خزنة اخري </p>
+                            </a>
+                        </li>
+
+
+                 
+
+                    </ul>
+                </li>
+
+            }
+            if (User.IsInRole("User") || User.IsInRole("SuperUser"))
+            {
+
+
+                @* خدمة الطلبة*@
+                <li class="nav-header">خدمة الطلبة</li>
+                <li class="nav-item">
+                    <a asp-action="index" asp-controller="Students" asp-area="scp" class="nav-link">
+                        <i class="fa fa-restroom nav-icon"></i>
+                        <p>الطلبة</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-action="NewCheckcard" asp-controller="Cards" asp-area="scp" class="nav-link">
+                        <i class="fa fa-address-card nav-icon"></i>
+                        <p> فحص كارت  شحن </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-action="Newimages" asp-controller="Students" asp-area="scp" class="nav-link">
+                        <i class="fa fa-file-image-o nav-icon"></i>
+                        <p>اعتماد صور الطلبة</p>
+                    </a>
+                </li>
+
+                @* إدارة المحاضرات  *@
+                <li class="nav-header"> المحاضرات </li>
+                <li class="nav-item">
+                    <a asp-action="Teachers" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                        <i class="fa fa-user-secret nav-icon"></i>
+                        <p> جدول المدرسين </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-action="ChooseTeacher" asp-controller="Teachers" asp-area="scp" class="nav-link">
+                        <i class="fa fa-users nav-icon"></i>
+                        <p> جدول المجموعات </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="ChooseTeacherReview" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                        <i class="fa fa-chalkboard-teacher nav-icon"></i>
+                        <p> جدول المراجعات </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="ChooseTeacherExam" asp-controller="Schedule" asp-area="scp" class="nav-link">
+                        <i class="fa fa-pen nav-icon"></i>
+                        <p> جدول الامتحانات </p>
+                    </a>
+                </li>
+                @*  الخزينة*@
+                <li class="nav-header">الخزينة</li>
+
+                <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                        <i class="fa fa-newspaper nav-icon"></i>
+                        <p>كشف حساب الخزنة</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a asp-action="Transformation" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                        <i class="fa fa-arrow-circle-right nav-icon"></i>
+                        <p>   توريد لخزنة  </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="Receipt" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                        <i class="fa fa-arrow-circle-left nav-icon"></i>
+                        <p>  استلام من خزنة اخري </p>
+                    </a>
+                </li>
+                
+
+            }
+            if (User.IsInRole("SuperUser"))
+            {
+                <li class="nav-item">
+                    <a asp-action="Expenses" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                        <i class="fa fa-suitcase nav-icon"></i>
+                        <p> مصروفات من الخزنة</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="Payment" asp-controller="Treasury" asp-area="scp" class="nav-link">
+                        <i class="fa fa-users nav-icon"></i>
+                        <p> صرف للمدرسين  </p>
+                    </a>
+                </li>
+
+           
+
+            }
+
+            if(User.IsInRole("SuperUser") || User.IsInRole("PowerUser") )
+            {
+                @await Component.InvokeAsync("MenuAccessRight")   
+            }
+        }
+         
+
+        <li class="nav-header">Setting</li>
+        @*
+        <li class="nav-item">
+        <a href="/ChangePassword" class="nav-link">
+        <i class="nav-icon fa fa-key text-danger"></i>
+        <p class="text"> تغيير كلمة المرور </p>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a href="#" class="nav-link">
+        <i class="nav-icon far fa-circle text-warning"></i>
+        <p>Warning</p>
+        </a>
+        </li>*@
+        <li class="nav-item">
+            <a href="/Logout" class="nav-link">
+                <i class="nav-icon fa fa-power-off text-info"></i>
+                <p>خروج من البرنامج</p>
+            </a>
+        </li>
+    </ul>
+</nav>
+@* </div>
+</aside>*@

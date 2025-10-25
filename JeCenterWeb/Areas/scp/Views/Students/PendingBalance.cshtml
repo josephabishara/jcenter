@@ -1,0 +1,72 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.StudentBalancePendingViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row">
+
+    <div class="col-md-6 text-center">
+        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+            @ViewBag.FullName
+        </a>
+    </div>
+    <div class="col-md-6 text-center">
+       
+    </div>
+</div>
+<br />
+
+
+<div class="row">
+
+    <div class="col-md-4 text-center">
+        <h5> محجوز : @ViewData["Pending"] L.E</h5>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+    </div>
+
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.balance)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @item.GroupName
+                </td>
+                <td>
+                    @item.balance
+                </td>
+                <td>
+                    @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+                    {
+                        <a asp-action="RetunPanding" asp-controller="Students" asp-area="scp" asp-route-AccountID="@item.AccountID" asp-route-GroupId="@item.GroupId" asp-route-TeacherId="@item.TeacherId" class="btn btn-info">تسوية </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,52 @@
+﻿ @model JeCenterWeb.Models.CNotifications
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_NotiMenu" />
+            </div>
+            <div class="col-md-9">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">  إشعار جديد للموظفين </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form asp-action="AddNotiEmp">
+                            
+                            <div class="form-group">
+                                <label asp-for="NotiTitel" class="control-label"></label>
+                                <input asp-for="NotiTitel" class="form-control" />
+                                <span asp-validation-for="NotiTitel" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NotificationNote" class="control-label"></label>
+                                <textarea id="textarea" asp-for="NotificationNote" placeholder="Blog Content" style="direction:rtl !important;"></textarea>
+                                <script src="~/lib/tinymce/tinymce.min.js"></script>
+                                <script>
+                                    tinymce.init({
+                                        selector: '#textarea', plugins: "tooltip print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern", toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat', height: "200", paste_data_images: true
+                                    });
+
+                                </script>
+
+                                <span asp-validation-for="NotificationNote" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="إرسال" class="btn btn-primary" /> |
+                                <a class="btn btn-dark" asp-action="Index"> رجوع </a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

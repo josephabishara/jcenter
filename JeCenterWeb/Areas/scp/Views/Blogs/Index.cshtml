@@ -1,0 +1,29 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CBlogs>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="row">
+<a asp-action="Create" class="btn btn-primary" > أضافة مقال </a>
+</div>
+<br />
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top" src="../@item.BlogImage" alt="Card image" height="200">
+                <div class="card-body" style="height:100px;overflow:hidden;">
+                    <h4 class="card-title">@item.BlogTitle</h4>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Edit" asp-route-id="@item.BlogsId" class="btn btn-success"><i class="fa fa-eye"></i> </a> |
+                    <a asp-action="Delete" asp-route-id="@item.BlogsId" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

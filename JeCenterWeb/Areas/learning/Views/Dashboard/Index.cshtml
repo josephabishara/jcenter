@@ -1,0 +1,59 @@
+﻿@inject IHttpContextAccessor Accessor
+<style>
+    h3 {
+        direction: rtl;
+        text-align: right;
+    }
+</style>
+
+<div class="product-feed-tab current" id="payment-dd">
+    <div class="billing-method">
+        <ul>
+            <li>
+                <h3> @ViewData["yearname"] </h3>
+                <div class="progress">
+                    <div class="progress-bar @ViewData["bar"]" role="progressbar" aria-valuenow="@ViewData["proccess"]"
+                         aria-valuemin="0" aria-valuemax="100" style="width:@ViewData["proccess"]%">
+                        @ViewData["proccessmessage"]
+                    </div>
+                </div>
+
+            </li>
+            <li>
+                <h3 style=""> مرحباً ,  @ViewData["UserName"]  </h3>
+
+
+            </li>
+            <li>
+                <h3>
+                    @ViewData["phone"]
+                </h3>
+
+            </li>
+            <li>
+                <h3>
+                    @ViewData["phasename"]
+                </h3>
+
+            </li>
+
+
+        </ul>
+
+    </div>
+
+    <div class="add-billing-method">
+        <h3>    السنين الدراسية      </h3>
+        <div class="payment_methods">
+            <div class="row" style="padding:15px;">
+                <div class="col-lg-6 text-center">
+                    <a class="btn btn-success" asp-action="Index" asp-controller="Applications"> السنين الدراسية المتاحة</a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <a class="btn btn-primary" asp-action="Subscribe" asp-controller="Applications"> أشترك في سنة دراسية جديدة </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</div>

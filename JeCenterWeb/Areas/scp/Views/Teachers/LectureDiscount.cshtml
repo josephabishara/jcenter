@@ -1,0 +1,59 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentLecture>
+
+@{
+    ViewData["Title"] = "Student Lecture";
+}
+
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentIndex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.Mobile)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.teacherDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CenterDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.StudentIndex
+                </td>
+                <td>
+                    @item.Student.FullName
+                </td>
+                <td>
+                    @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+                    {
+                        @item.Student.Mobile
+                    }
+                </td>
+                <td>
+                    @item.teacherDiscount
+                </td>
+                <td>
+                    @item.CenterDiscount
+                </td>
+                <td>
+                    @item.Discount
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

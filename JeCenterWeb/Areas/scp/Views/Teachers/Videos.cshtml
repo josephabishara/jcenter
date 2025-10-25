@@ -1,0 +1,30 @@
+﻿@model IEnumerable<JeCenterWeb.Models.TeachesVideos>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.TeacherId">
+        @ViewBag.TeacherName
+    </a>
+</div>
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    @item.VideoName
+                </div>
+                <div class="card-body">
+                    <iframe width="320" height="280" src="@item.VideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+                <div class="card-footer">
+                    @item.CSyllabus.SyllabusName
+                </div>
+            </div>
+        </div>
+    }
+</div>

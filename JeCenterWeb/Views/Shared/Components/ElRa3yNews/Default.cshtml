@@ -1,0 +1,71 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ElRa3yNews>
+
+@{int rtl = 0;}
+
+@foreach (var item in Model)
+{
+    if (rtl == 0)
+    {
+        <div class="row">
+        <div class="col-md-4 hidden-sm hidden-xs">
+            <div class="custom-module">
+                <img src="~/upload/device_01.png" alt="" class="img-responsive wow slideInLeft">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="custom-module p40l">
+                <h2 class="text-right">
+                    @item.TitelNews
+                </h2>
+
+                <p class="text-right">
+                    @item.ParagraphNews
+                </p>
+
+
+
+                <div class="btn-wrapper">
+                    <a href="#" class="btn btn-primary"> متعة التعلم أونلاين <i class="fa fa-play-circle" style="font-size:22px;"></i> </a>
+                </div>
+                <br>
+                <div class="btn-wrapper">
+                    <a href="#" class="btn btn-default">تتقابل مع معلمك  <i class="fa fa-university" style="font-size: 22px;"></i></a>
+                </div>
+            </div>
+        </div>  
+        </div>
+         rtl = 1; 
+    }
+    else
+    {
+        <div class="row">
+        <div class="col-md-8">
+            <div class="custom-module p40l">
+                <h2 class="text-right">
+                    @item.TitelNews
+                </h2>
+
+                <p class="text-right">
+                    @item.ParagraphNews
+                </p>
+
+
+
+                <div class="btn-wrapper">
+                    <a href="#" class="btn btn-primary"> متعة التعلم أونلاين <i class="fa fa-play-circle" style="font-size:22px;"></i> </a>
+                </div>
+                <br>
+                <div class="btn-wrapper">
+                    <a href="#" class="btn btn-default">تتقابل مع معلمك  <i class="fa fa-university" style="font-size: 22px;"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 hidden-sm hidden-xs">
+            <div class="custom-module">
+                <img src="~/upload/device_01.png" alt="" class="img-responsive wow slideInLeft">
+            </div>
+        </div>
+        </div>
+        rtl = 0;
+    }
+}

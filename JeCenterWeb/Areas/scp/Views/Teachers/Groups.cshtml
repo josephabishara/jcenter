@@ -1,0 +1,123 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CGroups>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+<div>
+<a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.TeacherId">
+    @ViewBag.TeacherName
+</a>
+</div>
+<br />
+<form asp-action="AddGroup" method="post">
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <select name="RoomId" class="form-control select2-search" asp-items="ViewBag.RoomId">
+                    <option value="0">أختار  القاعة</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="SessionStart" type="time" class="form-control" placeholder="من " />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="SessionEnd" type="time" class="form-control" placeholder="الى" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <input name="TeacherFee" class="form-control" placeholder="ق المدرس" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <input name="CenterFee" class="form-control" placeholder="ق المركز" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <input name="ServiceFee" class="form-control" placeholder=" خ السنتر" />
+            </div>
+        </div>
+      
+    </div>
+    <div class="row">
+       
+        <div class="col-2">
+            <div class="form-group">
+                <select name="physicalyearId" class="form-control select2-search" asp-items="ViewBag.physicalyearId">
+                    <option value="0">أختار  السنة الدراسية</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="FirstDay" class="form-control" type="date" />
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="form-group">
+                <input type="hidden" name="TeacherId" value="@ViewData["TeacherId"]" />
+                <select name="SyllabusID" class="form-control select2-search" asp-items="ViewBag.SyllabusID">
+                    <option value="0">أختار المادة / المنهج</option>
+                </select>
+            </div>
+        </div>
+       
+        <div class="col-3">
+            <input type="submit" value="إضافة" class="btn btn-info btn-block" />
+        </div>
+    </div>
+</form>
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SyllabusID)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.physicalyearId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfWeekId)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-block" asp-action="GroupSchedule" asp-route-id="@item.GroupId">
+                        @item.GroupName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="GroupSchedule" asp-route-id="@item.GroupId">
+                        @item.CSyllabus.SyllabusName
+                    </a>
+                </td>
+              
+                <td>
+                    <a class="btn btn-block" asp-action="GroupSchedule" asp-route-id="@item.GroupId">
+                        @item.PhysicalYear.PhysicalyearName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="GroupSchedule" asp-route-id="@item.GroupId">
+                        @item.ResourceDays.DayOfWeekName
+                    </a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

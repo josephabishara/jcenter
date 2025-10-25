@@ -1,0 +1,37 @@
+﻿@model IEnumerable<JeCenterWeb.Models.PhysicalYear>
+
+@{
+    ViewData["Title"] = "Physical Year  ";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        string colobg = "info-box bg-success";
+        string btn = "	fa fa-toggle-off";
+        if (item.Active == true)
+        {
+            colobg = "info-box bg-success";
+            btn = "	fa fa-toggle-on";
+        }
+        else if (item.Active == false)
+        {
+            colobg = "info-box bg-danger";
+            btn = "	fa fa-toggle-off";
+        }
+        <div class="col-md-3 col-sm-6 col-12">
+            <a class="btn btn-block" asp-action="ChangePhysicalYear" asp-route-id="@item.PhysicalyearId">
+                <div class="@colobg">
+                    <span class="info-box-icon"><i class="@btn"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-number">@item.PhysicalyearName</span>
+                        <span class="info-box-text"> @item.FromDate.ToString("yyyy-MM-dd")</span>
+                        <span class="info-box-text"> @item.ToDate.ToString("yyyy-MM-dd")</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+    }
+</div>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.FinancialJournalEntryLineViewModel>
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row">
+    <div class="col-md-3">
+        <h4>  @ViewData["branch"]</h4>
+    </div>
+    <div class="col-md-3">
+        <h4>@ViewData["date"]</h4>
+    </div>
+    <div class="col-md-3">
+        <h4>@ViewData["type"]</h4>
+    </div>
+    <div class="col-md-3">
+        <h4>@ViewData["sum"]</h4>
+    </div>
+</div>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:150px">
+                @Html.DisplayNameFor(model => model.JournalEntryDate)
+            </th>
+            <th style="width:100px">
+                توقيت
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th style="width:70px">
+             القيمة
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.JournalEntryDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                </td>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    <a class="btn" asp-area="scp" asp-action="BalanceByAccount" asp-controller="Students" asp-route-id="@item.AccountID">  @item.AccountName</a>
+                </td>
+                <td>
+                    @item.Notes
+                </td>
+                <td>
+                    @if (item.MovementTypeId == 7)
+                    {
+                        @item.Credit
+                    }
+                    else
+                    {
+                        @item.Debit
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

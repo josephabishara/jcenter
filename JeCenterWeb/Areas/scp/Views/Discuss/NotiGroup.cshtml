@@ -1,0 +1,72 @@
+﻿@model IEnumerable<JeCenterWeb.Models.GNotifications>
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_NotiMenu" />
+            </div>
+            <div class="col-md-9">
+                <div class="card card-success card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title"> الطلبة </h3>
+                        <div class="card-tools">
+                            <a asp-action="AddNotiGroup" asp-controller="Discuss" asp-area="scp" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> أشعار جديد</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:150px;" class="text-center">
+
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.NotiTitel)
+                                        </th>
+                                        <th style="width:200px;" class="text-center">
+                                            التاريخ
+                                        </th>
+                                        <th style="width:150px;" class="text-center">
+                                            الوقت
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a> |
+                                                <a href="#" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
+
+                                            </td>
+                                            <td class="mailbox-name">
+                                                @item.NotiTitel
+                                            </td>
+                                            <td class="text-center">
+                                                @Convert.ToDateTime(item.CreatedDate).ToString("yyyy-MM-dd")
+                                            </td>
+                                            <td class="text-center">
+                                                @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

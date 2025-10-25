@@ -1,0 +1,87 @@
+﻿@model JeCenterWeb.Models.ViewModel.ReviewsScheduleAndCountViewModel
+@{
+    ViewData["Title"] = "Lectures";
+}
+<div class="row">
+    <div class="col-2">
+        <a class="btn btn-block btn-sm btn-outline-dark " asp-action="Details" asp-route-id="@ViewBag.id">
+            @ViewBag.FullName
+        </a>
+    </div>
+    @foreach (var item in Model.StudentApplications)
+    {
+
+        int phse = Convert.ToInt32(ViewData["PhaseId"]);
+        string? btnclass = "btn-secondary";
+
+        if (item.PhaseId == phse)
+        {
+            btnclass = "btn-primary";
+        }
+        else
+        {
+            btnclass = "btn-secondary";
+        }
+        <div class="col-md-2">
+            <form asp-action="ChangePhase" method="post">
+                <input hidden="hidden" name="StudentId" value="@item.StudentId" />
+                <input hidden="hidden" name="PhaseId" value="@item.PhaseId" />
+                <input hidden="hidden" name="action" value="ExamsByDate" />
+                <input type="submit" value="@item.CPhases.PhaseName" class="btn btn-sm @btnclass btn-block" asp-action="ChangePhase" method="post" />
+            </form>
+        </div>
+    }
+    <div class="col-4">
+        <h5 class="text-danger"> @ViewData["mssg"]</h5>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-6">
+        <form asp-action="ExamsByDate" asp-controller="Students" asp-area="scp" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <input type="hidden" name="id" value="@ViewData["id"]" />
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="اليوم" class="btn btn-info" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<p>
+    @ViewData["date"]
+</p>
+<div class="row">
+    @foreach (var item in Model.ReviewsSchedule)
+    {
+        <div class="col-md-3">
+            <a class="btn btn-block" style="color: #842029;background-color: #f8d7da;border-color: #f5c2c7;" asp-action="ExamsInsertPrint" asp-route-ReviewsScheduleId="@item.ReviewsScheduleId" asp-route-id="@ViewData["id"]">
+                <div class="course-box shop-wrapper">
+                    <div class="course-details shop-box text-left">
+                        <p>
+                            <strong> <i class="fa fa-users"></i> @item.ReviewsScheduleName</strong>
+                        </p>
+                        <p>
+                            <i class="fa fa-book"></i> @item.CSyllabus.SyllabusName
+                        </p>
+                        <p>
+                            <i class="fa fa-clock"></i> @item.SessionStart : @item.SessionEnd
+                        </p>
+                        <p>
+                            <i class="fa fa-dollar-sign"></i> @item.LecturePrice
+                        </p>
+                        <p>
+                            <i class="fa fa-home"></i> @item.CRooms.RoomName <br>
+                            <i class="fa fa-braille"></i> @item.CRooms.Capacity
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <br />
+        </div>
+    }
+</div>

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CSyllabus>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .imgt{
+        border-top-right-radius: 10px !important;
+        border-top-left-radius : 10px !important;
+        
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+        
+        width: 100% !important;
+        height: 120px !important;
+    }
+    .divt{
+        border-top-right-radius: 10px !important;
+        border-top-left-radius: 10px !important;
+     
+    }
+</style>
+
+<section class="companies-info">
+    <div class="container">
+
+        <div class="companies-list">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    if (item.CGroups.Count > 0)
+                    {
+
+                        <div class="col-md-4 col-sm-6 col-12 divt">
+                            <div class="company_profile_info divt">
+                                <div class="company-up-info divt">
+                                    <img class="imgt" src="~/@item.imgurl" alt="">
+                                    <h3>
+                                       @item.SyllabusName" 
+                                    </h3>
+                                    <h4 style="direction:rtl;">
+                                        
+                                         @item.CGroups.Count
+                                        مجموعة
+                                    </h4>
+                                    
+                                </div>
+                                <a asp-action="Teachers" asp-route-id="@item.SyllabusID" asp-route-PhysicalyearId="@ViewData["PhysicalyearId"]" title="" class="view-more-pro"> أشتراك  </a>
+                            </div><!--company_profile_info end-->
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+@* <div class="row">
+    @foreach (var item in Model)
+    {
+        if (item.CGroups.Count > 0)
+        {
+            <div class="col-md-4">
+                <div class="course-box shop-wrapper">
+                    <div class="image-wrap entry">
+                        <img src="~/@item.imgurl" alt="@item.SyllabusName" class="img-responsive">
+                        <div class="magnifier">
+                            <a asp-action="Teachers" asp-route-id="@item.SyllabusID" asp-route-PhysicalyearId="@ViewData["PhysicalyearId"]" title="@item.SyllabusName"><i class="flaticon-add"></i></a>
+                        </div>
+                    </div>
+                    <div class="course-details shop-box text-center">
+                        <h4>
+
+                          
+                        </h4>
+                    </div>
+                    <div class="course-footer clearfix">
+                        <div class="pull-left">
+                            <ul class="list-inline">
+                                <li>
+                                    <a asp-action="Teachers" asp-route-id="@item.SyllabusID" asp-route-PhysicalyearId="@ViewData["PhysicalyearId"]">
+                                        <i class="fa fa-shopping-basket">
+                                        </i> @item.CGroups.Count
+                                        مجموعة
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="pull-right">
+                            <ul class="list-inline">
+                                <li>
+                                    <a asp-action="Teachers" asp-route-id="@item.SyllabusID" asp-route-PhysicalyearId="@ViewData["PhysicalyearId"]">
+                                        <i class="fa fa-graduation-cap"></i>
+                                        @item.CPhases.PhaseName
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div> *@

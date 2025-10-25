@@ -1,0 +1,108 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CGroupSchedule>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.TeacherId">
+        @ViewBag.TeacherName
+    </a>
+</div>
+<br />
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LectureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CGroups.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CGroups.CRooms.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CGroups.SessionStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CGroups.SessionEnd)
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @*  <a class="btn btn-block" asp-action="Details" asp-route-id="@item.GroupId">*@
+                    @item.LectureDate.ToString("yyyy-MM-dd")
+                    @*  </a>*@
+                </td>
+                <td>
+                    @item.CGroups.GroupName
+                </td>
+                <td>
+                    @item.CGroups.CRooms.RoomName
+                </td>
+                <td>
+                    @{
+                        DateTime start = new DateTime(2023, 1, 1, item.CGroups.SessionStart.Hours, item.CGroups.SessionStart.Minutes, item.CGroups.SessionStart.Seconds);
+                    }
+                    @start.ToString("t")
+                    @* @item.CGroups.SessionStart*@
+                </td>
+                <td>
+                    @{
+                        DateTime end = new DateTime(2023, 1, 1, item.CGroups.SessionStart.Hours, item.CGroups.SessionStart.Minutes, item.CGroups.SessionStart.Seconds);
+                    }
+                    @end.ToString("t")
+                    @*  @item.CGroups.SessionEnd*@
+                </td>
+
+                <td>
+                    @if (item.LectureDate < DateTime.Today && (item.Closed == false || item.Paided == false))
+                    {
+                        <strong class="text-info">  الرجاء الرجوع للادمن   </strong>
+                    }
+                    else if (item.Closed == true && item.Paided == true)
+                    {
+                        <strong class="text-success"> تم السداد </strong>
+                    }
+                    else if (item.Closed == true && item.Paided == false)
+                    {
+                        <strong class="text-warning">مغلقة وغير ممسددة</strong>
+                    }
+                    else if (item.Closed == false && item.Paided == false)
+                    {
+                        <strong class="text-danger"> غير مغلقة  </strong>
+                    }
+                    else
+                    {
+                        <strong class="text-warning"> ممسددة وغير مغلقة</strong>
+                    }
+                </td>
+                @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+                {
+                    <td>
+                        <a asp-action="lectureDetails" asp-area="scp" asp-controller="Teachers" asp-route-id="@item.GroupscheduleId" class="btn btn-info" style="width:200px;">تفاضيل الحصة</a>
+                    </td>
+                }
+                else if (item.Closed == false && item.Paided == false)
+                {
+                    <td>
+                        <a asp-action="lectureDetails" asp-area="scp" asp-controller="Teachers" asp-route-id="@item.GroupscheduleId" class="btn btn-info" style="width:200px;">تفاضيل الحصة</a>
+                    </td>
+                }
+
+            </tr>
+
+        }
+    </tbody>
+</table>

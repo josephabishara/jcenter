@@ -1,0 +1,36 @@
+﻿@model IEnumerable<JeCenterWeb.Models.UsersBalance>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-block" asp-action="Details" asp-route-id="@item.Id">
+                        @item.FullName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="Details" asp-route-id="@item.Id">
+                        @item.Balance
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

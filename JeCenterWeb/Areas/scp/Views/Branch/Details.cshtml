@@ -1,0 +1,84 @@
+﻿@model JeCenterWeb.Models.ViewModel.CBranchViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h3> فرع :   @Model.CBranch.BranchName </h3>
+    </div>
+  </div>
+
+<form asp-action="AddRoom" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="hidden" asp-for="@Model.CBranch.BranchId" name="BranchId" />
+            <div class="form-group">
+                <label class="control-label">اسم القاعة</label>
+                <input name="RoomName" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">سعة القاعة</label>
+                <input name="Capacity" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">عدد الادوار</label>
+                <input name="Floor" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="submit" value="إضافة قاعة" class="btn btn-info" />
+        </div>
+    </div>
+</form>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                   أسم القاعة
+                </th>
+                <th>
+                 سعة القاعة
+                </th>
+                <th>
+                  الدور
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CRooms)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Capacity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Floor)
+                    </td>
+
+
+                    <td>
+                        <form asp-action="DeleteRoom" asp-route-id="@item.RoomId" method="post">
+                            <input type="hidden" name="@item.RoomId" />
+                            <input type="submit" value="حذف" class="btn btn-danger" /> 
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

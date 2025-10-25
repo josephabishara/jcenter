@@ -1,0 +1,56 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CRooms>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p>
+    <a class="btn btn-info" asp-action="Create">إضافة قاعة </a>
+</p>
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Floor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BranchId)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-block" asp-action="Edit" asp-route-id="@item.RoomId">
+                        @item.RoomName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="Edit" asp-route-id="@item.RoomId">
+                        @item.Capacity
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="Edit" asp-route-id="@item.RoomId">
+                        @item.Floor
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="branch" asp-route-id="@item.BranchId">
+                        @item.CBranch.BranchName
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

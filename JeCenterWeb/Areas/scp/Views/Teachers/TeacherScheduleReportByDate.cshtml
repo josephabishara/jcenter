@@ -1,0 +1,161 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.TeacherScheduleReport>
+
+@{
+    ViewData["Title"] = "Teachers Report";
+}
+
+<div>
+    @Html.ValidationSummary()
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="TeacherScheduleReportByDate" asp-controller="Teachers" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-2">
+                    <input class="form-control text-left" name="StartDate" type="date" />
+                </div>
+                <div class="col-2">
+                    <input class="form-control text-left" name="EndDate" type="date"   />
+                </div>
+                <div class="col-3">
+                    <select id="TeacherId" name="TeacherId" class="form-control select2" asp-items="ViewBag.TeacherId">
+                        <option value="0">أختار  المدرس</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select id="SyllabusID" name="SyllabusID" class="form-control select2" asp-items="ViewBag.SyllabusID">
+                        <option value="0">أختار  المنهج</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+   
+</div>
+
+<br />
+
+
+<br />
+
+@{
+    int reportType = Convert.ToInt32(ViewData["ReportType"]);
+    int max = Convert.ToInt32( ViewData["max"]);
+
+ }
+
+
+ 
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="text-center">
+                    @ViewData["ReportName"] -  
+                    @if (ViewData["StartDate"] != null)
+                    {
+                        @Convert.ToDateTime(ViewData["StartDate"]).ToString("dd-MM-yyyy")
+                    }
+
+                    :
+                    @if (ViewData["EndDate"] != null)
+                    {
+                        @Convert.ToDateTime(ViewData["EndDate"]).ToString("dd-MM-yyyy")
+                    }
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        @foreach (var item in Model)
+                        {
+                            decimal dv = item.Count * 100;
+                           // dv = item.Count / max;
+                            string width =( dv / max ).ToString() + "%"  ;
+                            <div class="progress-group">
+                                @item.LectureDate.ToString("yyyy-MM-dd") - @item.SyllabusName  - @item.PhaseName - <b>  سعر الحصة :  @item.LecturePrice </b>
+                                <span class="float-right"><b>@item.Count</b>/ @max </span> 
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-primary" style="width: @width "></div>
+                                </div>
+                            </div>
+                            
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+
+            $("#TeacherId").change(function () {
+
+                var Syllabuslist = $('#SyllabusID');
+                Syllabuslist.empty();
+
+                $.ajax({
+                    type: "Get",
+                    url: "/scp/Teachers/Syllabuslist?Id=" + $(this).val(),  //remember change the controller to your owns.
+                    success: function (data) {
+                        var s = '<option value="0">أختار  المنهج</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i])
+                            s += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        }
+
+                        $("#SyllabusID").html(s);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+}
+
+
+
+@* 
+    <div class="progress-group">
+        Add Products to Cart
+        <span class="float-right"><b>160</b>/200</span>
+        <div class="progress progress-sm">
+            <div class="progress-bar bg-primary" style="width: 80%"></div>
+        </div>
+    </div>
+    <div class="progress-group">
+        Complete Purchase
+        <span class="float-right"><b>310</b>/400</span>
+        <div class="progress progress-sm">
+            <div class="progress-bar bg-danger" style="width: 75%"></div>
+        </div>
+    </div>
+    <div class="progress-group">
+        <span class="progress-text">Visit Premium Page</span>
+        <span class="float-right"><b>480</b>/800</span>
+        <div class="progress progress-sm">
+            <div class="progress-bar bg-success" style="width: 60%"></div>
+        </div>
+    </div>
+    <div class="progress-group">
+        Send Inquiries
+        <span class="float-right"><b>250</b>/500</span>
+        <div class="progress progress-sm">
+            <div class="progress-bar bg-warning" style="width: 50%"></div>
+        </div>
+    </div> *@

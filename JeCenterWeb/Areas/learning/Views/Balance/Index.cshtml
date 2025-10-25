@@ -1,0 +1,67 @@
+﻿@model IEnumerable<JeCenterWeb.Models.FinancialJournalEntryLine>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="posts-section">
+
+    <div class="post-bar" style="padding:25px;">
+
+
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-primary">اشحن</button>
+    </div>
+    <div class="col-md-6">
+        <input class="form-control" placeholder="أكتب كود الشحن" />
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table text-right" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th Class ="text-right">
+                @Html.DisplayNameFor(model => model.JournalEntryDate)
+            </th>
+            <th Class="text-right">
+                Note
+            </th>
+            <th Class="text-right">
+                @Html.DisplayNameFor(model => model.Debit)
+            </th>
+            <th Class="text-right">
+                @Html.DisplayNameFor(model => model.Credit)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.JournalEntryDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinancialDocuments.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Debit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credit)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+                </div></div>

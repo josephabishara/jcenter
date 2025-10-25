@@ -1,0 +1,126 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ReviewsSchedule>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.TeacherId">
+        @ViewBag.TeacherName
+    </a>
+</div>
+<br />
+<form asp-action="AddExam" method="post">
+     <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <select name="RoomId" class="form-control select2-search" asp-items="ViewBag.RoomId">
+                    <option value="0">أختار  القاعة</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="SessionStart" type="time" class="form-control" placeholder="من " />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="SessionEnd" type="time" class="form-control" placeholder="الى" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <input name="TeacherFee" class="form-control" placeholder="ق المدرس" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <input name="CenterFee" class="form-control" placeholder="ق المركز" />
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <input name="ServiceFee" class="form-control" placeholder=" خ السنتر" />
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="form-group">
+                <input name="ReviewsScheduleName" class="form-control" placeholder="اسم الامتحان" />
+            </div>
+        </div>
+         </div>
+    <div class="row">
+        <input type="hidden" value="@ViewData["TeacherId"]" name="TeacherId" />
+        <input type="hidden" value="2" name="ReviewTypeId" />
+        <div class="col-2">
+            <div class="form-group">
+                <select name="physicalyearId" class="form-control select2-search" asp-items="ViewBag.physicalyearId">
+                    <option value="0">أختار السنة </option>
+                </select>
+            </div>
+        </div> 
+        <div class="col-2">
+            <div class="form-group">
+                <input name="ReviewDate" class="form-control" type="date" />
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="form-group">
+                <select name="SyllabusID" class="form-control select2-search" asp-items="ViewBag.SyllabusID">
+                    <option value="0">أختار  المنهج</option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="col-3">
+            <input type="submit" value="إضافة" class="btn btn-danger btn-block" />
+        </div>
+    </div>
+
+</form>
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CRooms.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CSyllabus.SyllabusName)
+            </th>
+            <th>
+                اسم الامتحان
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.CRooms.RoomName
+                </td>
+                <td>
+                    @item.ReviewDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.CSyllabus.SyllabusName
+                </td>
+                <td>
+                    @item.ReviewsScheduleName
+                </td>
+
+                @* <td>
+            <a class="btn btn-block" asp-action="GroupSchedule" asp-route-id="@item.ReviewsScheduleId">
+
+            </a>
+            </td>*@
+            </tr>
+
+        }
+    </tbody>
+</table>

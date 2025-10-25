@@ -1,0 +1,128 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.FinancialJournalEntryViewModel>
+
+@{
+    ViewData["Title"] = "Payments";
+}
+<div class="row">
+    <div class="col-6">
+        <form asp-action="Paymentday" asp-controller="Financial" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-6">
+        <h3>@Convert.ToDateTime( ViewData["journaldate"]).ToString("yyyy-MM-dd")</h3>
+    </div>
+</div>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <i class="fa fa-paperclip"></i>
+            </th>
+            <th>
+                توقيت
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BranchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th style="width:300px;">
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approve)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.Attached == true)
+                    {
+                        string attachurl = "https://elra3ycenter.com/" + item.imgurl;
+                        <a class="btn btn-link" href="@attachurl">
+                            <i class="fa fa-paperclip"></i>
+                        </a>
+                    }
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                </td>
+                <td>
+                    @item.BranchName
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Financial" asp-route-id="@item.TreasuryID" asp-area="scp" class="btn btn-block" target="_blank">
+                        @item.FullName
+                    </a>
+                </td>
+                <td style="width:300px;">
+                    @item.Notes
+                </td>
+                <td>
+                    @item.Value
+                </td>
+
+                <td>
+                    <a asp-action="BalanceByAccount" asp-controller="Students" asp-route-id="@item.AccountID" asp-area="scp" class="btn btn-block" target="_blank">
+                        @item.AccountName
+                    </a>
+                </td>
+                <td>
+                    @if (item.Approve == 0)
+                    {
+                        <span class="badge bg-warning">Pending</span>
+
+                    }
+                    else if (item.Approve == 1)
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else if (item.Approve == 2)
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                </td>
+                <td>
+                    @if (item.Approve == 0)
+                    {
+                        <form asp-action="ApprovePayment" asp-controller="Financial" asp-route-id="@item.FinancialDocumentId" asp-area="scp" method="post">
+                            <input type="submit" value="موافقة" class="btn btn-success btn-block" />
+                        </form>
+                    }
+                </td>
+                <td>
+                    @if (item.Approve == 0)
+                    {
+                        <form asp-action="RejectPayment" asp-controller="Financial" asp-route-id="@item.FinancialDocumentId" asp-area="scp" method="post">
+                            <input type="submit" value="رفض" class="btn btn-danger btn-block" />
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

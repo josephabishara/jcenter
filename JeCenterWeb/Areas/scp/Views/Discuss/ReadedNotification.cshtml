@@ -1,0 +1,64 @@
+﻿@model JeCenterWeb.Models.ViewModel.ReadedNotificationViewModel
+
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_NotiMenu" />
+            </div>
+            <div class="col-md-9">
+                <div class="card card-primary card-outline">
+
+                    <div class="card-header">
+                        <h3 class="card-title"> الطلبة </h3>
+                        <div class="card-tools">
+                            <a asp-action="AddNotiEmp" asp-controller="Discuss" asp-area="scp" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> أشعار جديد</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="mailbox-read-info">
+                            <h5> @Model.cNotifications.NotiTitel</h5>
+                            <h6>
+                                <span class="mailbox-read-time float-right"> @Model.cNotifications.CreatedDate  </span>
+                            </h6>
+                        </div>
+                        <div class="mailbox-read-message">
+                            @Html.Raw(Model.cNotifications.NotificationNote)
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body p-0 container ">
+                        @foreach (var item in Model.NotificationUserSeen)
+                        {
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1 text-center">
+                                    @if (item.Seen == true)
+                                    {
+                                        <i class="fa fa-eye"></i>
+                                    }
+                                </div>
+                                <div class="col-md-6">
+                                    @item.UserName
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    @item.SeenDate  
+                                </div>
+                               
+                             
+                            </div>
+                            <hr />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

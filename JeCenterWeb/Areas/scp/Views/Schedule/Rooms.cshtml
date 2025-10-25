@@ -1,0 +1,72 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.RoomScheduleViewModel>
+<div class="row">
+    <div class="col-6">
+        <form asp-action="RoomsByDate" asp-controller="Schedule" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4">
+       
+    </div>
+    <div class="col-2">
+        <a asp-action="RoomsPrint" asp-route-date="@ViewData["date"]" class="btn btn-outline-dark btn-lg btn-block"><i class="fa fa-print"> Print</i></a>
+    </div>
+</div>
+
+<br />
+@*@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-1">
+            @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+            {
+                <h5> <a asp-action="AddGroup" asp-route-id="@item.Room.RoomId" asp-route-date="@ViewData["date"]" class="btn btn-dark">@item.Room.RoomName </a></h5>
+            }
+            else
+            {
+                <h5> <a href="#"  class="btn btn-secondary">@item.Room.RoomName </a></h5>
+            }
+            <p>@item.Room.Capacity</p>
+        </div>
+
+        <div class="col-11">
+            <div class="row">
+                @foreach (var item2 in item.RoomGroupReviewsExamsScheduleViewModel)
+                {
+                    string btnclass = "btn-info";
+                    string url = "/scp/Schedule/EditGroup/" + item2.Id;
+                    if (item2.TypeId == 1)
+                    {
+                        btnclass = "btn-success";
+                        url = "/scp/Schedule/EditReview/" + item2.Id;
+                    }
+                    else if (item2.TypeId == 2)
+                    {
+                        btnclass = "btn-warning";
+                        url = "/scp/Schedule/EditExam/" + item2.Id;
+                    }
+                    <div class="col-2" style="padding-left:1px;">
+                        <a class="btn @btnclass btn-block" href="@url">
+                            <h6>@item2.Titel </h6>
+                            <p style="direction:ltr;">
+                                @{
+                                    DateTime start = new DateTime(item2.Date.Year, item2.Date.Month, item2.Date.Day, item2.SessionStart.Hours, item2.SessionStart.Minutes, item2.SessionStart.Seconds);
+                                    DateTime end = new DateTime(item2.Date.Year, item2.Date.Month, item2.Date.Day, item2.SessionEnd.Hours, item2.SessionEnd.Minutes, item2.SessionEnd.Seconds);
+                                }
+                                من : @start.ToString("t") <br> الى : @end.ToShortTimeString()
+                            </p>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <hr />
+}*@

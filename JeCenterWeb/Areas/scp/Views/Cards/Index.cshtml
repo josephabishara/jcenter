@@ -1,0 +1,24 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ChargingCard>
+
+@{
+    ViewData["Title"] = "Charging Card";
+}
+
+
+<form asp-action="AddChargingCard" method="post">
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <input name="Cardvalue"  class="form-control" placeholder="فئة " />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="CardCount"  class="form-control" placeholder="عدد" />
+            </div>
+        </div>
+        <div class="col-2">
+            <input type="submit" value="إضافة" class="btn btn-info btn-block" />
+        </div>
+    </div>
+</form>

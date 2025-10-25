@@ -1,0 +1,134 @@
+﻿@model JeCenterWeb.Models.CGroups
+
+@{
+    ViewData["Title"] = "TeacherGroup";
+}
+
+<style>
+   h3{
+        direction: rtl !important;
+        text-align: center !important;
+    }
+    h4{
+        direction: rtl !important;
+        text-align: center !important;
+    }
+
+    p {
+        direction: rtl !important;
+        text-align: center !important;
+        width:100% !important;
+    }
+</style>
+
+<div class="tab-pane fade show active " id="nav-acc" role="tabpanel" aria-labelledby="nav-acc-tab">
+    <div class="acc-setting">
+        <h3>     @Model.GroupName </h3>
+        
+            <div class="notbar">
+            <h4>
+                 @Model.CRooms.CBranch.BranchName
+            </h4>
+                <p>
+                    <strong>يوم : @Model.ResourceDays.DayOfWeekName</strong>
+                </p>
+                <p>
+                    @{
+                        DateTime start = new DateTime(2023, 1, 1, Model.SessionStart.Hours, Model.SessionStart.Minutes, Model.SessionStart.Seconds);
+                        DateTime end = new DateTime(2023, 1, 1, Model.SessionEnd.Hours, Model.SessionEnd.Minutes, Model.SessionEnd.Seconds);
+                    }
+                    من : @start.ToString("t")  الى : @end.ToString("t")
+                </p>
+            </div>
+        <div class="notbar">
+              <h4>
+                  تفاصيل الايصال
+              </h4>
+                <p>
+                    @ViewData["mssg1"]
+                </p>
+                <p>
+                    @ViewData["mssg3"]
+                </p>
+                <p>
+                    @ViewData["mssg2"]
+                </p>
+            </div>
+        <div class="notbar">
+                <h4>  الدفع   </h4>
+                @if (ViewData["allow"] == "1")
+                {
+                    <p>
+                        <form asp-action="Reservation" asp-route-id="@Model.GroupId" method="post" class="text-center">
+                            <input type="submit" value=" تأكيد الحجز " class="btn btn-primary" asp-action="Reservation" asp-route-id="@Model.GroupId" method="post" />
+                        </form>
+                    </p>
+
+                }
+                else if (ViewData["allow"] == "0")
+                {
+                    <p class="text-danger">
+                        <strong>  رصيدك  @ViewData["balance"] جنيه </strong>  رجاء شحن الرصيد لأستكمال الحجز
+                    </p>
+                }
+            </div> 
+            
+       
+    </div> 
+</div>
+@* 
+<div class="panel panel-default">
+    <div class="course-box shop-wrapper">
+
+        <div class="course-details shop-box text-center">
+            <h4>
+                <a asp-action="TeacherGroup" asp-route-id="@Model.GroupId" title="">   @Model.GroupName</a>
+            </h4>
+            <h4>
+                <strong>يوم : @Model.ResourceDays.DayOfWeekName</strong>
+            </h4>
+            <h4 style="direction:rtl;">
+                @{
+                    DateTime start = new DateTime(2023, 1, 1, Model.SessionStart.Hours, Model.SessionStart.Minutes, Model.SessionStart.Seconds);
+                    DateTime end = new DateTime(2023, 1, 1, Model.SessionEnd.Hours, Model.SessionEnd.Minutes, Model.SessionEnd.Seconds);
+                }
+                من : @start.ToString("t")  الى : @end.ToString("t")
+
+            </h4>
+            <p> فرع : @Model.CRooms.CBranch.BranchName </p>
+        </div>
+        <div class="course-footer clearfix">
+            <p class="text-center">
+                @ViewData["mssg1"]
+            </p>
+            <p class="text-center">
+                @ViewData["mssg3"]
+            </p>
+            <p class="text-center">
+                @ViewData["mssg2"]
+            </p>
+            <h4 class="text-center">
+                إجمالي  : <strong>@ViewData["total"]</strong> ج . م
+            </h4>
+            @if (ViewData["allow"] == "1")
+            {
+                <p class="text-center">
+                    <form asp-action="Reservation" asp-route-id="@Model.GroupId" method="post" class="text-center">
+                        <input type="submit" value=" تأكيد الحجز " class="btn btn-primary" asp-action="Reservation" asp-route-id="@Model.GroupId" method="post" />
+                    </form>
+                </p>
+              
+            }
+            else if(ViewData["allow"] == "0")
+            {
+                <p class="text-center text-danger">
+                    <strong>  رصيدك  @ViewData["balance"] جنيه </strong>  رجاء شحن الرصيد لأستكمال الحجز
+                </p>
+            }
+          
+        </div>
+    </div>
+</div>
+
+
+ *@

@@ -1,0 +1,131 @@
+﻿@model JeCenterWeb.Models.ViewModel.EditReviewViewModel
+
+@{
+    if(Model.Type == 1)
+    {
+        ViewData["Title"] = "تعديل مراجعة";
+    }
+    else if (Model.Type == 2)
+    {
+        ViewData["Title"] = "تعديل امتحان";
+    }
+}
+<div class="row">
+    <div class="col-4">
+        <a class="btn btn-outline-info" asp-action="RoomsByDate" asp-route-date="@ViewData["date"]">
+            جدول القاعات
+        </a>
+    </div>
+    <div class="col-4">
+        <h5>
+            <strong> يوم : </strong> @ViewData["date"] <br />  <input name="CrrDate" type="hidden" value="@ViewData["date"]" />
+        </h5>
+    </div>
+    <div class="col-4">
+        @ViewData["ReviewName"]
+    </div>
+</div>
+<br />
+@{
+    string btnclass = "btn-info";
+    string btntext = "تعديل " ;
+}
+@if (Model.Type == 1)
+{
+    btnclass = "btn-success";
+    btntext = "تعديل المراجعة";
+}
+else if (Model.Type == 2)
+{
+    btnclass = "btn-warning";
+    btntext = "تعديل الامتحان";
+}
+<form asp-action="EditReview" method="post">
+    <div class="row">
+        <div class="col-6">
+            <input type="hidden" asp-for="date" />
+            <input type="hidden" asp-for="ReviewId" />
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="RoomId" class="control-label"></label>
+                        <select asp-for="RoomId" class="form-control select2-search" asp-items="ViewBag.RoomId">
+                            <option value="0">أختار  القاعة</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="SessionStart" class="control-label"></label>
+                        <input asp-for="SessionStart" type="time" class="form-control" placeholder="من " />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="SessionEnd" class="control-label"></label>
+                        <input asp-for="SessionEnd" type="time" class="form-control" placeholder="الى" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="TeacherFee" class="control-label"></label>
+                        <input asp-for="TeacherFee" class="form-control text-center" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="CenterFee" class="control-label"></label>
+                        <input asp-for="CenterFee" class="form-control text-center" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="ServiceFee" class="control-label"></label>
+                        <input asp-for="ServiceFee" class="form-control text-center" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="lectureno" class="control-label"></label>
+                        <select asp-for="lectureno" class="form-control select2-search">
+                            <option value="1">الاولى</option>
+                            <option value="2">الثانية</option>
+                            <option value="3">الثالثة</option>
+                            <option value="4">الرابعة</option>
+                            <option value="5">الخامسة</option>
+                            <option value="6">السادسة</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <input type="submit" value="@btntext" class="btn @btnclass btn-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<br />
+
+<form asp-action="DeleteReview" asp-route-id="@Model.ReviewId" method="post">
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-4">
+                    <input type="hidden" name="@Model.ReviewId" />
+                    <input type="submit" value=" حذف المراجعة" class="btn btn-danger btn-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@if (User.IsInRole("AdminSettings"))
+{
+    
+}

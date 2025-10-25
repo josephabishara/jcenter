@@ -1,0 +1,433 @@
+﻿@model JeCenterWeb.Models.ViewModel.StudentDetailsViewModel
+
+<style>
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+<div class="row  alert alert-secondary">
+    <div class="col-2">
+        <a asp-action="Balance" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id" class="btn btn-sm btn-primary btn-block" style="text-decoration:none;"> رصيد الطالب @ViewData["Balance"] </a>
+    </div>
+
+    <div class="col-2">
+
+        <a asp-action="PendingBalance" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id" class="btn btn-sm btn-warning btn-block" style="text-decoration:none;"> رصيد محجوز @ViewData["Pending"]  </a>
+    </div>
+    <div class="col-2">
+        <a asp-action="Balance" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id" class="btn btn-sm btn-danger btn-block" style="text-decoration:none;"> رصيد الطالب  @ViewData["OldBalance"] </a>
+    </div>
+    <div class="col-2">
+        <a asp-action="Chargevalue" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id" class="btn  btn-sm  btn-info btn-block"> أشحن ع الهواء</a>
+    </div>
+    <div class="col-4">
+        <h3 class="text-danger">@ViewData["message"]</h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        @if (Model.student.Active == true)
+        {
+            <div class="row">
+                @*  دفع محاضرة   *@
+                <div class="col-4">
+                    <a asp-action="Lectures" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success"><i class="fa fa-users"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> دفع محاضرة </span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @*  دفع مراجعة   *@
+                <div class="col-4">
+                    <a asp-action="Reviews" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fa fa-chalkboard-teacher"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> دفع مراجعة </span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @*  دفع امتحان   *@
+                <div class="col-4">
+                    <a asp-action="Exams" asp-controller="Students" asp-area="scp" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-danger"><i class="fa fa-pen"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> دفع امتحان </span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+        <div class="row">
+            @* كشف حساب  *@
+            <div class="col-4">
+                <a asp-action="Balance" asp-route-id="@Model.student.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary"><i class="fa fa-newspaper"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> كشف حساب </span>
+                            <span class="info-box-number">@ViewData["Balance"]</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @if (Model.student.Active == true)
+            {
+                @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+                {
+                    @*  استرجاع محاضرة  *@
+
+                    if (ViewData["ReplyLecture"] == "true")
+                    {
+                        <div class="col-4">
+                            <a asp-action="ReplyLecture" asp-route-id="@Model.student.Id">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-lime"><i class="fa fa-calendar-day"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text"> استرجاع محاضرة </span>
+                                        <span class="info-box-number"> مراجعة - أمتحان</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    else if (ViewData["ReplyLecture"] == "false")
+                    {
+                        if (User.IsInRole("AdminSettings"))
+                        {
+                            <div class="col-4">
+                                <a asp-action="ReplyLecture" asp-route-id="@Model.student.Id">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-lime"><i class="fa fa-calendar-day"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"> استرجاع محاضرة </span>
+                                            <span class="info-box-number"> مراجعة - أمتحان</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                    }
+
+                    @*   أسترجاع مجموعة  *@
+                    <div class="col-4">
+                        <a asp-action="ReplyGroup" asp-route-id="@Model.student.Id">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-olive"><i class="fa fa-calendar-week"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text"> حذف مجموعة </span>
+                                    <span class="info-box-number"> حذف فقط </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row">
+            @*   حجز مجموعة  *@
+            @if (Model.student.Active == true)
+            {
+                <div class="col-4">
+                    <a asp-action="SubscribesForGroups" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-teal"><i class="fa fa-user-plus"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> مجموعة جديدة</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            @*جدول المجموعات*@
+            <div class="col-4">
+                <a asp-action="Schedule" asp-route-id="@Model.student.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-orange"><i class="fa fa-table"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">جدول الطالب /ة   </span>
+                            <span class="info-box-number"></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @*   تغير كلمة المرور  *@
+            @if (Model.student.Active == true)
+            {
+                <div class="col-4">
+                    <a asp-action="ChangePassword" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-dark"><i class="fa fa-key"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> تغير كلمة المرور </span>
+                                <span class="info-box-number">@Model.student.Pwd</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="row">
+            @*  بيانات  *@
+            @if (Model.student.Active == true)
+            {
+                <div class="col-4">
+                    <a asp-action="Edit" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info"><i class="fa fa-book"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">  بيانات </span>
+                                <span class="info-box-number">تعديل</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            @*حالة الطالب*@
+            <div class="col-4">
+                <div class="info-box">
+
+                    @if (Model.student.Active == true)
+                    {
+                        <span class="info-box-icon bg-success"><i class="fa fa-play"></i></span>
+                        @if (User.IsInRole("SuperUser") || User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+                        {
+                            @if (ViewData["ChangeState"] == "true")
+                            {
+                                <div class="info-box-content">
+                                    <form asp-action="ChangeState" asp-route-id="@Model.student.Id" method="post">
+                                        <input type="submit" value="الحالة" class="btn" />
+                                    </form>
+                                </div>
+                            }
+                        }
+                    }
+                    else if (Model.student.Active == false)
+                    {
+
+                        <span class="info-box-icon bg-danger"><i class="fa fa-pause"></i></span>
+                        @if (User.IsInRole("AdminSettings"))
+                        {
+                            <div class="info-box-content">
+                                <form asp-action="ChangeState" asp-route-id="@Model.student.Id" method="post">
+                                    <input type="submit" value="الحالة" class="btn" />
+                                </form>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+            @* حجز سنة جديدة  *@
+            @if (Model.student.Active == true)
+            {
+                <div class="col-4">
+                    <a asp-action="Applications" asp-route-id="@Model.student.Id">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-pink"><i class="fa fa-user-plus"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"> حجز سنة</span>
+                                <span class="info-box-number"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+        @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+        {
+            @if (Model.student.Active == true)
+            {
+                <div class="row">
+                    @* خصومات الطلبة  *@
+                    @if (ViewData["Discount"] == "true")
+                    {
+                        <div class="col-4">
+                            <a asp-action="Discount" asp-route-id="@Model.student.Id">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-purple"><i class="fa fa-user-minus"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text"> الخصومات </span>
+                                        <span class="info-box-number"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    else if (ViewData["Discount"] == "false")
+                    {
+                        if (User.IsInRole("AdminSettings"))
+                        {
+                            <div class="col-4">
+                                <a asp-action="Discount" asp-route-id="@Model.student.Id">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-purple"><i class="fa fa-user-minus"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"> الخصومات </span>
+                                            <span class="info-box-number"></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+
+
+                    @if (ViewData["replyApplication"] == "true")
+                    {
+                        @*   أسترجاع سنة  *@
+                        <div class="col-4">
+                            <a asp-action="ReplyApplication" asp-route-id="@Model.student.Id">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-maroon"><i class="fa fa-calendar-times"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">أسترجاع سنة</span>
+                                        <span class="info-box-number">-</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+                    {
+                        @*  تغير الصورة  *@
+                        <div class="col-4">
+                            <a asp-action="UpdateImage" asp-route-id="@Model.student.Id">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-fuchsia"><i class="fa fa-image"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text"> تغير الصورة </span>
+                                        <span class="info-box-number">-</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+
+
+
+                </div>
+            }
+        }
+
+        <div class="card card-body" style="height:300px;overflow-y:scroll;">
+            <h5 class="text-center text-info"> ملاحظات الطالب </h5>
+            <form asp-action="ChangeNote" asp-controller="Students" asp-area="scp" method="post">
+                <div class="row text-center">
+                    <input type="hidden" name="id" value="@Model.student.Id" />
+                    <div class="col-8">
+                        <input class="form-control text-center" name="Note" placeholder=" اكتب ملحوظة " />
+                    </div>
+                    <br /> <br />
+                    <div class="col-4">
+                        <input type="submit" value=" اضافة ملحوظة" class="btn btn-info  btn-block" />
+                    </div>
+                </div>
+            </form>
+            <br />
+
+            @foreach (var item in Model.CommentsViewModel)
+            {
+                <div class="row">
+                    <div class="col-1">
+                        <img src="~/@item.imgurl" class="img-circle elevation-2" width="100%" />
+                    </div>
+                    <div class="col-2">
+                        @item.CreateName
+                    </div>
+                    <div class="col-7">
+                        @item.Note
+                    </div>
+                    <div class="col-2 text-center">
+                        @Convert.ToDateTime(item.CreatedDate).ToString("yyyy-MM-dd")
+                    </div>
+                </div>
+                <br />
+            }
+
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="row text-center">
+            @if (Model.student.imageint == 1)
+            {
+                <img src="~/images/Students/waitapprove.jpg" height="300px" width="300px">
+            }
+            else if (Model.student.imageint == 2)
+            {
+                <img src="~/@Model.student.imgurl" height="300px" width="300px">
+            }
+            else if (Model.student.imageint == 3)
+            {
+                <img src="~/images/Students/Rejected.jpg" height="300px" width="300px">
+            }
+            else if (Model.student.imageint == 0)
+            {
+                <img src="~/images/Students/waitload.jpg" height="300px" width="300px">
+            }
+
+
+        </div>
+        <br />
+        <h5><i class="fa fa-user"></i> @Model.student.FullName</h5> <br />
+        <h5><i class="fa fa-phone"></i> @Model.student.Mobile</h5> <br /> <br /> <br />
+        @if (User.IsInRole("AdminSettings"))
+        {
+            <div class="card card-body" style="height:300px;overflow-y:scroll;">
+                <h5 class="text-center text-danger"> ملاحظات خاصة </h5>
+
+                <form asp-action="AdminNote" asp-controller="Students" asp-area="scp" method="post">
+                    <div class="row text-center">
+                        <input type="hidden" name="id" value="@Model.student.Id" />
+                        <div class="col-12">
+                            <input class="form-control text-center" name="Note" placeholder=" أكتب ملحوظة " />
+                        </div>
+                        <br /> <br />
+                        <div class="col-12">
+                            <input type="submit" value="  اضافة  ملحوظة خاصة  " class="btn btn-danger  btn-block" />
+                        </div>
+                    </div>
+                </form>
+                <br />
+
+                @foreach (var Parentitem in Model.ParentCommentsViewModel)
+                {
+                    <div class="row">
+                        <div class="col-8">
+                            @Parentitem.Note
+                        </div>
+                        <div class="col-4 text-center">
+                            @Convert.ToDateTime(Parentitem.CreatedDate).ToString("MM-dd")
+                        </div>
+                    </div>
+                    <br />
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+

@@ -1,0 +1,49 @@
+﻿@model JeCenterWeb.Models.TeacherSyllabus
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@Model.TeacherId">
+        @ViewBag.TeacherName
+    </a>
+</div>
+<br />
+<div class="row">
+    <div class="col-6">
+        <form asp-action="EditSyllabus" method="post">
+            <input type="hidden" asp-for="TeacherSyllabusId" />
+            <input type="hidden" asp-for="TeacherId"  />
+            <input type="hidden" asp-for="PhaseId"   />
+            <input type="hidden" asp-for="SyllabusID"  />
+            <input type="hidden" asp-for="TeacherName"   />
+
+            <div class="form-group">
+                <label asp-for="PhaseName" class="control-label"></label>
+                <input asp-for="PhaseName" class="form-control text-center"   />
+            </div> 
+            <div class="form-group">
+                <label asp-for="SyllabusName" class="control-label"></label>
+                <input asp-for="SyllabusName" class="form-control text-center"  />
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationCenter" class="control-label"></label>
+                <input asp-for="ApplicationCenter" class="form-control text-center"  />
+                <span asp-validation-for="ApplicationCenter" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationTeacher" class="control-label"></label>
+                <input asp-for="ApplicationTeacher" class="form-control text-center"/>
+                <span asp-validation-for="ApplicationTeacher" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a class="btn btn-dark" asp-action="Syllabus" asp-area="scp" asp-controller="Teachers" asp-route-id="@Model.TeacherId" > رجوع </a>
+            </div>
+        </form>
+    </div>
+</div>

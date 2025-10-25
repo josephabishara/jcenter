@@ -1,0 +1,54 @@
+﻿@model IEnumerable<JeCenterWeb.Models.FinancialAccount>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a class="btn btn-info" asp-action="CreateAccount">إضافة </a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:100px;">
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th></th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-success " asp-action="EditAccount" asp-route-id="@item.FinancialAccountId">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                        @item.AccountName
+                </td>
+                    <td>
+                        @if (item.AdvancedPermission == true)
+                        {
+                            <a class="btn btn-danger " asp-action="EditAccount" asp-route-id="@item.FinancialAccountId">
+                                <i class="fa fa-eye-slash"></i>
+                            </a>
+                           
+                        }
+                        else if (item.AdvancedPermission == false)
+                        {
+                            <a class="btn btn-success " asp-action="EditAccount" asp-route-id="@item.FinancialAccountId">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        }
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

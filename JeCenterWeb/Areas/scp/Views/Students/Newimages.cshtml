@@ -1,0 +1,53 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Student Images";
+}
+
+<div class="row">
+    @{
+        int cout = Model.Count();
+    }
+    <h4>
+        @if(cout > 0)
+        {
+            <span>
+                @cout صورة جديدة
+            </span>
+        }
+        else
+        {
+            <span>
+                لا يوجد صور جديدة
+            </span>
+        }
+    </h4>
+    </div>
+    <br />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                <img class="card-img-top" src="~/@item.imgurl" alt="@item.FullName" height="200px">
+                <div class="card-body">
+                    <h4 class="card-title"> @item.FullName</h4><br />
+                    <p class="card-text">@item.Mobile</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <form asp-action="ApproveImage" asp-route-id="@item.Id" method="post">
+                                <input type="submit" value=" قبول الصورة" class="btn btn-success btn-block" />
+                            </form>
+
+                        </div>
+                        <div class="col-6">
+                            <form asp-action="RejectImage" asp-route-id="@item.Id" method="post">
+                                <input type="submit" value=" رفض الصورة" class="btn btn-danger btn-block" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

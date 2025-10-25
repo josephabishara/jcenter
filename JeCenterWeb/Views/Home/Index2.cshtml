@@ -1,0 +1,547 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "سنتر الراعي";
+    Layout = "_Layout";
+}
+
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+</style>
+
+<link href="~/css/carousel.rtl.css" rel="stylesheet">
+@await Component.InvokeAsync("SliderView")
+
+<main>
+    <div class="container marketing">
+
+        <div class="row featurette">
+            <div class="col-md-6 order-md-2" style="padding:15px;">
+
+                <h1 style="font-size:32pt;">
+                    تعلم اسرع جداا
+                </h1>
+                <br />   <br />
+                <p style="direction:rtl !important;text-align:right !important;font-size:16pt;">
+                    استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                    <br />
+                    مساحة خاصة لطرح الأسئلة المتعلقة بالمناهج الدراسية وتبادل الخبرات بين الطلاب والمعلمين وسائر المساهمين من خلال الإجابة عليها.
+                    <br />
+                    تعرّف على دورات المناهج الدراسية واستكشفها بسهولة من خلال شرح مبسط من قِبل المعلمين المفضبين لديك
+                </p>
+                <br />   <br />
+                @if (signInManager.IsSignedIn(User))
+                {
+                    @if (User.IsInRole("AdminSettings") || User.IsInRole("PowerUser") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+                    {
+                        <a href="/logout" class="btn btn-outline-danger"> خروج <i class="fa fa-sign-out"></i>  </a>
+                        <a asp-area="scp" asp-controller="Dashboard" asp-action="Index" class="btn btn-primar"> صفحة الأدمن <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                    }
+                    else if (User.IsInRole("Student"))
+                    {
+                        <a href="/logout" class="btn btn-outline-danger"> خروج <i class="fa fa-sign-out"></i> </a>
+                        <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" class="btn btn-primary">صفحتي <i class="fa fa-university"></i></a>
+                    }
+
+                }
+                else
+                {
+                    <a href="/Login" class="btn btn-primary">  دخول <i class="fa fa-sign-in" style="font-size:22px;"></i></a>
+                    <a href="/Register" class="btn btn-outline-danger">  حساب جديد <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                }
+
+
+
+
+            </div>
+            <div class="col-md-6 order-md-1" style="padding:15px;">
+                <img src="~/images/headerelra3y.jpg" class="img-thumbnail" />
+            </div>
+        </div>
+        <hr class="featurette-divider">
+        <div class="container marketing">
+            <div class="row">
+                <h1 class="text-center">
+                    ادعم التحوُّل السريع
+                </h1>
+            </div>
+            <br />
+            <br />
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <i class="flaticon-computer-tool-for-education" style="color: #DB4437 ; font-size:48pt;"></i>
+                    <br />
+                    <h4 class="text-center" style="color: #DB4437">  تعلم ,اختبر نفسك </h4>
+                    <br />
+                    <p class="text-right">
+                        استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                    </p>
+                    <br />
+
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        @if (User.IsInRole("AdminSettings") || User.IsInRole("PowerUser") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+                        {
+                            <a href="/logout" class="btn btn-outline-danger"> خروج <i class="fa fa-sign-out"></i>  </a>
+                            <a asp-area="scp" asp-controller="Dashboard" asp-action="Index" class="btn btn-danger"> صفحة الأدمن <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                        }
+                        else if (User.IsInRole("Student"))
+                        {
+                            <a href="/logout" class="btn btn-outline-danger"> خروج <i class="fa fa-sign-out"></i> </a>
+                            <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" class="btn btn-danger">صفحتي <i class="fa fa-university"></i></a>
+                        }
+
+                    }
+                    else
+                    {
+                        <a href="/Login" class="btn btn-danger">  دخول <i class="fa fa-sign-in" style="font-size:22px;"></i></a>
+                        <a href="/Register" class="btn btn-outline-danger">  حساب جديد <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                    }
+                </div>
+
+                <div class="col-lg-4">
+                    <i class="flaticon-monitor-tablet-and-smartohone" style="color: #0F9D58;font-size:48pt;"></i> <br />
+                    <h4 class="text-center" style="color: #0F9D58;"> مناسب لجميع الأجهزة </h4> <br />
+                    <p class="text-right">
+                        استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                    </p> <br />
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        @if (User.IsInRole("AdminSettings") || User.IsInRole("PowerUser") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+                        {
+                            <a href="/logout" class="btn btn-outline-success"> خروج <i class="fa fa-sign-out"></i>  </a>
+                            <a asp-area="scp" asp-controller="Dashboard" asp-action="Index" class="btn btn-success"> صفحة الأدمن <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                        }
+                        else if (User.IsInRole("Student"))
+                        {
+                            <a href="/logout" class="btn btn-outline-success"> خروج <i class="fa fa-sign-out"></i> </a>
+                            <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" class="btn btn-success">صفحتي <i class="fa fa-university"></i></a>
+                        }
+
+                    }
+                    else
+                    {
+                        <a href="/Login" class="btn btn-success">  دخول <i class="fa fa-sign-in" style="font-size:22px;"></i></a>
+                        <a href="/Register" class="btn btn-outline-success">  حساب جديد <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                    }
+                </div>
+
+                <div class="col-lg-4">
+                    <i class="flaticon-download-business-statistics-symbol-of-a-graphic" style="color: #F4B400;font-size:48pt;"></i> <br />
+                    <h4 class="text-center" style="color: #F4B400;"> تحكم كامل في صفحتك  </h4> <br />
+                    <p class="text-right">
+                        استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                    </p> <br />
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        @if (User.IsInRole("AdminSettings") || User.IsInRole("PowerUser") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+                        {
+                            <a href="/logout" class="btn btn-outline-warning"> خروج <i class="fa fa-sign-out"></i>  </a>
+                            <a asp-area="scp" asp-controller="Dashboard" asp-action="Index" class="btn btn-warning"> صفحة الأدمن <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                        }
+                        else if (User.IsInRole("Student"))
+                        {
+                            <a href="/logout" class="btn btn-outline-warning"> خروج <i class="fa fa-sign-out"></i> </a>
+                            <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" class="btn btn-warning">صفحتي <i class="fa fa-university"></i></a>
+                        }
+
+                    }
+                    else
+                    {
+                        <a href="/Login" class="btn btn-warning">  دخول <i class="fa fa-sign-in" style="font-size:22px;"></i></a>
+                        <a href="/Register" class="btn btn-outline-warning">  حساب جديد <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                    }
+                </div>
+            </div>
+
+        </div>
+        <hr class="featurette-divider">
+        <div class="container marketing">
+            <div class="row">
+                @*  مقالات   *@
+
+                @await Component.InvokeAsync("BlogsHome")
+            </div>
+        </div>
+</main>
+@*
+<header class="main-header clearfix" role="header">
+    <div class="logo">
+        <a class="navbar-brand" href="#"><img src="~/images/logo.png" alt=""></a>
+    </div>
+    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+    <nav id="menu" class="main-nav" role="navigation">
+        <ul class="main-menu">
+            <li><a href="#section2">أعرف أكتر </a></li>
+           <li class="has-submenu"><a href="#"> تسجيل دخوا</a>
+            <ul class="sub-menu">
+            <li><a href="#section2">Who we are?</a></li>
+            <li><a href="#section3">What we do?</a></li>
+            <li><a href="#section3">How it works?</a></li>
+            <li><a href="https://templatemo.com/about" rel="sponsored" class="external">External URL</a></li>
+            </ul>
+            </li>
+            <li><a href="#section4">المدرسين</a></li>
+
+            <li><a href="#section6">تواصل معنا</a></li>
+              <li><a href="https://templatemo.com" class="external">External</a></li>
+        </ul>
+    </nav>
+</header>
+<section class="section main-banner" id="top" data-section="section1">
+    <video autoplay muted loop id="bg-video">
+        <source src="~/upload/preview.mp4" type="video/mp4" />
+    </video>
+
+    <div class="video-overlay header-text">
+        <div class="caption">
+            <h6>
+                استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+          </h6>
+            <h2><em>سنتر </em> الراعي</h2>
+            @if (signInManager.IsSignedIn(User))
+            {
+                @if (User.IsInRole("AdminSettings") || User.IsInRole("PowerUser") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+                {
+                    <div class="main-button">
+                        <div class="scroll-to-section"> <a asp-area="scp" asp-controller="Dashboard" asp-action="Index" style="width:150px">  <i class="fa fa-user-circle"></i> صفحة الأدمن </a> <a style="width:150px" href="/logout">  <i class="fa fa-sign-out"></i>  خروج </a></div>
+                    </div>
+                }
+                else if (User.IsInRole("Student"))
+                {
+                    <div class="main-button">
+                        <div class="scroll-to-section"> <a asp-area="learning" asp-controller="Dashboard" asp-action="Index" style="width:150px">  <i class="fa fa-user-circle"></i>  صفحتي   </a>  <a style="width:150px" href="/logout">  <i class="fa fa-sign-out"></i>  خروج </a> </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="main-button">
+                    <div class="scroll-to-section"> <a style="width:150px" href="/Login"> <i class="fa fa-sign-in"></i> تسجيل الدخول   </a>  <a style="width:150px" href="/Register"> <i class="fa fa-user-circle"></i> حساب جديد  </a></div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<section class="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="features-post">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4>
+                                <i class="fa fa-pencil"></i>تعلم ,اختبر نفسك
+                            </h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>
+                                استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                            </p>
+                            <div class="scroll-to-section"><a href="#">سجل بياناتك.</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="features-post second-features">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4>
+                                <i class="fa fa-graduation-cap"></i>    مناسب لكل المراحل
+                            </h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>
+                                استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                            </p>
+                            <div class="scroll-to-section"><a href="#">جرب مجانا</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="features-post third-features">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-book"></i> مواد دراسية </h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>
+                                استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                            </p>
+                            <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
+                            <div class="scroll-to-section"><a href="#section4">Read More</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section why-us" data-section="section2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2> ليه تختار سنتر الراعي ?</h2>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id='tabs'>
+                    <ul>
+                        <li><a href='#tabs-1'> أقوى مدرسين  </a></li>
+                        <li><a href='#tabs-2'> متابعة فعالة </a></li>
+                        <li><a href='#tabs-3'> تعلم من اي مكان </a></li>
+                    </ul>
+                    <section class='tabs-content'>
+                        <article id='tabs-1'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="~/learning/assets/images/choose-us-image-01.png" alt="">
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Best Education</h4>
+                                    <p>Grad School is free educational HTML template with Bootstrap 4.5.2 CSS layout. Feel free to use it for educational or commercial purposes. You may want to make <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a little donation</a> to TemplateMo. Please tell your friends about us. Thank you.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article id='tabs-2'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="~/learning/assets/images/choose-us-image-02.png" alt="">
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Top Level</h4>
+                                    <p>You can modify this HTML layout by editing contents and adding more pages as you needed. Since this template has options to add dropdown menus, you can put many HTML pages.</p>
+                                    <p>Suspendisse tincidunt, magna ut finibus rutrum, libero dolor euismod odio, nec interdum quam felis non ante.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article id='tabs-3'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="~/learning/assets/images/choose-us-image-03.png" alt="">
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Quality Meeting</h4>
+                                    <p>You are NOT allowed to redistribute this template ZIP file on any template collection website. However, you can use this template to convert into a specific theme for any kind of CMS platform such as WordPress. For more information, you shall <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact TemplateMo</a> now.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section courses" data-section="section4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Choose Your Course</h2>
+                </div>
+            </div>
+            <div class="owl-carousel owl-theme">
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-01.jpg" alt="Course #1">
+                    <div class="down-content">
+                        <h4>Digital Marketing</h4>
+                        <p>You can get free images and videos for your websites by visiting Unsplash, Pixabay, and Pexels.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-01.png" alt="Author 1">
+                        </div>
+                        <div class="text-button-pay">
+                            <a href="#">Pay <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-02.jpg" alt="Course #2">
+                    <div class="down-content">
+                        <h4>Business World</h4>
+                        <p>Quisque cursus augue ut velit dictum, quis volutpat enim blandit. Maecenas a lectus ac ipsum porta.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-02.png" alt="Author 2">
+                        </div>
+                        <div class="text-button-free">
+                            <a href="#">Free <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-03.jpg" alt="Course #3">
+                    <div class="down-content">
+                        <h4>Media Technology</h4>
+                        <p>Pellentesque ultricies diam magna, auctor cursus lectus pretium nec. Maecenas finibus lobortis enim.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-03.png" alt="Author 3">
+                        </div>
+                        <div class="text-button-pay">
+                            <a href="#">Pay <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-04.jpg" alt="Course #4">
+                    <div class="down-content">
+                        <h4>Communications</h4>
+                        <p>Download free images and videos for your websites by visiting Unsplash, Pixabay, and Pexels.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-04.png" alt="Author 4">
+                        </div>
+                        <div class="text-button-free">
+                            <a href="#">Free <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-05.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Business Ethics</h4>
+                        <p>Pellentesque ultricies diam magna, auctor cursus lectus pretium nec. Maecenas finibus lobortis enim.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-05.png" alt="">
+                        </div>
+                        <div class="text-button-pay">
+                            <a href="#">Pay <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-01.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Photography</h4>
+                        <p>Quisque cursus augue ut velit dictum, quis volutpat enim blandit. Maecenas a lectus ac ipsum porta.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-01.png" alt="">
+                        </div>
+                        <div class="text-button-free">
+                            <a href="#">Free <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-02.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Web Development</h4>
+                        <p>Pellentesque ultricies diam magna, auctor cursus lectus pretium nec. Maecenas finibus lobortis enim.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-02.png" alt="">
+                        </div>
+                        <div class="text-button-free">
+                            <a href="#">Free <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-03.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Learn HTML CSS</h4>
+                        <p>You can get free images and videos for your websites by visiting Unsplash, Pixabay, and Pexels.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-03.png" alt="">
+                        </div>
+                        <div class="text-button-pay">
+                            <a href="#">Pay <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-04.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Social Media</h4>
+                        <p>Pellentesque ultricies diam magna, auctor cursus lectus pretium nec. Maecenas finibus lobortis enim.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-04.png" alt="">
+                        </div>
+                        <div class="text-button-pay">
+                            <a href="#">Pay <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-05.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Digital Arts</h4>
+                        <p>Quisque cursus augue ut velit dictum, quis volutpat enim blandit. Maecenas a lectus ac ipsum porta.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-05.png" alt="">
+                        </div>
+                        <div class="text-button-free">
+                            <a href="#">Free <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/learning/assets/images/courses-01.jpg" alt="">
+                    <div class="down-content">
+                        <h4>Media Streaming</h4>
+                        <p>Pellentesque ultricies diam magna, auctor cursus lectus pretium nec. Maecenas finibus lobortis enim.</p>
+                        <div class="author-image">
+                            <img src="~/learning/assets/images/author-01.png" alt="">
+                        </div>
+                        <div class="text-button-pay">
+                            <a href="#">Pay <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section contact" data-section="section6">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2> أتواصل معانا لو عندك اي تساؤلات </h2>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+
+
+                <form id="contact" action="" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fieldset>
+                                <input name="name" type="text" class="form-control" id="name" placeholder=" اسمك " required="">
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                            <fieldset>
+                                <input name="email" type="text" class="form-control" id="email" placeholder=" موبايلك " required="">
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <textarea name="message" rows="6" class="form-control" id="message" placeholder=" أستفسارك ..." required=""></textarea>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <button type="submit" id="form-submit" class="button">  أبعت الرسالة </button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div id="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3452.5016858389477!2d31.23791124679542!3d30.07981520129122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458416f8d8f3f69%3A0xab579382ee3e98da!2z2LPZhtiq2LEg2KfZhNix2KfYudmKINin2YTYqti52YTZitmF2Yo!5e0!3m2!1sen!2seg!4v1683981604650!5m2!1sen!2seg" width="100%" height="422px" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section> *@

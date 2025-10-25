@@ -1,0 +1,122 @@
+﻿@model JeCenterWeb.Models.ViewModel.StudentsLecturesAndCountAndPhases
+
+@{
+    ViewData["Title"] = "Lectures";
+}
+<div class="row">
+    <div class="col-2">
+        <a class="btn btn-block btn-sm btn-outline-dark " asp-action="Details" asp-route-id="@ViewBag.id">
+            @ViewBag.FullName
+        </a>
+    </div>
+    @foreach (var item in Model.StudentApplications)
+    {
+     
+      int phse = Convert.ToInt32(ViewData["PhaseId"]); 
+      string? btnclass = "btn-secondary"; 
+
+       if (item.PhaseId == phse)
+        {
+            btnclass = "btn-primary";
+        }
+        else
+        {
+            btnclass = "btn-secondary";
+        }
+        <div class="col-md-2">
+            <form asp-action="ChangePhase" method="post">
+                <input hidden="hidden" name="StudentId" value="@item.StudentId" />
+                <input hidden="hidden" name="PhaseId" value="@item.PhaseId" />
+                <input hidden="hidden" name="action" value="Lectures" />
+                <input type="submit" value="@item.CPhases.PhaseName" class="btn btn-sm @btnclass btn-block" asp-action="ChangePhase" method="post" />
+            </form>
+        </div> 
+    }
+    <div class="col-4">
+        <h5 class="text-danger"> @ViewData["mssg"]</h5>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-6">
+        <form asp-action="LecturesByWord" asp-controller="Students" asp-area="scp" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <input type="hidden" name="id" value="@ViewData["id"]" />
+                    <input class="form-control text-left" name="word" placeholder=" اسم المدرس او المجموعة " />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-info" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-6">
+        <form asp-action="LecturesByDate" asp-controller="Students" asp-area="scp" method="post">
+            <div class="row">
+                <div class="col-6">
+                    <input type="hidden" name="id" value="@ViewData["id"]" />
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="اليوم" class="btn btn-info" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    @foreach (var item in Model.StudentsLecturesAndCount)
+    {
+        string style = "color: #0f5132;background-color: #d1e7dd;border-color: #badbcc;";
+        //            /scp/Students/GroupInsertPrint/244?GroupscheduleId=62384
+        //   scp/Students/GroupInsertPrint/244?GroupscheduleId=35549
+        string url = "/scp/Students/GroupInsertPrint/" + ViewData["id"] + "?GroupscheduleId=" + item.GroupscheduleId;
+        if (item.CountAttend >= Convert.ToInt32(item.Capacity))
+        {
+            style = "color: #0f5132;background-color: lightgray;border-color: #badbcc;";
+            url = "#";
+        }
+        <div class="col-md-3">
+            <a class="btn btn-block btn-sm" style="@style" href="@url" >
+                <div class="course-box shop-wrapper">
+                    <div class="course-details shop-box text-left">
+                        @* <p>
+                    <strong> <i class="fa fa-edit"></i> @item.GroupscheduleId</strong>
+                    </p>*@
+
+                        <strong> <i class="fa fa-users"></i> @item.GroupName</strong>
+                        <br>
+                        <i class="fa fa-book"></i> @item.SyllabusName
+
+                        @{
+                            DateTime start = new DateTime(item.FirstDay.Year, item.FirstDay.Month, item.FirstDay.Day, item.SessionStart.Hours, item.SessionStart.Minutes, item.SessionStart.Seconds);
+                            DateTime end = new DateTime(item.FirstDay.Year, item.FirstDay.Month, item.FirstDay.Day, item.SessionEnd.Hours, item.SessionEnd.Minutes, item.SessionEnd.Seconds);
+                        }
+                        <br>
+                        <i class="fa fa-clock"></i> @start.ToString("t") : @end.ToString("t")
+                        <br>
+                        <i class="fa fa-dollar-sign"></i> @item.LecturePrice
+                        <br>
+                        <i class="fa fa-home"></i> @item.RoomName
+                        <br>
+                        <i class="fa fa-braille"></i> @item.Capacity 
+                        @if ( item.CountAttend < Convert.ToInt32( item.Capacity))
+                        {
+                            <i class="fa fa-user"></i> @item.CountAttend
+                        }
+                        else
+                        {
+                            <i class="fa fa-lock"></i> @item.CountAttend
+                        }
+
+
+                    </div>
+                </div>
+            </a>
+            <br>
+        </div>
+    }
+</div>

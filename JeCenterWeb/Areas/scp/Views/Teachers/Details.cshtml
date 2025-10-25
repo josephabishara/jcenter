@@ -1,0 +1,259 @@
+﻿@model JeCenterWeb.Models.ViewModel.TeacherPageViewModel
+
+<style>
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            @*المناهج*@
+            <div class="col-4">
+                <a asp-action="Syllabus" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-pink"><i class="fa fa-book"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> المواد والمناهج </span>
+                            <span class="info-box-number">@Model.TeacherSyllabus</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @* خصومات الطلبة  *@
+            <div class="col-4">
+                <a asp-action="DiscountTeacher" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-purple"><i class="fa fa-user-minus"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> خصومات الطلبة </span>
+                            <span class="info-box-number">@Model.TeacherDiscount</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @*حالة المدرس*@
+            <div class="col-4">
+                <div class="info-box">
+                    @if (Model.Teacher.Active == true)
+                    {
+                        <span class="info-box-icon bg-success"><i class="fa fa-play"></i></span>
+                    }
+                    else
+                    {
+                        <span class="info-box-icon bg-danger"><i class="fa fa-pause"></i></span>
+                    }
+
+                    <div class="info-box-content">
+                        <form asp-action="ChangeState" asp-route-id="@Model.Teacher.Id" method="post">
+                            <input type="submit" value="تغير الحالة " class="btn" />
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+      
+        <div class="row">
+            @*المجموعات*@
+            <div class="col-4">
+                <a asp-action="Groups" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-success"><i class="fa fa-users"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">المجموعات</span>
+                            <span class="info-box-number">@Model.TeacherGroup</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @* حصص مراجعة  *@
+            <div class="col-4">
+                <a asp-action="Reviews" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning"><i class="fa fa-chalkboard-teacher"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> حصص مراجعة </span>
+                            <span class="info-box-number">@Model.TeacherReviews</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @* أمتحانات  *@
+            <div class="col-4">
+                <a asp-action="Exams" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-danger"><i class="fa fa-pen"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> أمتحانات </span>
+                            <span class="info-box-number">@Model.TeacherExams</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+         
+        </div>
+        <div class="row">
+            @* كشف حساب  
+            <div class="col-4">
+                <a asp-action="Balance" asp-route-id="@Model.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary"><i class="fa fa-newspaper"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> كشف حساب </span>
+                            <span class="info-box-number">@Model.TeacherTotal</span>
+                        </div>
+                    </div>
+                </a>
+            </div>*@
+       
+            @*  تغير الصورة  *@
+            <div class="col-4">
+                <a asp-action="UpdateImage" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-fuchsia"><i class="fa fa-image"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> تغير الصورة </span>
+                            <span class="info-box-number">-</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @*  تعديل البيانات *@
+            <div class="col-4">
+                <a asp-action="Edit" asp-route-id="@Model.Teacher.Id">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="fa fa-book"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">تعديل بيانات </span>
+                            <span class="info-box-number"></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        
+        </div>
+
+
+     @*
+        <div class="col-4">
+        <div class="info-box">
+            <span class="info-box-icon bg-orange"><i class="fa fa-restroom"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">  عدد الطلبة </span>
+                <span class="info-box-number">@Model.TeacherStudent</span>
+            </div>
+        </div>
+    </div>
+        <div class="col-4">
+        <a href="#">
+        <div class="info-box">
+        <span class="info-box-icon bg-purple"><i class="fa fa-credit-card"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text"> كروت الشحن </span>
+        <span class="info-box-number">@Model.TeacherCards</span>
+        </div>
+        </div>
+        </a>
+        </div>
+        <div class="col-4">
+        <a asp-action="Assistans" asp-route-id="@Model.Teacher.Id">
+        <div class="info-box">
+        <span class="info-box-icon bg-pink"><i class="fa fa-user-cog"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text"> المساعدين </span>
+        <span class="info-box-number">@Model.TeacherAssistant</span>
+        </div>
+        </div>
+        </a>
+        </div>
+     <form asp-action="Edit">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Teacher.FullName" class="control-label"></label>
+                        <input asp-for="@Model.Teacher.FullName" class="form-control" />
+                        <span asp-validation-for="@Model.Teacher.FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Teacher.Email" class="control-label"></label>
+                        <input asp-for="@Model.Teacher.Email" class="form-control" />
+                        <span asp-validation-for="@Model.Teacher.Email" class="text-danger"></span>
+                    </div>
+
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="@Model.Teacher.Pwd" class="control-label"></label>
+                        <input asp-for="@Model.Teacher.Pwd" class="form-control" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Teacher.Mobile" class="control-label"></label>
+                        <input asp-for="@Model.Teacher.Mobile" class="form-control" />
+                        <span asp-validation-for="@Model.Teacher.Mobile" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="submit" value="حفظ" class="btn btn-info btn-block" />
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Index" class="btn btn-dark btn-block"> رجوع  </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>*@
+
+    </div>
+    <div class="col-md-4">
+        <div class="row text-center">
+            <img src="~/@Model.Teacher.imgurl" height="300px" width="300px">
+        </div>
+        <br />
+        <div class="row text-center">
+            <h2> @Model.Teacher.FullName</h2>
+        </div>
+        <br />
+       @* <form asp-action="Uploadimg" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="hidden" name="@Model.Teacher.Id" />
+                    <div class="form-group">
+                        <input type="submit" value="رفع الصورة" class="btn btn-info btn-block" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="form-control" name="imgurl" type="file">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-6">
+                <input type="submit" value="حفظ" class="btn btn-info btn-block" />
+            </div>
+            <div class="col-6">
+                <a asp-action="Index" class="btn btn-dark btn-block"> رجوع  </a>
+            </div>
+        </div>*@
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

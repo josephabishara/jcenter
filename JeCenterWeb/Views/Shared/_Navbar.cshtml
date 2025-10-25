@@ -1,0 +1,57 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top " style="direction:rtl;">
+        <div class="container-fluid">
+            <img src="~/images/logo-dark.png" width="150px;" /> &nbsp&nbsp&nbsp
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">  سنتر الراعي </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">   <i class="fa fa-desktop" style="font-size:16pt"></i>  الرئيسية </a>
+                    </li> &ensp;&ensp;
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Blogs" asp-action="Index">   <i class="fa fa-file-text-o" style="font-size:16pt"></i>   مقالات </a>
+                    </li> &ensp;&ensp;
+        @*             <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Courses" asp-action="Index">   <i class="fa fa-graduation-cap" style="font-size:16pt"></i>  كورسات </a>
+                    </li> &ensp;&ensp;
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Podcast" asp-action="Index">   <i class="fa fa-podcast" style="font-size:16pt"></i>   بودكاست </a>
+                    </li> &ensp;&ensp;
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Webinar" asp-action="Index">   <i class="fa fa-youtube-play" style="font-size:16pt"></i>   محاضرات مسجلة </a>
+                    </li> &ensp;&ensp; *@
+                    @*  
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-controller="Store" asp-action="Index">   <i class="fa fa-laptop" style="font-size:16pt"></i> برامج </a>
+                    </li>
+                    @await Component.InvokeAsync("BlogsCatMenu") *@
+                </ul>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    @await Component.InvokeAsync("Label")
+                }
+                else
+                {
+                    <ul class="navbar-nav" style="padding-left:150px">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/Register">حساب جديد</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/Login">تسجيل دخول</a>
+                        </li>
+                    </ul>
+                    @*   <pre> <a href="#" class="btn btn-outline-primary"> حساب جديد</a>  <a href="#" class="btn btn-primary"><i class="material-icons"></i> دخول</a> </pre> *@
+
+                }
+            </div>
+        </div>
+    </nav>
+
+</header>
+

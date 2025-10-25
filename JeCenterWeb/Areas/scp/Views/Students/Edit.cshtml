@@ -1,0 +1,101 @@
+﻿@model JeCenterWeb.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-md-4 text-left">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FristName" class="control-label"></label>
+                        <input asp-for="FristName" class="form-control" placeholder="أسم الطالب / ة" />
+                        <span asp-validation-for="FristName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="SecondName" class="control-label"></label>
+                        <input asp-for="SecondName" class="form-control" placeholder="أسم الأب" />
+                        <span asp-validation-for="SecondName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" placeholder="أسم الجد" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FamilyName" class="control-label"></label>
+                        <input asp-for="FamilyName" class="form-control" placeholder="أسم العائلة" />
+                        <span asp-validation-for="FamilyName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" placeholder=" رقم الموبايل" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="البريد الإليكتروني" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthdate" class="control-label"></label>
+                <input asp-for="Birthdate" class="form-control" type="date" placeholder="تاريخ الميلاد" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4 text-left">
+            <div class="form-group">
+                <label asp-for="School" class="control-label"></label>
+                <input asp-for="School" class="form-control" placeholder="المدرسة" />
+                <span asp-validation-for="School" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" placeholder=" العنوان" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NationalID" class="control-label"></label>
+                <input asp-for="NationalID" class="form-control" placeholder=" الرقم القومي" />
+                <span asp-validation-for="NationalID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentJob" class="control-label"></label>
+                <input asp-for="ParentJob" class="form-control" placeholder="وظيفة ولي الأمر" />
+                <span asp-validation-for="ParentJob" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentMobile" class="control-label"></label>
+                <input asp-for="ParentMobile" class="form-control" placeholder="رقم ولي الامر" />
+                <span asp-validation-for="ParentMobile" class="text-danger"></span>
+            </div>
+          
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="text-center text-lg-start mt-4 pt-2">
+                <input type="submit" value=" حفظ البيانات " class="btn btn-primary btn-lg btn-block" style="padding-left: 2.5rem; padding-right: 2.5rem;" />
+            </div>
+        </div>
+    </div>
+</form>

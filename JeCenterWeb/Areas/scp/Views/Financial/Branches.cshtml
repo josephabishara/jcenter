@@ -1,0 +1,130 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.FinancialDashboardViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-6">
+        <form asp-action="BranchesByDate" asp-controller="Financial" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4">
+        <h3>  @ViewData["date"]</h3>
+    </div>
+    <div class="col-2">
+    </div>
+</div>
+
+<br />
+
+@foreach (var item in Model)
+{
+    <hr class="featurette-divider">
+    <h3>@item.BranchName   </h3>
+    <hr class="featurette-divider">
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fa fa-user-graduate"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">  الطلبة </span>
+                            <span class="info-box-number">  @item.StudentCount</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fa fa-users"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> المجموعات </span>
+                            <span class="info-box-number">  @item.GroupsCount</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-chalkboard-teacher"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> المراجعات </span>
+                            <span class="info-box-number">  @item.ReviewsCount</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-pen"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">  الامتحانات </span>
+                            <span class="info-box-number">  @item.ExamsCount</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix hidden-md-up"></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <a asp-area="scp" asp-controller="Dashboard" asp-action="TeachersPayments" asp-route-branchId="@item.BranchId" asp-route-date="@ViewData["date"]" style="color:black; text-decoration:none;">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-dark elevation-1"><i class="fa fa-user-secret"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"> المدرسين </span>
+                            <span class="info-box-number">
+                                @item.TeacherCount
+                            </span>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                @foreach (var item2 in item.FinancialDashboardReport)
+                {
+
+                    string myday = item2.JournalEntryDate.Year.ToString() + "-" + item2.JournalEntryDate.Month.ToString() + "-" + item2.JournalEntryDate.Day.ToString();
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <a asp-area="scp" asp-controller="Financial" asp-action="BranchesDetails" asp-route-branchId="@item2.BranchId" asp-route-movementTypeId="@item2.MovementTypeId" asp-route-date="@myday" style="color:black; text-decoration:none;">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary elevation-1"><i class="fa fa-money"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text"> @item2.MovementTypeName </span>
+                                    <span class="info-box-number">
+                                        @if (item2.MovementTypeId == 7)
+                                        {
+                                            @item2.Credit
+                                        }
+                                        else
+                                        {
+                                            @item2.Debit
+                                        }
+                                        <small>ج م </small>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                }
+
+
+                <div class="clearfix hidden-md-up"></div>
+            </div>
+        </div>
+    </section>
+}

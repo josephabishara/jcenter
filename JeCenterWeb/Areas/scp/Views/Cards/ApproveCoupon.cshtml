@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Check Card";
+}
+ 
+<form asp-action="ApprovedCoupon" method="get">
+    <div class="row">
+        <div class="col-2">
+            <input name="id" class="form-control" placeholder="بحث" value="@ViewData["CurrentFilter"]" autofocus />
+        </div>
+        <div class="col-4">
+            <input type="submit" value="اعتماد" class="btn btn-success btn-block"  />
+        </div>
+    </div>
+</form>
+<br />

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CGroups>
+
+@{
+    ViewData["Title"] = "TeacherGroups";
+}
+
+
+<section class="companies-info">
+    <div class="container">
+        
+        <div class="companies-list">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-md-6 col-sm-12">
+                        <div class="company_profile_info"  >
+                            <div class="company-up-info" style="padding-top:25px;padding-bottom:5px;">
+
+                                <h3>   @item.GroupName.</h3>
+                                <p>
+                                    <strong>يوم : @item.ResourceDays.DayOfWeekName</strong>
+                                </p>
+                                @{
+                                    DateTime start = new DateTime(2023, 1, 1, item.SessionStart.Hours, item.SessionStart.Minutes, item.SessionStart.Seconds);
+                                    DateTime end = new DateTime(2023, 1, 1, item.SessionEnd.Hours, item.SessionEnd.Minutes, item.SessionEnd.Seconds);
+                                }
+                                <h4 style="direction:rtl;">
+                                    من   @start.ToString("t")  الى   @end.ToString("t")
+                                </h4>
+                                <h4>
+                                    فرع : @item.CRooms.CBranch.BranchName
+                                </h4>
+                                <h4>
+                                    جنيه  @item.LecturePrice
+                                </h4>
+                               
+
+                               
+                            </div>
+                            @if (Convert.ToInt32(item.CRooms.Capacity) > item.StudentGroup.Count)
+                            {
+                                <a asp-action="TeacherGroup" asp-route-id="@item.GroupId" title="" class="view-more-pro text-primary" > أحجز </a>
+                            }
+                            else
+                            {
+                              <a href="#" title="" class="view-more-pro text-secondary">   المجموعة مكتملة العدد </a>
+                            }
+                          
+                        </div> 
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@* 
+@foreach (var item in Model)
+{
+    <div class="col-md-4" style="padding:5px;">
+        <div class="panel panel-default">
+            <div class="course-box shop-wrapper">
+
+                <div class="course-details shop-box text-center">
+                    <h4>
+                        @if (Convert.ToInt32(item.CRooms.Capacity) > item.StudentGroup.Count)
+                        {
+                            <a asp-action="TeacherGroup" asp-route-id="@item.GroupId" title="">   @item.GroupName</a>
+                        }
+                        else
+                        {
+                            @item.GroupName
+                        }
+                    </h4>
+                    <h4>
+                        <strong>يوم : @item.ResourceDays.DayOfWeekName</strong>
+                    </h4>
+                    @{
+                        DateTime start = new DateTime(2023, 1, 1, item.SessionStart.Hours, item.SessionStart.Minutes, item.SessionStart.Seconds);
+                        DateTime end = new DateTime(2023, 1, 1, item.SessionEnd.Hours, item.SessionEnd.Minutes, item.SessionEnd.Seconds);
+                    }
+                    <h4 style="direction:rtl;">
+                        من   @start.ToString("t")  الى   @end.ToString("t")
+                    </h4>
+                    <p> فرع : @item.CRooms.CBranch.BranchName </p>
+                </div>
+                @if (Convert.ToInt32(item.CRooms.Capacity) > item.StudentGroup.Count)
+                {
+                    <div class="course-footer clearfix">
+                        <div class="pull-left">
+                            <ul class="list-inline">
+                                <li><a asp-action="TeacherGroup" asp-route-id="@item.GroupId" class="btn btn-info"> أحجز </a></li>
+                            </ul>
+                        </div>
+
+                        <div class="pull-right">
+                            <ul class="list-inline">
+                                <li><a asp-action="TeacherGroup" asp-route-id="@item.GroupId"> جنيه  @item.LecturePrice</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="course-footer clearfix">
+                        <div class="pull-left">
+                            <ul class="list-inline">
+                                <li> المجموعة مكتملة العدد </li>
+                            </ul>
+                        </div>
+
+                        <div class="pull-right">
+                            <ul class="list-inline">
+                                <li><a asp-action="TeacherGroup" asp-route-id="@item.GroupId"> جنيه  @item.LecturePrice</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+ *@

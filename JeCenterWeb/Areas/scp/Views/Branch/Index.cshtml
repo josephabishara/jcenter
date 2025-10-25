@@ -1,0 +1,29 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CBranch>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<p>
+    <a class="btn btn-info" asp-action="Create">إضافة </a>
+</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-sm-6 col-md-3">
+            <a class="btn btn-block" asp-action="Details" asp-route-id="@item.BranchId">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fa fa-university"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"> @item.BranchName </span>
+                        <span class="info-box-number">
+                            @item.CRooms.Count()
+                            <small> قاعة </small>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

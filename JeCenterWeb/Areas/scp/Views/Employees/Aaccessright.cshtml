@@ -1,0 +1,48 @@
+﻿@model IEnumerable<JeCenterWeb.Models.UserAccessRight>
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-group">
+            <label class="control-label"> الاسم</label>
+            <input name="FullName" class="form-control" value="@ViewData["FullName"]" />
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form asp-action="AddAccessRight" method="post">
+                    <input type="hidden" Name="UserId" value="@ViewData["UserId"]" />
+                    <div class="row">
+                        <div class="col-8">
+                            <select name="AccessId" class="form-control select2" asp-items="ViewBag.Accessrightid">
+                                <option value="0">الصلاحية</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" value="أضافة صلاحية" class="btn btn-success btn-block" />
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-8">
+                            @item.AccessRight.AccessName
+                        </div>
+                        <div class="col-4">
+                            <form asp-action="RemoveAccessRight" asp-route-id="@item.Id" method="post">
+                                <input type="submit" value="حذف الصلاحية" class="btn btn-danger btn-block" />
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+ 

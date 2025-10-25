@@ -1,0 +1,72 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentApplications>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="posts-section">
+
+
+    <div class="post-bar" style="padding:25px;">
+<h2 class="text-center">@ViewData["mssg"]</h2>
+
+<br />
+
+<p class="text-right">
+    <a class="btn btn-success" asp-action="Subscribe" asp-controller="Applications"> أشترك جديد</a>
+</p>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6" style="padding:5px;">
+
+                <div class="company_profile_info">
+                    <div class="company-up-info">
+                        <img src="~/@item.CPhases.imgurl" alt="@item.CPhases.PhaseName">
+                        <h3> @item.CPhases.PhaseName  </h3>
+                        <h4>  @item.PhysicalYear.PhysicalyearName  </h4>
+
+                    </div>
+                    <a asp-action="ChangePhysicalYear" asp-route-id="@item.ApplicationId" title="" class="view-more-pro">
+                        @if (item.Paided == false)
+                        {
+                            <strong class="text-danger">استمارة غير مدفوعة</strong>
+                        }
+                        else
+                        {
+                            <strong class="text-success"> استمارة مدفوعة </strong>
+                        }
+                    </a>
+                </div><!--company_profile_info end-->
+           @*      <div class="text-center" style="border:1px solid lightgray;border-radius:5px; ">
+                    <a asp-action="ChangePhysicalYear" asp-route-id="@item.ApplicationId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="~/@item.CPhases.imgurl" alt="@item.CPhases.PhaseName">
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="card-title"> @item.CPhases.PhaseName</h4>
+                                <p class="card-text">  @item.PhysicalYear.PhysicalyearName</p>
+                                <p>
+                                    @if (item.Paided == false)
+                                    {
+                                        <strong class="text-danger">استمارة غير مدفوعة</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong class="text-success"> استمارة مدفوعة </strong>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div> *@
+            </div>
+        }
+    </div>
+</div>
+</div>
+</div>
+<br />

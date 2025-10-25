@@ -1,0 +1,98 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.StudentReviewViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row">
+    <div class="col-6">
+        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+            @ViewBag.FullName
+        </a>
+    </div>
+    <div class="col-6">
+        <a class="btn btn-success" asp-action="ReplyLecture" asp-controller="Students" asp-area="scp" asp-route-id="@ViewData["id"]">
+            <i class="fa fa-users"></i> أسترجاع محاضرة
+        </a> |
+        <a class="btn btn-warning" asp-action="ReplyReview" asp-controller="Students" asp-area="scp" asp-route-id="@ViewData["id"]">
+            <i class="fa fa-chalkboard-teacher"></i> أسترجاع مراجعة
+        </a> |
+        <a class="btn btn-danger" asp-action="ReplyExam" asp-controller="Students" asp-area="scp" asp-route-id="@ViewData["id"]">
+            <i class="fa fa-pen"></i> أسترجاع امتحان
+        </a>
+    </div>
+</div>
+<br />
+
+
+<div class="row">
+
+    <div class="col-md-4 text-center">
+        <h5> المحفظة : @ViewData["Balance"] L.E</h5>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+    </div>
+
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LectureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentLectureId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewsScheduleName)
+            </th>
+            <th>
+                ثمن المراجعة
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.LectureDate.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.StudentLectureId
+                </td>
+                <td>
+                    @item.ReviewsScheduleName
+                </td>
+                <td>
+                    @item.Paided
+                </td>
+
+                <td>
+                    @if(ViewData["ReplyLecture"] == "true")
+                    {
+                        @if (item.Deleted != 1)
+                        {
+                            <form asp-action="DeleteReview" asp-route-id="@item.StudentLectureId" method="post">
+                                <input type="submit" value="-" class="btn btn-danger" asp-action="DeleteReview" OnClientClick="this.disabled=true;" asp-route-id="@item.StudentLectureId" method="post" ondblclick="dblclick" />
+                            </form>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function dblclick() {
+        alert("البرنامج لا يقبل الضغط مرتين")
+    }
+</script>

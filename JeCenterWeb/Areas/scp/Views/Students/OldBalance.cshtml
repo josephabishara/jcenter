@@ -1,0 +1,74 @@
+﻿@* @model IEnumerable<JeCenterWeb.Models.Second.Studentstatement> *@
+
+@{
+    ViewData["Title"] = "Details";
+}
+@* 
+<div class="row alert alert-secondary">
+
+    <div class="col-md-6 text-center">
+        <a class="btn btn-outline-danger text-dark" asp-action="Details" asp-route-id="@ViewBag.id">
+            @ViewBag.FullName
+        </a>
+    </div>
+    <div class="col-md-6 text-center">
+        <h3 class="text-bold text-danger">
+            كشف حساب البرنامج القديم
+        </h3>
+    </div>
+</div>
+<br />
+
+
+<div class="row">
+
+    <div class="col-md-4 text-center text-danger">
+        <h5> رصيد اول المدة : @ViewData["OldBalance"] L.E</h5>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+    </div>
+
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.satatedate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Depit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credit)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.satatedate
+                </td>
+                <td>
+                    @item.Code
+                </td>
+                <td>
+                    @item.Depit
+                </td>
+                <td>
+                    @item.Credit
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@

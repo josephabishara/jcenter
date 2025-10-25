@@ -1,0 +1,159 @@
+﻿@model JeCenterWeb.Models.ViewModel.RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/cp/plugins/fontawesome-free/css/all.min.css">
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/images/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/cp/dist/css/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="~/cp/dist/helppage.css" rel="stylesheet" />
+</head>
+<body style="background-image: url(images/library6.jpg) !important ;background-repeat: no-repeat;background-color: #cccccc;">
+
+    <section class="vh-100">
+        <div class="container h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="padding:15px;">
+                <form asp-action="register">
+                
+                    <div class="row" style="direction:rtl;">
+                        <div class="col-md-8" style="border:solid ;border-color: #fff ;border-radius:15px;background-color: rgba(200, 200, 200, 0.6);padding:20px 50px 0px 50px;text-align:center;">
+                            <a href="/home"> <img src="~/images/elra3ylogo150.png" style="width:250px;" /></a>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6 text-right">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input asp-for="FristName" class="form-control" placeholder="أسم الطالب / ة" />
+                                                <span asp-validation-for="FristName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input asp-for="SecondName" class="form-control" placeholder="أسم الأب" />
+                                                <span asp-validation-for="SecondName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input asp-for="LastName" class="form-control" placeholder="أسم الجد" />
+                                                <span asp-validation-for="LastName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input asp-for="FamilyName" class="form-control" placeholder="أسم العائلة" />
+                                                <span asp-validation-for="FamilyName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Mobile" class="form-control" placeholder=" رقم الموبايل" />
+                                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input asp-for="Password" class="form-control" placeholder="كلمة المرور" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="ConfirmPassword" class="form-control" placeholder="تأكيد كلمة المرور" />
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                  
+                                    <div class="form-group">
+                                        <input asp-for="Birthdate" class="form-control" type="date" placeholder="تاريخ الميلاد" />
+                                        <span asp-validation-for="Birthdate" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 text-right">
+                                   
+                                    <div class="form-group">
+                                        <input asp-for="School" class="form-control" placeholder="المدرسة" />
+                                        <span asp-validation-for="School" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Address" class="form-control" placeholder=" العنوان" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="NationalID" class="form-control" placeholder=" الرقم القومي" />
+                                        <span asp-validation-for="NationalID" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="ParentJob" class="form-control" placeholder="وظيفة ولي الأمر" />
+                                        <span asp-validation-for="ParentJob" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="ParentMobile" class="form-control" placeholder="رقم ولي الامر" />
+                                        <span asp-validation-for="ParentMobile" class="text-danger"></span>
+                                    </div>
+                                   @* <div class="form-group">
+                                        <Select asp-for="GenderId" class="form-control select2" asp-items="ViewBag.GenderId">
+                                            <option value="0"></option>
+                                            <option value="1">طالب</option>
+                                            <option value="2">طالبة</option>
+                                        </Select>
+                                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <Select asp-for="PhaseId" class="form-control select2" asp-items="ViewBag.PhaseId">
+                                            <option value="0"></option>
+                                           
+                                        </Select>
+                                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-center text-lg-start mt-4 pt-2">
+                                        <input type="submit" value="حساب جديد" class="btn btn-primary btn-lg btn-block" style="padding-left: 2.5rem; padding-right: 2.5rem;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center text-lg-start mt-4 pt-2">
+                                        <a asp-action="Login" class="btn btn-secondary  btn-lg btn-block" style="padding-left: 2.5rem; padding-right: 2.5rem;">أنا أمتلك حساب</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 d-none d-md-block">
+                            <img src="~/images/student_login6.png" class="img-fluid  d-none d-md-block" alt="register" />
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- jQuery -->
+    <script src="~/cp/plugins/jquery/jquery.min.js"></script>
+
+
+</body>
+</html>

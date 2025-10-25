@@ -1,0 +1,93 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.DashboardCopons>
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (signInManager.IsSignedIn(User))
+{
+    @if (User.IsInRole("AdminSettings"))
+    {
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">تقارير الخزينة</h3>
+                                <partial name="_dashboard" />
+                            </div>
+                            <div class="card-body">
+                                <div class="card-body table-responsive p-0" style="height:800px;overflow-y:scroll;">
+                                    <div class="row">
+                                        @foreach (var item in Model)
+                                        {
+                                            string bg = "bg-danger";
+                                            if (item.UserTypeId == 2)
+                                            {
+                                                bg = "bg-info";
+                                            }
+                                            else if (item.UserTypeId == 3)
+                                            {
+                                                bg = "bg-warning";
+                                            }
+                                            <div class="col-md-4">
+                                                <div class="card card-widget widget-user">
+                                                    <div class="widget-user-header @bg">
+                                                        <h3 class="widget-user-username"> @item.FullName </h3>
+                                                        <h5 class="widget-user-desc"> @item.BranchName -  @item.CoponsOfAll </h5>
+                                                    </div>
+                                                    <div class="widget-user-image">
+                                                        <img class="img-circle elevation-2" style="height:90px;" src="~/@item.imgurl" alt="@item.FullName">
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <div class="row">
+                                                            <div class="col-sm-4 border-right">
+                                                                <div class="description-block">
+                                                                    <h5 class="description-header">@item.CoponsOfGroups</h5>
+                                                                    <span class="description-text">مجموعات</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4 border-right">
+                                                                <div class="description-block">
+                                                                    <h5 class="description-header">@item.CoponsOfReviews</h5>
+                                                                    <span class="description-text">مراجعات</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="description-block">
+                                                                    <h5 class="description-header">@item.CoponsOfExams</h5>
+                                                                    <span class="description-text">أمتحانات</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    @if (User.IsInRole("PowerUser") || User.IsInRole("SuperUser"))
+    {
+        <div>
+            <img src="~/images/elra3ylogo150.png" alt="Elra3y Center" style="display: block;margin-left: auto;margin-right: auto;width: 40%;" />
+        </div>
+
+    }
+
+    @if (User.IsInRole("User"))
+    {
+        <div>
+            <img src="~/images/elra3ylogo1502.png" alt="Elra3y Center" style="display: block;margin-left: auto;margin-right: auto;width: 40%;" />
+        </div>
+
+    }
+
+}

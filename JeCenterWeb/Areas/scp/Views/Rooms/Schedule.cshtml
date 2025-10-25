@@ -1,0 +1,29 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.RoomScheduleViewModel>
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-1">
+            <h5> @item.Room.RoomName</h5>
+            <p>@item.Room.Capacity</p>
+        </div>
+
+        <div class="col-11">
+            <div class="row">
+               @* @foreach (var item2 in item.GroupSchedule)
+                {
+                    <div class="col-2" style="padding-left:1px;">
+                        <div class="btn btn-outline-dark btn-block">
+                            <h5>@item2.CGroups.TeacherName </h5>
+                            <p style="direction:ltr;">
+                                @item2.CGroups.SessionStart.Minutes : @item2.CGroups.SessionStart.Hours - @item2.CGroups.SessionEnd.Minutes : @item2.CGroups.SessionEnd.Hours
+                            </p>
+                        </div>
+                    </div>
+                }*@
+            </div>
+        </div>
+    </div>
+    <hr />
+}

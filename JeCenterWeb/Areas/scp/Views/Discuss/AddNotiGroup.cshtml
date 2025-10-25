@@ -1,0 +1,115 @@
+﻿@model JeCenterWeb.Models.GNotifications
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_NotiMenu" />
+            </div>
+            <div class="col-md-9">
+                <div class="card card-success card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">  إشعار جديد لمجموعة </h3>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="AddNotiGroup">
+                            
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">المدرس</label>
+                                        <div class="form-group">
+                                            <select id="Id" name="AccountId" class="form-control select2" asp-items="ViewBag.Id">
+                                                <option value="0">أختار  المدرس</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label">المجموعة</label>
+                                        <select id="GroupsId" asp-for="GroupId" class="form-control select2">
+                                            <option value="0">  أختار  المجموعة  </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NotiTitel" class="control-label"></label>
+                                <input asp-for="NotiTitel" class="form-control" />
+                                <span asp-validation-for="NotiTitel" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NotificationNote" class="control-label"></label>
+                                <textarea id="textarea" asp-for="NotificationNote" placeholder="Blog Content" style="direction:rtl !important;"></textarea>
+                                <script src="~/lib/tinymce/tinymce.min.js"></script>
+                                <script>
+                                    tinymce.init({
+                                        selector: '#textarea', plugins: "tooltip print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern", toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat', height: "200", paste_data_images: true
+                                    });
+
+                                </script>
+
+                                <span asp-validation-for="NotificationNote" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" style="color:white;">.</label><br />
+                                <input type="submit" value="إرسال" class="btn btn-success" /> |
+                                <a class="btn btn-dark" asp-action="Index"> رجوع </a>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@section Scripts {
+    <script>
+        $(function () {
+
+            $("#Id").change(function () {
+
+                var Syllabuslist = $('#GroupsId');
+                Syllabuslist.empty();
+
+                $.ajax({
+                    type: "Get",
+                    url: "/scp/Discuss/GetGroup?Id=" + $(this).val(),  //remember change the controller to your owns.
+                    success: function (data) {
+                        var s = '<option value="0">أختار  المجموعة</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i])
+                            s += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        }
+
+                        $("#GroupsId").html(s);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+
+
+
+        });
+    </script>
+
+}

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.SearchActiveByWordViewModel>
+
+@{
+    ViewData["Title"] = "Students";
+}
+<div class="row">
+    <div class="col-6">
+        <form asp-action="SearchActiveByWord" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input name="word" class="form-control" placeholder="بحث" value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-4">
+                    <input type="submit" value="بحث" class="btn btn-info btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4">
+    </div>
+    <div class="col-2">
+        <a class="btn btn-info btn-block" asp-action="Create">إضافة </a>
+    </div>
+</div>
+<br />
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th style="width:20%;">
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th style="width:20%;">
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th style="width:20%;">
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
+            <th style="width:40%;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-block" asp-action="Details" asp-route-id="@item.Id">
+                        @item.FullName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="Details" asp-route-id="@item.Id">
+                        @item.Mobile
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="Details" asp-route-id="@item.Id">
+                        @item.Balance
+                    </a>
+                </td>
+                <td>
+                    @if (item.Active == true)
+                    {
+                        <a class="btn btn-info" asp-action="Chargevalue" asp-controller="Students" asp-area="scp" asp-route-id="@item.Id">
+                            <i class="fa fa-dollar-sign"></i> شحن
+                        </a>
+                        <a class="btn btn-success" asp-action="Lectures" asp-controller="Students" asp-area="scp" asp-route-id="@item.Id">
+                            <i class="fa fa-users"></i>محاضرة
+                        </a>
+                        <a class="btn btn-warning" asp-action="Reviews" asp-controller="Students" asp-area="scp" asp-route-id="@item.Id">
+                            <i class="fa fa-chalkboard-teacher"></i>  مراجعة
+                        </a>
+                        <a class="btn btn-danger" asp-action="Exams" asp-controller="Students" asp-area="scp" asp-route-id="@item.Id">
+                            <i class="fa fa-pen"></i>  امتحان
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

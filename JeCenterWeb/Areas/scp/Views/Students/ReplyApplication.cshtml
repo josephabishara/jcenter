@@ -1,0 +1,61 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentApplications>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+
+
+<div class="row">
+
+    <div class="col-md-4 text-center">
+        <h5> المحفظة : @ViewData["Balance"] L.E</h5>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+    </div>
+
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhysicalYear.PhysicalyearName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPhases.PhaseName)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.PhysicalYear.PhysicalyearName
+                </td>
+                <td>
+                    @item.CPhases.PhaseName
+                </td>
+                 <td>
+                    <form asp-action="DeleteApplication" asp-route-id="@item.ApplicationId" method="post">
+                        <input type="submit" value="-" class="btn btn-danger" asp-action="DeleteApplication" asp-route-id="@item.ApplicationId" method="post" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

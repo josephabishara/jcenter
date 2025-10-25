@@ -1,0 +1,61 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CSlider>
+
+
+
+<!-- slider section -->
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    @{
+       
+        int i = 1;
+        int j = 0;
+        string active = "";
+        string active2 = "";
+        string current = "";
+    }
+
+    <div class="carousel-indicators">
+        @foreach (var jtem in Model)
+        {
+            if (j == 0)
+            {
+               active = "active";
+               current = "true";
+            }
+            else
+            {
+                active = "";
+                current = "";
+            }
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@j" class="@active" aria-current="@current" aria-label="Slide @j"></button>
+            j++;
+        }
+    </div>
+    <div class="carousel-inner">
+        @foreach (var item in Model)
+        {
+            if (i == 1)
+            {
+                active2 = "active";
+                i = 0;
+            }
+            else
+            {
+                active2 = "";
+            }
+            <div class="carousel-item @active2">
+                <img src="~/@item.SliderImg" width="100%" height="100%" alt="">
+                @*   <div class="container">
+                  <div class="carousel-caption text-start" style="width:400px;">
+                        <h1>   @item.Titel </h1>
+                        <p>   @item.SubTitel </p>
+                        <p>
+                            <a class="btn btn-lg btn-outline-light" href="@item.Url"> @item.BtnName</a>
+                        </p>
+                    </div> 
+                </div>*@
+            </div>
+        }
+    </div>
+</div>
+
+

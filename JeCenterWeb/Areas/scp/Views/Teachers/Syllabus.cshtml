@@ -1,0 +1,130 @@
+﻿@model IEnumerable<JeCenterWeb.Models.TeacherSyllabus>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.TeacherId">
+        @ViewBag.TeacherName
+    </a>
+</div>
+<br />
+<form asp-action="AddSyllabus" method="post">
+    <div class="row">
+        <div class="col-0">
+            <div class="form-group">
+                <input type="hidden" name="TeacherId" value="@ViewBag.TeacherId" />
+                <select id="PhaseId" name="PhaseId" class="form-control select2" asp-items="ViewBag.PhaseId">
+                    <option value="0">أختار  المرحلة</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <select id="SyllabusID" name="SyllabusID" class="form-control select2" asp-items="ViewBag.SyllabusID">
+                    <option value="0"> أختار  المادة </option>
+                </select>
+            </div>
+        </div>
+           <div class="col-2">
+            <div class="form-group">
+                <input name="ApplicationCenter" class="form-control text-center" value="0" required />
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <input name="ApplicationTeacher" class="form-control text-center" value="0" required />
+            </div>
+        </div>
+        <div class="col-2">
+            <input type="submit" value="إضافة" class="btn btn-info btn-block" />
+        </div>
+    </div>
+</form>
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhaseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SyllabusName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationCenter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationTeacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationValue)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-block" asp-action="EditSyllabus" asp-route-id="@item.TeacherSyllabusId">
+                        @item.PhaseName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="EditSyllabus" asp-route-id="@item.TeacherSyllabusId">
+                        @item.SyllabusName
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="EditSyllabus" asp-route-id="@item.TeacherSyllabusId">
+                        @item.ApplicationCenter
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="EditSyllabus" asp-route-id="@item.TeacherSyllabusId">
+                        @item.ApplicationTeacher
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-block" asp-action="EditSyllabus" asp-route-id="@item.TeacherSyllabusId">
+                        @item.ApplicationValue
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            $("#PhaseId").change(function () {
+
+                var Syllabuslist = $('#SyllabusID');
+                Syllabuslist.empty();
+
+                $.ajax({
+                    type: "Get",
+                    url: "/scp/Teachers/GetSyllabusID?PhaseId=" + $(this).val(),  //remember change the controller to your owns.
+                    success: function (data) {
+                        var s = '<option value="0"> اختار المادة / المنهج </option>';
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i])
+                            s += '<option value="' + data[i].id + '">' + data[i].name +  '</option>';
+                        }
+                      
+                        $("#SyllabusID").html(s);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+

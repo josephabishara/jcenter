@@ -1,0 +1,104 @@
+﻿@model JeCenterWeb.Models.ViewModel.LectureDetilsViewModel
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+<div class="card">
+    <div class="card-header" style="text-align: -webkit-center;">
+        <h4>@ViewData["Head"]</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>
+                            عدد الحضور بالمركز: @Model.AttendCount
+                        </h5>
+                    </div>
+                    <div class="col-md-2">
+
+                        <a asp-action="LectureAttend" asp-route-id="@Model.LectureId" class="btn btn-info form-control">عرض الاسماء</a>
+
+
+                    </div>
+                    <div class="col-md-2">
+                        <a asp-route-id="@ViewData["GroupId"]" asp-action="GroupSchedule" asp-area="scp" asp-controller="Teachers" class="btn btn-dark form-control"> عودة للمجموعة  </a>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-8">
+                        <h5>
+                            عدد الغياب: @Model.AbsentCount
+                        </h5>
+                    </div>
+                    <div class="col-md-2">
+                        @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+                        {
+                            <a asp-action="LectureAbsent" asp-route-id="@Model.LectureId" class="btn btn-info form-control">عرض الاسماء</a>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        @*  <a class="btn btn-success form-control"> نقل للتعويض </a>*@
+                    </div>
+                </div>
+                @*   <div class="row" style="margin-top: 10px;">
+                <div class="col-md-8">
+                <h5>
+                عدد الحضور اونلاين: 0
+                </h5>
+                </div>
+                <div class="col-md-2">
+                <a class="btn btn-info form-control">عرض الاسماء</a>
+                </div>
+                </div>*@
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-8">
+                        <h5>
+                            عدد الطلاب الحاصلين علي خصومات: @Model.DiscountCount
+                        </h5>
+                    </div>
+                    <div class="col-md-2">
+                        @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+                        {
+                            <a asp-action="LectureDiscount" asp-route-id="@Model.LectureId" class="btn btn-info form-control">عرض الاسماء</a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-footer" style="direction: rtl; margin: 5px;">
+
+        <a asp-action="LectureTeacherDetails" asp-route-id="@Model.LectureId" class="btn btn-primary" style="width:300px;">  طباعة بيان المدرس </a>
+        <a asp-action="LectureCenterDetails" asp-route-id="@Model.LectureId" class="btn btn-danger" style="width:300px;"> طباعة بيان للمركز</a>
+        @if (Model.Closed == true & Model.Paided == true)
+        {
+            <a href="#" class="btn btn-success" class="btn btn-success" style="width:200px;"> تم السداد </a>
+        }
+        else if (Model.Closed == true & Model.Paided == false)
+        {
+            <a href="#" class="btn btn-warning" style="width:200px;">مغلقة وغير ممسددة</a>
+            @if (ViewData["OpenLecture"] == "true")
+            {
+                <a asp-action="OpenLecture" asp-area="scp" asp-controller="Teachers" asp-route-id="@Model.LectureId" class="btn btn-secondary" style="width:200px;">إعادة فتح الحصة</a>
+            }
+        }
+        else if (Model.Closed == false & Model.Paided == false)
+        {
+            <a asp-action="CloseLecture" asp-area="scp" asp-controller="Teachers" asp-route-id="@Model.LectureId" class="btn btn-danger" style="width:200px;">غلق الحصة</a>
+        }
+        else
+        {
+            <a href="#" class="btn btn-warning" style="width:200px;"> ممسددة وغير مغلقة</a>
+        }
+    </div>
+</div>

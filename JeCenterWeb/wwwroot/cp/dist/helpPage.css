@@ -1,0 +1,13 @@
+.login-logo a, .register-logo a, .lockscreen-logo a{
+    color: white;
+}
+.login-page, .register-page, .lockscreen {
+    background-blend-mode: multiply;
+    color: #fff;
+    backdrop-filter: brightness(65%);
+    background-image: url('img/bg2.jpg') !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #cccccc;
+}

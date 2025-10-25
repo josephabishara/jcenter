@@ -1,0 +1,177 @@
+﻿@inject IHttpContextAccessor Accessor
+@inject SignInManager<ApplicationUser> signInManager
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/cp/dist/css/adminlte.min.css">
+    <!-- Select2 -->
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../../cp/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../../../cp/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="../../cp/plugins/summernote/summernote-bs4.css">
+    <link rel="stylesheet" href="~/cp/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    @* <link rel="stylesheet" href="~/cp/plugins/jqvmap/jqvmap.min.css">*@
+
+    <link rel="stylesheet" href="~/cp/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="~/cp/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="~/cp/plugins/summernote/summernote-bs4.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Bootstrap 4 rtl -->
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/cp/dist/css/custom.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" style="text-align:right;">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            @* SEARCH FORM Mobile*@
+            <form class="form-inline ml-3" asp-action="SearchActiveByWord" asp-controller="Students" asp-area="scp" method="get">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" name="word" placeholder="رقم الموبايل" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            @await Component.InvokeAsync("NotificationMnu")
+         
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a asp-action="Index" asp-controller="Dashboard" asp-area="scp" class="brand-link">
+           @*     <img src="~/images/apple-touch-icon.png" alt="" class="brand-image img-circle elevation-3"
+                     style="opacity: .8">*@
+                @if (signInManager.IsSignedIn(User))
+                {
+                    @if (User.IsInRole("AdminSettings"))
+                    {
+                        <span class="brand-text font-weight-normal text-success"> <i class="fa fa-star text-success"></i> سوبر أدمن  </span>
+                    }
+                    else  if (User.IsInRole("PowerUser"))
+                    {
+                        <span class="brand-text font-weight-normal text-info"> <i class="fa fa-star text-info"></i> أدمن </span>
+                    }
+                    else if (User.IsInRole("SuperUser"))
+                    {
+                        <span class="brand-text font-weight-normal text-warning"> <i class="fa fa-star text-warning"></i> مشرف </span>
+                    }
+                    else if (User.IsInRole("User"))
+                    {
+                        <span class="brand-text font-weight-normal text-danger"> <i class="fa fa-star text-danger"></i> خدمة الطلبة </span>
+                    }
+                }
+            </a>
+
+
+            <div class="sidebar">
+                @await Component.InvokeAsync("Label")
+
+                <partial name="_AdminMenu" />
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1> @ViewData["ControllerName"] </h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item active"> @ViewData["ControllerName"] </li>
+                                <li class="breadcrumb-item "><a href="#">@ViewData["AppName"]</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <section class="content">
+
+                <!-- Default box -->
+                <div class="card">
+                    @*  <div class="card-header" style="direction:rtl;">
+                    <h3 class="card-title">Title</h3>
+
+                    <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                    </button>
+                    </div>
+                    </div>*@
+                    <div class="card-body">
+                        @RenderBody()
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="~/cp/plugins/jquery/jquery.min.js"></script>
+    <script src="~/cp/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 rtl -->
+    <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
+    <script src="~/cp/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/cp/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/cp/plugins/sparklines/sparkline.js"></script>
+    <script src="../../../cp/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Summernote -->
+    <script src="../../cp/plugins/summernote/summernote-bs4.min.js"></script>
+    @*<script src="~/cp/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/cp/plugins/jqvmap/maps/jquery.vmap.world.js"></script>*@
+    <script src="~/cp/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="~/cp/plugins/moment/moment.min.js"></script>
+    <script src="~/cp/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/cp/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/cp/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/cp/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/cp/dist/js/adminlte.js"></script>
+    <script src="~/cp/dist/js/pages/dashboard.js"></script>
+    <script src="~/cp/dist/js/demo.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Page script -->
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            })
+            //Add text editor
+            $('#compose-textarea').summernote()
+        })
+    </script>
+</body>
+</html>

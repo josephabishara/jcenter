@@ -1,0 +1,169 @@
+﻿@inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor Accessor
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" type="text/css" href="~/Learn/css/animate.css">
+    <link rel="stylesheet" href="~/Learn/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" type="text/css" href="~/Learn/css/line-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/Learn/css/line-awesome-font-awesome.min.css">
+    <link rel="stylesheet" href="~/Learn/jquery/font-awesome.4.7.0.css">
+    <link rel="stylesheet" type="text/css" href="~/Learn/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Learn/lib/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Learn/lib/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="~/Learn/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/Learn/css/responsive.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="container">
+                <div class="header-data">
+                    <div class="logo">
+                        <a href="#" title=""><img src="~/learn/images/wd-logo.png" alt=""></a>
+                    </div>
+
+                    <!--
+                        <div class="search-bar">
+                        <form>
+                            <input type="text" name="search" placeholder="Search...">
+                            <button type="submit"><i class="la la-search"></i></button>
+                        </form>
+                    </div>
+                    -->
+
+                    <nav>
+                        <ul style="direction:rtl;">
+                            <li>
+                                <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" title="">
+                                    <span><i class="fa fa-home"></i></span>
+                                    صفحتي
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Groups" asp-area="learning" title="">
+                                    <span><i class="fa fa-users"></i></span>
+                                    المجموعات
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Schedule" asp-area="learning" title="">
+                                    <span> <i class="fa fa-calendar"></i></span>
+                                    جدولي
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Balance" asp-area="learning" title="">
+                                    <span> <i class="fa fa-credit-card"></i></span>
+                                    محفظتي
+                                </a>
+
+                            </li>
+
+
+
+                            @await Component.InvokeAsync("NotificationSNav")
+                            <li>
+                                <a href="/logout" title="">
+                                    <span><i class="fa fa-sign-out"></i></span>
+                                    خروج
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="menu-btn">
+                        <a href="#" title=""><i class="fa fa-bars"></i></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="main-section">
+                <div class="container">
+                    <div class="main-section-data">
+                        <div class="row">
+
+                            <div class="col-lg-9 col-md-8 no-pd">
+                                <div class="main-ws-sec">
+                                    <div class="company-title">
+                                        <h3 style="font-size:20px;text-align:center;">@ViewData["ControllerName"]  </h3>
+                                    </div>
+                                    @RenderBody()
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-4 pd-left-none no-pd">
+                                <div class="main-left-sidebar no-margin">
+                                    <div class="user-data full-width">
+                                        @await Component.InvokeAsync("StudentProfile")
+                                        <div style="padding-right:15px;">
+                                            <ul class="user-fw-status text-right">
+
+                                                @await Component.InvokeAsync("StudentBalance")
+                                                @await Component.InvokeAsync("NotificationNav")
+                                                <li>
+                                                    <h4>
+                                                        <a asp-controller="Dashboard" asp-area="learning" asp-action="UpdateImage" style="font-size:16px;">
+                                                            تغير الصورة    <i class="fa fa-image"></i>
+                                                        </a>
+                                                    </h4>
+                                                </li>
+                                                <li>
+                                                    <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" style="font-size:16px;"> صفحتي الشخصية   <i class="fa fa-user"></i> </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/logout" style="font-size:16px;">
+                                                        خروج      <i class="fa fa-sign-out"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+
+
+
+
+
+
+
+
+    </div><!--theme-layout end-->
+    <!-- jQuery Files -->
+    <script src="~/Learn/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Learn/js/popper.js"></script>
+    <script type="text/javascript" src="~/Learn/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Learn/js/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="~/Learn/lib/slick/slick.min.js"></script>
+    <script type="text/javascript" src="~/Learn/js/scrollbar.js"></script>
+    <script type="text/javascript" src="~/Learn/js/script.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "سنتر الراعي";
+    Layout = "_Layout";
+}
+
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+</style>
+
+<link href="~/css/carousel.rtl.css" rel="stylesheet">
+@await Component.InvokeAsync("SliderView")
+
+<main>
+    <div class="container marketing">
+        <div class="container marketing">
+            <div class="row">
+                <h1 class="text-center">
+                    تابعنا على صفحاتنا الرسمية على مواقع التواصل الاجتماعي
+                </h1>
+            </div>
+            <br />
+            <br />
+
+            <div class="row">
+                <div class="col-lg-3 text-center">
+                    <img src="~/images/slider/01.png" alt=" روض الفرج" width="50%" />
+                    <br /><br />
+                    <h4 class="text-center" style="color: #80266C">   روض الفرج  </h4>
+                    <p class="text-center" style="color: #80266C;direction:rtl;">
+
+                    </p>
+                    <br />
+                    <a href="https://www.facebook.com/profile.php?id=100064683186961" class="btn btn-dark"> روض الفرج  <i class="fa fa-facebook" style="font-size: 22px;"></i></a>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <img src="~/images/slider/02.png" alt="  الخلفاوي " width="50%" />
+                    <br /><br />
+                    <h4 class="text-center" style="color: #9B50D0">   الخلفاوي     </h4>
+                    <p class="text-center" style="color: #9B50D0;direction:rtl;">
+
+                    </p>
+                    <br />
+                    <a href=" https://www.facebook.com/profile.php?id=100092411214849" class="btn btn-dark">  الخلفاوي    <i class="fa fa-facebook" style="font-size: 22px;"></i></a>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <img src="~/images/slider/03.png" alt="     خلوصي " width="50%" />
+                    <br /><br />
+                    <h4 class="text-center" style="color: #01812c">    خلوصي         </h4>
+                    <p class="text-center" style="color: #01812c;direction:rtl;">
+
+                    </p>
+                    <br />
+                    <a href="https://www.facebook.com/profile.php?id=61559597381870" class="btn btn-dark">   خلوصي      <i class="fa fa-facebook" style="font-size: 22px;"></i></a>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <img src="~/images/slider/04.png" alt="    المرحلة الإعدادية " width="50%" />
+                    <br /><br />
+                    <h4 class="text-center" style="color: #035783">    المرحلة الإعدادية      </h4>
+                    <p class="text-center" style="color: #035783;direction:rtl;">
+
+                    </p>
+                    <br />
+                    <a href="https://www.facebook.com/profile.php?id=100092318656967" class="btn btn-dark">   المرحلة الإعدادية    <i class="fa fa-facebook" style="font-size: 22px;"></i></a>
+                </div>
+            </div>
+
+        </div>
+       @*  <hr class="featurette-divider">
+        <div class="row featurette">
+            <div class="col-md-6 order-md-2" style="padding:15px;">
+
+                <h1 style="font-size:32pt;">
+                    تعلم اسرع جداا
+                </h1>
+                <br />   <br />
+                <p style="direction:rtl !important;text-align:right !important;font-size:16pt;">
+                    استفِد من خدمة مجانية للمدارس والجامعات تَجمع بين الاجتماعات وجهاً لوجه والواجبات والمحادثات في مركزٍ واحد
+                    <br />
+                    مساحة خاصة لطرح الأسئلة المتعلقة بالمناهج الدراسية وتبادل الخبرات بين الطلاب والمعلمين وسائر المساهمين من خلال الإجابة عليها.
+                    <br />
+                    تعرّف على دورات المناهج الدراسية واستكشفها بسهولة من خلال شرح مبسط من قِبل المعلمين المفضبين لديك
+                </p>
+                <br />   <br />
+                @if (signInManager.IsSignedIn(User))
+                {
+                    @if (User.IsInRole("AdminSettings") || User.IsInRole("PowerUser") || User.IsInRole("SuperUser") || User.IsInRole("User"))
+                    {
+                        <a href="/logout" class="btn btn-outline-danger"> خروج <i class="fa fa-sign-out"></i>  </a>
+                        <a asp-area="scp" asp-controller="Dashboard" asp-action="Index" class="btn btn-primar"> صفحة الأدمن <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                    }
+                    else if (User.IsInRole("Student"))
+                    {
+                        <a href="/logout" class="btn btn-outline-danger"> خروج <i class="fa fa-sign-out"></i> </a>
+                        <a asp-action="Index" asp-controller="Dashboard" asp-area="learning" class="btn btn-primary">صفحتي <i class="fa fa-university"></i></a>
+                    }
+
+                }
+                else
+                {
+                    <a href="/Login" class="btn btn-primary">  دخول <i class="fa fa-sign-in" style="font-size:22px;"></i></a>
+                    <a href="/Register" class="btn btn-outline-danger">  حساب جديد <i class="fa fa-user-circle" style="font-size: 22px;"></i></a>
+                }
+
+
+
+
+            </div>
+            <div class="col-md-6 order-md-1" style="padding:15px;">
+                <img src="~/images/headerelra3y.jpg" class="img-thumbnail" />
+            </div>
+        </div> *@
+       
+        <hr class="featurette-divider">
+        <div class="container marketing">
+            <div class="row">
+                @*  مقالات   *@
+
+                @await Component.InvokeAsync("BlogsHome")
+            </div>
+        </div>
+    </div>
+</main>

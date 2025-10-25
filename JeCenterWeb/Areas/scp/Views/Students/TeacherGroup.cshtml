@@ -1,0 +1,73 @@
+﻿@model JeCenterWeb.Models.CGroups
+
+@{
+    ViewData["Title"] = "TeacherGroup";
+}
+
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+<div class="row">
+    <div class="col-6">
+        <div class="panel panel-default">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>
+                        @Model.GroupName
+                    </h4>
+                </div>
+                <div class="card-body text-center">
+                    <h3>
+                        <strong>يوم : @Model.ResourceDays.DayOfWeekName</strong>
+                    </h3>
+                    <h4>
+                        @{
+                            DateTime start = new DateTime(2023, 1, 1, Model.SessionStart.Hours, Model.SessionStart.Minutes, Model.SessionStart.Seconds);
+                            DateTime end = new DateTime(2023, 1, 1, Model.SessionEnd.Hours, Model.SessionEnd.Minutes, Model.SessionEnd.Seconds);
+                        }
+                        من : @start.ToString("t")  الى : @end.ToString("t")
+
+                    </h4>
+                    <p> قاعة : @Model.CRooms.RoomName -  فرع : @Model.CRooms.CBranch.BranchName </p>
+              
+                    <p class="text-center">
+                        @ViewData["mssg1"]
+                    </p>
+                    <p class="text-center">
+                        @ViewData["mssg3"]
+                    </p>
+                    <p class="text-center">
+                        @ViewData["mssg2"]
+                    </p>
+                    <h4 class="text-center">
+                        إجمالي  : <strong>@ViewData["total"]</strong> ج . م
+                    </h4>
+                   
+                </div>
+                @if (ViewData["allow"] == "1")
+                {
+                    <div class="card-footer text-center">
+                        <form asp-action="Reservation" asp-route-GroupId="@Model.GroupId" asp-route-id="@ViewData["id"]" method="post" class="text-center">
+                            <input type="submit" value=" تأكيد الحجز " class="btn btn-primary btn-block" asp-action="Reservation" asp-route-id="@ViewData["id"]" asp-route-GroupId="@Model.GroupId" method="post" />
+                        </form>
+                    </div>
+                }
+                else if (ViewData["allow"] == "0")
+                {
+                    <p class="text-center text-danger">
+                        <strong>  رصيد الطالب  @ViewData["balance"] جنيه </strong>  رجاء شحن الرصيد لأستكمال الحجز
+                    </p>
+                }
+            
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+    </div>
+</div>
+
+
+

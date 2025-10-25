@@ -1,0 +1,38 @@
+﻿@model JeCenterWeb.Models.FinancialAccount
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@* 
+<div class="row">
+    <form asp-action="Delete" asp-route-id="@Model.FinancialAccountId" method="post">
+        <input type="hidden" name="@Model.FinancialAccountId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div> *@
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FinancialAccountId" />
+            <div class="form-group">
+                <label asp-for="AccountName" class="control-label"></label>
+                <input asp-for="AccountName" class="form-control" />
+                <span asp-validation-for="AccountName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdvancedPermission" ></label>
+                <input asp-for="AdvancedPermission" type="checkbox"  />
+                <span asp-validation-for="AdvancedPermission" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a class="btn btn-dark" asp-action="ChartOfAccounts"> رجوع </a>
+            </div>
+        </form>
+    </div>
+</div>
+

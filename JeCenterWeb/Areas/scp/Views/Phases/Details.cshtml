@@ -1,0 +1,62 @@
+﻿@model JeCenterWeb.Models.ViewModel.PhaseSyllabusViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddSyllabus" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="PhaseID" value="@Model.CPhases.PhaseId" />
+
+            <div class="form-group">
+                <label class="control-label"> اسم المادة / المنهج</label>
+                <input class="form-control" name="SyllabusName" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label"> صورة المادة</label>
+                <input class="form-control" name="imgurl" type="file">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="إضافة" class="btn btn-info" /> | 
+                <a asp-action="SubPhase" asp-route-id="@Model.CPhases.Parent" class="btn btn-dark"> رجوع  </a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="@Model.CPhases.PhaseName" class="control-label"></label>
+            <label class="form-control">@Model.CPhases.PhaseName</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.CPhases.ApplicationValue" class="control-label"></label>
+            <label class="form-control">@Model.CPhases.ApplicationValue</label>
+        </div>
+    </div>
+    <div class="col-md-4" style="padding-top:40px;">
+        <img class="profile-user-img img-fluid img-circle"
+             src="~/@Model.CPhases.imgurl"
+             alt="@Model.CPhases.PhaseName">
+    </div>
+
+
+</div>
+
+
+<div class="row">
+    @foreach (var item in Model.CSyllabus)
+    {
+        <div ckass="col-md-4" style="padding:20px;">
+            <div class="card">
+                <img  height="160" width="320" src="~/@item.imgurl" alt="@item.SyllabusName">
+                <div class="card-body">
+                    <h4 class="card-title">@item.SyllabusName</h4>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,46 @@
+﻿@model JeCenterWeb.Models.ViewModel.UsersRolesViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="ChangeRole">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="OldRoleId" />
+            <div class="form-group">
+                <label class="control-label"> الاسم</label>
+                <input name="FullName" class="form-control" value="@ViewData["FullName"]" />
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label class="control-label">نوع المستخدم</label>
+                        <select asp-for="RoleId" class="form-control">
+                            <option value="4">  مستخدم </option>
+                            <option value="3"> مشرف </option>
+                            <option value="2"> أدمن </option>
+                            <option value="1"> سوبر أدمن </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label asp-for="AdvancedPermission" class="control-label"></label>
+                        <input asp-for="AdvancedPermission" class="form-control" />
+                        <span asp-validation-for="AdvancedPermission" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-info" /> |
+                <a asp-action="Index" class="btn btn-dark"> رجوع  </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+

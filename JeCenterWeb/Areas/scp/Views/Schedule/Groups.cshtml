@@ -1,0 +1,33 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CGroupSchedule>
+
+@{
+    ViewData["Title"] = "Lectures";
+}
+
+
+
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> المدرس</th>
+                <th>المجموعة</th>
+                <th>القاعة</th>
+                <th>من</th>
+                <th>الى</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CGroups.TeacherName</td>
+                    <td>@item.CGroups.GroupName</td>
+                    <td>@item.CGroups.CRooms.RoomName </td>
+                    <td>@item.CGroups.SessionStart</td>
+                    <td>@item.CGroups.SessionEnd</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Teachers Report";
+}
+
+<div>
+    @ViewData["Error"]
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="TeacherScheduleReportByDate" asp-controller="Teachers" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-2">
+                    <input class="form-control text-left" name="StartDate" type="date" />
+                </div>
+                <div class="col-2">
+                    <input class="form-control text-left" name="EndDate" type="date" />
+                </div>
+                <div class="col-3">
+                    <select id="TeacherId" name="TeacherId" class="form-control select2" asp-items="ViewBag.TeacherId">
+                        <option value="0">أختار  المدرس</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select id="SyllabusID" name="SyllabusID" class="form-control select2" asp-items="ViewBag.SyllabusID">
+                        <option value="0">أختار  المنهج</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+
+            $("#TeacherId").change(function () {
+
+                var Syllabuslist = $('#SyllabusID');
+                Syllabuslist.empty();
+
+                $.ajax({
+                    type: "Get",
+                    url: "/scp/Teachers/Syllabuslist?Id=" + $(this).val(),  //remember change the controller to your owns.
+                    success: function (data) {
+                        var s = '<option value="0">أختار  المنهج</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i])
+                            s += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        }
+
+                        $("#SyllabusID").html(s);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+}

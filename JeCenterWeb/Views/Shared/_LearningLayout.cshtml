@@ -1,0 +1,119 @@
+﻿@inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor Accessor
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/images/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/carousel.css">
+    <link rel="stylesheet" href="ّ/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="~/css/animate.css">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <!-- LOADER -->
+    <div id="preloader">
+        <img class="preloader" src="~/images/loader.gif" alt="">
+    </div>
+    <div id="wrapper">
+        <header class="header header-normal">
+            <div class="container">
+                <nav class="navbar navbar-default yamm">
+                    <div class="navbar-header">
+                        @* <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>*@
+                        <div class="logo-normal">
+                            <a class="navbar-brand" asp-action="Index" asp-controller="Dashboard" asp-area="learning"><img src="~/images/logo-dark.png" alt=""></a>
+                        </div>
+                    </div>
+
+                    <div id="navbar" class="navbar-collapse collapse hidden-xs">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/logout"> خروج <i class="fa fa-sign-out"></i></a></li>
+                            @await Component.InvokeAsync("NotificationNav")
+                            <li><a asp-action="Index" asp-controller="Groups" asp-area="learning">المجموعات <i class="fa fa-users"></i></a></li>
+                            <li><a asp-action="Index" asp-controller="Schedule" asp-area="learning">جدولي   <i class="fa fa-calendar"></i></a></li>
+                            <li><a asp-action="Index" asp-controller="Balance" asp-area="learning"> محفظتي  <i class="fa fa-credit-card-alt"></i></a></li>
+                        
+                            <li><a asp-action="Index" asp-controller="Dashboard" asp-area="learning"> صفحتي  <i class="fa fa-user-circle-o"></i></a></li>
+                            
+                        </ul>
+                    </div>
+
+                </nav><!-- end navbar -->
+                <div class="row hidden-md hidden-lg hidden-sm text-center">
+                    <div class="col-sm-2 col-xs-2  text-center">
+                        <a asp-action="Index" asp-controller="Dashboard" asp-area="learning"><i class="fa fa-user-circle-o"></i></a>
+                        <small style="font-size:xx-small">صفحتي</small>
+                    </div>
+
+                    <div class="col-sm-2 col-xs-2  text-center">
+                        <a asp-action="Index" asp-controller="Groups" asp-area="learning"> <i class="fa fa-users"></i></a>
+                        <small style="font-size:xx-small">المجموعات</small>
+                    </div>
+                    <div class="col-sm-2 col-xs-2  text-center">
+                        <a asp-action="Index" asp-controller="Schedule" asp-area="learning">   <i class="fa fa-calendar"></i></a>
+                        <small style="font-size:xx-small">جدولي</small>
+                    </div>
+                    <div class="col-sm-2 col-xs-2  text-center">
+                        <a asp-action="Index" asp-controller="Balance" asp-area="learning">   <i class="fa fa-credit-card-alt"></i></a>
+                        <small style="font-size:xx-small">محفظتي</small>
+                    </div>
+                    @await Component.InvokeAsync("NotificationSNav")
+                    <div class="col-sm-2 col-xs-2  text-center">
+                        <a href="/logout"> <i class="fa fa-sign-out"></i></a>
+                        <small style="font-size:xx-small">خروج</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="section gb nopadtop">
+            <div class="container">
+                <div class="boxed boxedp4">
+                    <div class="shop-top">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p> @ViewData["ControllerName"]</p>
+                            </div>
+                            <div class="pull-right text-right" style="direction:rtl;">
+                                <p><i class="fa fa-user"></i> @ViewData["UserName"] <br />  <i class="fa fa-credit-card-alt"></i> @ViewData["Balance"] </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row blog-grid shop-grid">
+                        @RenderBody()
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- jQuery Files -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/bootstrap-select.min.js"></script>
+    <script src="~/js/animate.js"></script>
+    <script src="~/js/custom.js"></script>
+</body>
+</html>

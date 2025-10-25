@@ -1,0 +1,46 @@
+﻿@model JeCenterWeb.Models.CNotifications
+
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_NotiMenu" />
+            </div>
+            <div class="col-md-9">
+                <div class="card card-primary card-outline">
+
+                    <div class="card-header">
+                        <h3 class="card-title"> الطلبة </h3>
+                        <div class="card-tools">
+                            <form asp-action="DeleteNotiEmp" asp-route-id="@Model.NotificationId" method="post">
+                                <input type="hidden" name="@Model.NotificationId" />
+                                <input type="submit" value="حذف" class="btn btn-danger" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="mailbox-read-info">
+                            <h5> @Model.NotiTitel</h5>
+                            <h6>
+                                <span class="mailbox-read-time float-right"> @Model.CreatedDate  </span>
+                            </h6>
+                        </div>
+                        <div class="mailbox-read-message">
+                            @Html.Raw(Model.NotificationNote)
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentLecture>
+
+@{
+    ViewData["Title"] = "Student Lecture";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body onload="window.print()" style="direction: rtl;">
+
+    <div style="max-width: 400px; text-align: center;">
+        <a asp-action="ReviewDetails" asp-area="scp" asp-controller="Schedule" asp-route-id="@ViewData["id"]">
+            <img src="~/images/elra3ylogo150.png" width="150px" />
+        </a>
+        <br />
+        <h3> المركز </h3>
+
+        <div style="justify-content: center;">
+            <div class="col-4">
+                @ViewData["lblcountwithoutdisc_center"]
+            </div>
+            <div class="col-4">
+                @ViewData["lbltotalwithoutdisc_center"]
+            </div>
+        </div>
+        <div style="justify-content: center;">
+            <div class="col-4">
+                @ViewData["lblcountwithdisc_center"]
+            </div>
+            <div class="col-4">
+                @ViewData["lbltotalwithdisc_center"]
+            </div>
+        </div>
+        @ViewData["teacherprice"]
+        <br />
+
+        <h3> المدرس</h3>
+
+        <div style="justify-content: center;">
+            <div class="col-4">
+                @ViewData["lblcountwithoutdisc_teacher"]
+            </div>
+            <div class="col-4">
+                @ViewData["lbltotalwithoutdisc_teacher"]
+            </div>
+        </div>
+        <div style="justify-content: center;">
+            <div class="col-4">
+                @ViewData["lblcountwithdisc_teacher"]
+            </div>
+            <div class="col-4">
+                @ViewData["lbltotalwithdisc_teacher"]
+            </div>
+        </div>
+        @ViewData["teacherprice"]
+        <br />
+
+
+
+        <br /><br />
+
+        @ViewData["lbltotalteacher"]
+
+        <br />
+        <br />
+
+    </div>
+</body>
+</html>

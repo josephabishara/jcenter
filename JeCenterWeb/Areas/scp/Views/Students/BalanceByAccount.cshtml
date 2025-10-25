@@ -1,0 +1,123 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.FinancialJournalEntryLineViewModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row">
+
+    <div class="col-md-6 text-center">
+        <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@ViewBag.id">
+            @ViewBag.FullName
+        </a>
+    </div>
+    <div class="col-md-6 text-center">
+@if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") )
+        {
+            @if (ViewData["returnValue"] == "true")
+            {
+                <form asp-action="returnValue" asp-controller="Students" asp-area="scp" method="post">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="hidden" name="id" value="@ViewBag.Id" />
+                            <input class="form-control text-center" name="Value" placeholder=" قيمة   " value="0" />
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" value="صرف" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            }
+        }
+    </div>
+</div>
+<br />
+
+
+
+<div class="row">
+
+    <div class="col-md-4 text-center">
+        <h5> المحفظة : @ViewData["Balance"] L.E</h5>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4><i class="fa fa-user"></i> @ViewData["FullName"] </h4>
+    </div>
+
+</div>
+<br />
+<p class="text-center">
+    @ViewData["mssg"]
+</p>
+<br />
+<table class="table" style="direction:rtl;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JournalEntryDate)
+            </th>
+            @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+            {
+                <th>
+                    توقيت
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Debit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credit)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*  <td>
+            @item.JournalEntryDate.ToString("yyyy-MM-dd")
+            </td>
+
+            <td>
+            @item.FinancialDocuments.Notes
+            </td>
+            <td>
+            @item.Debit
+            </td>
+            <td>
+            @item.Credit
+            </td>
+            CreatedDate
+            *@
+
+                <td>
+                    @item.JournalEntryDate.ToString("yyyy-MM-dd")
+                </td>
+                @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+                {
+
+                    <td>
+                        @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                }
+                <td>
+                    @item.Notes
+                </td>
+                <td>
+                    @item.Debit
+                </td>
+                <td>
+                    @item.Credit
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,54 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+
+<ul class="navbar-nav" style="padding-left:150px">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false"> @ViewData["FullName"]  </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            @if (signInManager.IsSignedIn(User))
+            {
+                @if (User.IsInRole("AdminSettings"))
+                {
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-user-circle"></i>  صفحة الأدمن </a></li>
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Treasury" asp-action="Index"><i class="fa fa-credit-card-alt"></i>   الخزينة </a></li>
+                    <li><a class="dropdown-item" href="/logout"> <i class="fa fa-sign-out"></i>  خروج  </a></li>
+                }
+                else if (User.IsInRole("PowerUser"))
+                {
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-user-circle"></i>  صفحة الأدمن </a></li>
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Treasury" asp-action="Index"><i class="fa fa-credit-card-alt"></i>   الخزينة </a></li>
+                    <li><a class="dropdown-item" href="/logout"><i class="fa fa-sign-out"></i>  خروج  </a></li>
+                }
+                else if (User.IsInRole("SuperUser"))
+                {
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-user-circle"></i>  صفحة الأدمن </a></li>
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Treasury" asp-action="Index"><i class="fa fa-credit-card-alt"></i>   الخزينة </a></li>
+                    <li><a class="dropdown-item" href="/logout"> <i class="fa fa-sign-out"></i>  خروج   </a></li>
+                }
+                else if (User.IsInRole("User"))
+                {
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-user-circle"></i>  صفحة الأدمن </a></li>
+                    <li><a class="dropdown-item" asp-area="scp" asp-controller="Treasury" asp-action="Index"><i class="fa fa-credit-card-alt"></i>   الخزينة </a></li>
+                    <li><a class="dropdown-item" href="/logout">  <i class="fa fa-sign-out"></i> خروج  </a></li>
+                }
+
+
+                else if (User.IsInRole("Student"))
+                {
+                    @*  <li><a asp-action="Index" asp-controller="Dashboard" asp-area="online">أونلاين <i class="fa fa-play-circle"></i></a></li>*@
+                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Dashboard" asp-area="learning"> <i class="fa fa-university"></i> صفحتي </a></li>
+                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Balance" asp-area="learning"> <i class="fa fa-credit-card-alt"></i> محفظتي </a></li>
+                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Schedule" asp-area="learning"> <i class="fa fa-calendar"></i> جدولي </a></li>
+                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Groups" asp-area="learning"> <i class="fa fa-users"></i> المجموعات </a></li>
+                    <li><a class="dropdown-item" href="/logout"> خروج <i class="fa fa-sign-out"></i>  </a></li>
+                }
+
+            }
+            else
+            {
+                <li><a href="/Login">تسجيل الدخول  <i class="fa fa-sign-in"></i>  </a></li>
+                <li><a href="/Register"> حساب جديد  <i class="fa fa-user-circle"></i>  </a></li>
+            }
+
+        </ul>
+    </li>
+</ul>

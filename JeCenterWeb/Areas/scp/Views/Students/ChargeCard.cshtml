@@ -1,0 +1,28 @@
+﻿@model JeCenterWeb.Models.ViewModel.ChargeValueViewModel
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+<div class="row">
+   
+    <div class="col-8">
+        <div class="info-box">
+            <span class="info-box-icon bg-danger"><i class="fa fa-credit-card"></i></span>
+            <div class="info-box-content">
+                <form asp-action="ChargeCard" asp-controller="Students" asp-area="scp" method="post">
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="hidden" asp-action="id" value="@ViewData["id"]" />
+                            <input class="form-control text-left" asp-action="Value" placeholder="أكتب كود الكارت" />
+                        </div>
+                        <div class="col-2">
+                            <input type="submit" value="اشحن" class="btn btn-danger" onclick="return confirm('سوف يتم شحن كارت للطالب ');" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

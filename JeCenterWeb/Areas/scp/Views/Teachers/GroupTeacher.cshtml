@@ -1,0 +1,122 @@
+﻿@model IEnumerable<JeCenterWeb.Models.CGroups>
+@inject SignInManager<ApplicationUser> signInManager
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+<div>
+    <a class="btn btn-dark" asp-action="ChooseTeacher">رجوع</a> |
+    @ViewBag.TeacherName
+</div>
+<br />
+
+<div class="row">
+    <div class="col-6">
+        <form asp-action="GroupTeacherByYear" asp-controller="Teachers" asp-area="scp" method="get">
+            <input type="hidden" value="@ViewData["TeacherId"]" name="TeacherId" />
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group">
+                        <select name="PhysicalyearId" class="form-control" asp-items="ViewBag.physicalyearId">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <input type="submit" value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+<br />
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CRooms.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SyllabusID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CSyllabus.CPhases.PhaseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LecturePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfWeekId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SessionStart)
+            </th>
+            @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+            {
+                <th>
+                    عدد الطلبة
+                </th>
+            }
+            else
+            {
+                <th></th>
+            }
+               
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                        @item.CRooms.RoomName
+                </td>
+                <td>
+                        @item.GroupName
+                </td>
+                <td>
+                        @item.CSyllabus.SyllabusName
+                </td>
+                <td>
+                        @item.CSyllabus.CPhases.PhaseName
+                </td>
+                <td>
+                        @item.LecturePrice
+                </td>
+                <td>
+                        @item.ResourceDays.DayOfWeekName
+                </td>
+                <td>
+                        @{
+                            DateTime start = new DateTime(2023, 1, 1, item.SessionStart.Hours, item.SessionStart.Minutes, item.SessionStart.Seconds);
+                        }
+                        @start.ToString("t")
+                </td>
+                @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") )
+                {
+                    <td>
+                        <a class="btn btn-block btn-dark" asp-action="GroupSchedule" asp-route-id="@item.GroupId"> 
+                            @item.CountAttend
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a class="btn btn-block btn-dark" asp-action="GroupSchedule" asp-route-id="@item.GroupId">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                }
+              
+            </tr>
+
+        }
+    </tbody>
+</table>

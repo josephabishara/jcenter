@@ -1,0 +1,182 @@
+﻿@model IEnumerable<JeCenterWeb.Models.FinancialDocuments>
+@{
+    ViewData["Title"] = "Treasury";
+}
+<div class="row">
+    <div class="col-md-4">
+        <h3>رصيد الخزينة : @ViewData["Balance"]</h3>
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
+<br />
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+    إضافة مصروف
+</button>
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">  إضافة مصروف </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="AddExpenses" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="TreasuryID" value="@ViewData["TreasuryID"]" />
+                    <input type="hidden" name="MovementTypeId" value="@ViewData["MovementTypeId"]" />
+                    <input type="hidden" name="JournalEntryDate" value="@ViewData["JournalEntryDate"]" />
+                    @*  <input type="hidden" name="physicalyearId" value="@ViewData["physicalyearId"]" /> *@
+                    <div class="form-group">
+                        <label class="control-label">الحساب</label>
+                        <div class="form-group">
+                            <select name="AccountId" class="form-control select2" asp-items="ViewBag.AccountID">
+                                <option value="0">أختار  الحساب</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">بيان</label>
+                        <input name="Note" class="form-control" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">قيمة</label>
+                                <input name="Value" class="form-control text-center" value="0" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">الفرع</label>
+                                <div class="form-group">
+                                    <select name="BranchId" class="form-control select2" asp-items="ViewBag.BranchId">
+                                        <option value="0"> الفرع  </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">السنة</label>
+                                <div class="form-group">
+                                    <select name="PhysicalyearId" class="form-control select2" asp-items="ViewBag.PhysicalyearId">
+                                        <option value="0"> السنة  </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div>
+                                <label class="control-label">مرفق</label>
+                                <input class="form-control" name="imgurl" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="submit" value="حقظ" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                رقم الحركة
+            </th>
+            <th>
+                الوقت
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th style="text-align:right;">
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Approve)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.JournalEntryDate == DateTime.Today)
+            {
+                <tr>
+                        <td>
+                        @item.FinancialDocumentId
+                        </td>
+                        <td>
+                        @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                        </td>
+                        <td>
+                        @item.Value
+                        </td>
+                        <td style="text-align:right;">
+                        @item.Notes
+                        </td>
+                        <td>
+                        @if (item.Approve == 0)
+                        {
+                                    <span class="badge bg-warning">Pending</span>
+
+                        }
+                        else if (item.Approve == 1)
+                        {
+                                    <span class="badge bg-success">Approved</span>
+                        }
+                        else if (item.Approve == 2)
+                        {
+                                    <span class="badge bg-danger">Rejected</span>
+                        }
+                        </td>
+                        </tr>
+            }
+            else if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+            {
+                         <tr>
+                        <td>
+                        @item.FinancialDocumentId
+                        </td>
+                        <td>
+                        @Convert.ToDateTime(item.CreatedDate).ToString("t")
+                        </td>
+                        <td>
+                        @item.Value
+                        </td>
+                        <td style="text-align:right;">
+                        @item.Notes
+                        </td>
+                        <td>
+                        @if (item.Approve == 0)
+                        {
+                                    <span class="badge bg-warning">Pending</span>
+
+                        }
+                        else if (item.Approve == 1)
+                        {
+                                    <span class="badge bg-success">Approved</span>
+                        }
+                        else if (item.Approve == 2)
+                        {
+                                    <span class="badge bg-danger">Rejected</span>
+                        }
+                        </td>
+                        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
+

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<JeCenterWeb.Models.StudentGroup>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+
+<div class="row">
+    <table class="table table-striped text-right">
+        <thead>
+            <tr>
+                <th class="text-right">اسم المجموعة</th>
+                <th class="text-right">اليوم</th>
+                <th class="text-right">القاعة</th>
+                <th class="text-right">من</th>
+                <th class="text-right">الى</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CGroups.GroupName </td>
+                    <td>@item.CGroups.ResourceDays.DayOfWeekName </td>
+                    <td>@item.CGroups.CRooms.RoomName </td>
+                    <td>@item.CGroups.SessionStart</td>
+                    <td>@item.CGroups.SessionEnd</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

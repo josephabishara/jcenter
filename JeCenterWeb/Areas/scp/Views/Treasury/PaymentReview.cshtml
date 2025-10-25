@@ -1,0 +1,171 @@
+﻿@model IEnumerable<JeCenterWeb.Models.FinancialDocuments>
+@{
+    ViewData["Title"] = "Treasury";
+}
+<div class="row">
+    <div class="col-md-4">
+        <h3>رصيد الخزينة : @ViewData["Balance"]</h3>
+    </div>
+
+    <div class="col-6">
+        <a class="btn btn-success" asp-action="Payment" asp-controller="Treasury" asp-area="scp">
+            <i class="fa fa-users"></i> صرف محاضرة
+        </a> |
+        <a class="btn btn-warning" asp-action="PaymentReview" asp-controller="Treasury" asp-area="scp">
+            <i class="fa fa-chalkboard-teacher"></i> صرف مراجعة
+        </a> |
+        <a class="btn btn-danger" asp-action="PaymentExam" asp-controller="Treasury" asp-area="scp">
+            <i class="fa fa-pen"></i> صرف امتحان
+        </a>
+    </div>
+</div>
+<br />
+<form asp-action="AddPaymentReview">
+    <div class="row">
+        <div class="col-md-3">
+            <input type="hidden" name="TreasuryID" value="@ViewData["TreasuryID"]" />
+            <input type="hidden" name="MovementTypeId" value="@ViewData["MovementTypeId"]" />
+            <input type="hidden" name="JournalEntryDate" value="@ViewData["JournalEntryDate"]" />
+            <input type="hidden" name="physicalyearId" value="@ViewData["physicalyearId"]" />
+
+            <div class="form-group">
+                <label class="control-label">المدرس</label>
+                <div class="form-group">
+                    <select id="Id" name="AccountId" class="form-control select2" asp-items="ViewBag.Id">
+                        <option value="0">أختار  المدرس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label class="control-label">المراجعة</label>
+                <select id="GroupscheduleId" name="GroupscheduleId" class="form-control select2">
+                    <option value="0">أختار  المراجعة</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label">قيمة</label>
+                <input id="Value" name="Value" class="form-control text-center" value="0" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label" style="color:white;">.</label><br />
+                <input type="submit" value="صرف" class="btn btn-primary" /> |
+                <a class="btn btn-dark" asp-action="Index"> رجوع </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                رقم الحركة
+            </th>
+            <th>
+                الوقت
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.JournalEntryDate == DateTime.Today)
+            {
+                <tr>
+                    <td>
+                        @item.FinancialDocumentId
+                    </td>
+                    <td>
+                        @item.JournalEntryDate.ToString("t")
+                    </td>
+                    <td>
+                        @item.Value
+                    </td>
+                    <td style="width:70%;text-align:right;">
+                        @item.Notes
+                    </td>
+                </tr>
+            }
+            else if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+            {
+                <tr>
+                    <td>
+                        @item.FinancialDocumentId
+                    </td>
+                    <td>
+                        @item.JournalEntryDate.ToString("t")
+                    </td>
+                    <td>
+                        @item.Value
+                    </td>
+                    <td style="width:70%;text-align:right;">
+                        @item.Notes
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            $("#Id").change(function () {
+
+                var Syllabuslist = $('#GroupscheduleId');
+                Syllabuslist.empty();
+
+                $.ajax({
+                    type: "Get",
+                    url: "/scp/Treasury/GetReviewschedule?Id=" + $(this).val(),  //remember change the controller to your owns.
+                    success: function (data) {
+                        var s = '<option value="0">أختار  مراجعة</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data[i])
+                            s += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                        }
+
+                        $("#GroupscheduleId").html(s);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+            $("#GroupscheduleId").change(function () {
+                return $.ajax({
+                    type: "get",
+                    url: "/scp/Treasury/GetReviewscheduleValue?GroupscheduleId=" + $(this).val(),
+                    success: function (data) {
+                        $("#Value").val("");
+                        $("#Value").val(data);
+                    },
+                    error: function (response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+
+
+        });
+    </script>
+
+}
+

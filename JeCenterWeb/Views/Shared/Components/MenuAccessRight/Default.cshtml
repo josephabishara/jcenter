@@ -1,0 +1,12 @@
+﻿@model IEnumerable<JeCenterWeb.Models.UserAccessRight>
+
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a asp-action="@item.AccessRight.ActionName" asp-controller="@item.AccessRight.ControllerName" asp-area="scp" class="nav-link">
+            <i class="fa @item.AccessRight.MenuIcon nav-icon"></i>
+            <p>  @item.AccessRight.AccessName </p>
+        </a>
+    </li>
+}

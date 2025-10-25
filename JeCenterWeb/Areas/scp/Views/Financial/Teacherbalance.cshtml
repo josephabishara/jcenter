@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "User Balance";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="callout callout-info">
+            <form asp-action="Detail">
+
+                <div class="row">
+                    <div class="col-8">
+                        <select name="id" class="form-control select2" asp-items="ViewBag.userid"></select>
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" value="عرض" class="btn btn-info" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

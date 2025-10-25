@@ -1,0 +1,120 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.StudentDiscountViewModel>
+
+@{
+    ViewData["Title"] = "Payments";
+}
+
+<div class="card-head clearfixr">
+        @{
+            int  prv =Convert.ToInt32( ViewData["prvpag"]);
+        }
+       
+        <a class="btn btn-primary" asp-route-page="@ViewData["nxtpag"]" asp-action="Discounts" asp-controller="Financial" asp-area="scp">&laquo; التالي</a>
+    <a class="btn btn-primary" href="#">@ViewData["page"]</a>
+        @if (prv > 0)
+        {
+        <a class="btn btn-primary" asp-route-page="@ViewData["prvpag"]" asp-action="Discounts" asp-controller="Financial" asp-area="scp">السابق &raquo; </a>
+        }
+</div>
+
+<table class="table table-striped table-sm text-center">
+    <thead>
+        <tr>
+            <th>
+                التاريخ
+            </th>
+            <th>
+                المستخدم
+            </th>
+            <th>
+                الطالب
+            </th>
+            <th>
+                المدرس
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.teacherDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CenterDiscount)
+            </th>
+            <th>
+                الحالة
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Convert.ToDateTime( item.CreatedDate).ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    <a asp-action="Discount" asp-area="scp" asp-controller="Students" asp-route-id="@item.StudentId" class="btn btn-block" target="_blank">    @item.StudentName </a>
+                </td>
+                <td>
+                    @item.TeacherName
+                </td>
+                
+                <td>
+                    @item.Discount
+                </td>
+                <td>
+                    @item.teacherDiscount
+                </td>
+                <td>
+                    @item.CenterDiscount
+                </td>
+                <td>
+                    @if (item.Active == true)
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else if(item.UpdateId == 0 )
+                    {
+                        <span class="badge bg-warning">Wait</span>
+                    }
+                    else if (item.UpdateId > 0)
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                </td>
+                <td>
+                    @if (item.UpdateId == 0)
+                    {
+                        <form asp-action="ApproveDiscount" asp-controller="Financial" asp-route-id="@item.StudentDiscountId" asp-area="scp" method="post">
+                            <input type="submit" value="موافقة" class="btn btn-success btn-block" />
+                        </form>
+                    }
+                </td>
+                <td>
+                    @if (item.UpdateId ==  0)
+                    {
+                        <form asp-action="DeleteDiscount" asp-controller="Financial" asp-route-id="@item.StudentDiscountId" asp-area="scp" method="post">
+                            <input type="submit" value="رفض" class="btn btn-danger btn-block" />
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="card-footer clearfix">
+    <a class="btn btn-primary" asp-route-page="@ViewData["nxtpag"]" asp-action="Discounts" asp-controller="Financial" asp-area="scp">&laquo; التالي</a>
+    <a class="btn btn-primary" href="#">@ViewData["page"]</a>
+    @if (prv > 0)
+    {
+        <a class="btn btn-primary" asp-route-page="@ViewData["prvpag"]" asp-action="Discounts" asp-controller="Financial" asp-area="scp">السابق &raquo; </a>
+    }
+</div>

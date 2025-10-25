@@ -1,0 +1,43 @@
+﻿@model JeCenterWeb.Models.ViewModel.ChargeValueViewModel
+<div>
+    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@ViewBag.id">
+        @ViewBag.FullName
+    </a>
+</div>
+<br />
+<div class="row">
+    <div class="col-8">
+        <div class="info-box">
+            <span class="info-box-icon bg-success"><i class="fa fa-wallet"></i></span>
+            <div class="info-box-content">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <form asp-action="ChargeValue" asp-controller="Students" asp-area="scp" method="post">
+                    <div class="row">
+                        <div class="col-4">
+                            <input type="hidden" asp-for="id" value="@ViewData["id"]" />
+                            <input class="form-control text-center" asp-for="Value" placeholder=" قيمة الشحن  " />
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select name="BranchId" class="form-control select2" asp-items="ViewBag.BranchId">
+                                        <option value="0"> الفرع  </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" value="اشحن" class="btn btn-success" onclick="return confirm('سوف يتم شحن رصيد للطالب ');" />
+
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* *@

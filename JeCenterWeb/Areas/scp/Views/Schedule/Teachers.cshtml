@@ -1,0 +1,95 @@
+﻿@model JeCenterWeb.Models.ViewModel.ScheduleTeachersVIewModel
+
+@{
+    ViewData["Title"] = "Lectures";
+}
+<div class="row">
+    <div class="col-6">
+        <form asp-action="TeachersByDate" asp-controller="Schedule" asp-area="scp" method="get">
+            <div class="row">
+                <div class="col-8">
+                    <input class="form-control text-left" name="date" type="date" />
+                </div>
+                <div class="col-2">
+                    <input type="submit"  value="بحث" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2">
+                <a asp-action="TeachersById" asp-controller="Schedule" asp-area="scp" asp-route-id="1" asp-route-date="@ViewData["date"]" method="get" class="btn btn-success btn-block"><i class="fa fa-clock"></i></a>
+            </div>
+            <div class="col-2">
+                <a asp-action="TeachersById" asp-controller="Schedule" asp-area="scp" asp-route-id="2" asp-route-date="@ViewData["date"]" method="get" class="btn btn-info btn-block"><i class="fa fa-home"></i></a>
+            </div>
+            <div class="col-2">
+                <a asp-action="TeachersById" asp-controller="Schedule" asp-area="scp" asp-route-id="3" asp-route-date="@ViewData["date"]" method="get" class="btn btn-warning btn-block"><i class="fa fa-user-secret"></i></a>
+            </div>
+            <div class="col-2">
+                </div>
+            <div class="col-4">
+                <a asp-action="TeachersPrint" asp-route-date="@ViewData["date"]" class="btn btn-outline-dark btn-lg btn-block"><i class="fa fa-print"> Print</i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> المدرس</th>
+                <th>القاعة</th>
+                <th>من</th>
+                <th>الى</th>
+                <th>المرحلة الدراسية</th>
+                <th>المجموعة</th>
+             @*    <th>عدد الطلبة</th> *@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CGroupSchedule)
+            {
+                <tr>
+                    <td>@item.CGroups.TeacherName</td>
+                    <td>@item.CGroups.CRooms.RoomName </td>
+                    <td>
+                        @{
+                            DateTime start = new DateTime(2023, 1, 1, item.CGroups.SessionStart.Hours, item.CGroups.SessionStart.Minutes, item.CGroups.SessionStart.Seconds);
+                            DateTime end = new DateTime(2023, 1, 1, item.CGroups.SessionEnd.Hours, item.CGroups.SessionEnd.Minutes, item.CGroups.SessionEnd.Seconds);
+                        }
+
+                        @start.ToString("hh:mm")
+                    </td>
+                    <td>@end.ToString("hh:mm")</td>
+                    <td>@item.CGroups.CSyllabus.CPhases.PhaseName</td>
+                    <td>@item.CGroups.GroupName</td>
+                    @* <td>@item.CGroups.StudentGroup.Count</td> *@
+                </tr>
+            }
+            @foreach (var item in Model.ReviewsSchedule)
+            {
+                <tr>
+                    <td></td>
+                    <td>@item.CRooms.RoomName </td>
+                    <td>
+                        @{
+                            DateTime start = new DateTime(2023, 1, 1, item.SessionStart.Hours, item.SessionStart.Minutes, item.SessionStart.Seconds);
+                            DateTime end = new DateTime(2023, 1, 1, item.SessionEnd.Hours, item.SessionEnd.Minutes, item.SessionEnd.Seconds);
+                        }
+
+                        @start.ToString("hh:mm")
+                    </td>
+                    <td>@end.ToString("hh:mm")</td>
+                    <td>@item.CSyllabus.CPhases.PhaseName</td>
+                    <td>@item.ReviewsScheduleName</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<JeCenterWeb.Models.ViewModel.TeachersGroupsViewModel>
+
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+
+<section class="companies-info">
+    <div class="container">
+       
+        <div class="companies-list">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    string imgUrl = item.imgurl;
+                    if (item.imgurl == "images/Teachers/default.png" || item.imgurl == null)
+                    {
+                        item.imgurl = "images/Teachers/default.jpg";
+                    }
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="company_profile_info">
+                            <div class="company-up-info" style="padding-top:25px;padding-bottom:5px;">
+                                <img src="~/@imgUrl" alt="@item.TeacherName" width="90px" height="90px">
+                                <h3> @item.TeacherName  </h3>
+                                <h4>    عدد المجموعات :  @item.CountOfGroups  </h4>
+
+                            </div>
+                            <a asp-action="TeacherGroups" asp-route-id="@item.id" asp-route-SyllabusID="@item.SyllabusID" title="" class="view-more-pro"> أشتراك  </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@* 
+
+
+
+@foreach (var item in Model)
+{
+    <div class="col-md-4">
+        <div class="course-box shop-wrapper">
+            <div class="image-wrap entry">
+                <img src="~/@item.imgurl" alt="" class="img-responsive">
+                <div class="magnifier">
+                    <a asp-action="TeacherGroups" asp-route-id="@item.id" asp-route-SyllabusID="@item.SyllabusID" title=""><i class="flaticon-add"></i></a>
+                </div>
+            </div>
+            <div class="course-details shop-box text-center">
+                <h4>
+                    <a asp-action="TeacherGroups" asp-route-id="@item.id" asp-route-SyllabusID="@item.SyllabusID" title="">@item.TeacherName</a>
+                </h4>
+                <h4>
+                    <a asp-action="TeacherGroups" asp-route-id="@item.id" asp-route-SyllabusID="@item.SyllabusID">   عدد المجموعات :  @item.CountOfGroups </a>
+                </h4>
+            </div>
+
+        </div>
+    </div>
+}
+ *@
