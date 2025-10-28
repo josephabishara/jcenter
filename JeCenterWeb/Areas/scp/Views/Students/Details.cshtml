@@ -205,7 +205,15 @@
                     @if (Model.student.Active == true)
                     {
                         <span class="info-box-icon bg-success"><i class="fa fa-play"></i></span>
-                        @if (User.IsInRole("SuperUser") || User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+                        @if (  User.IsInRole("AdminSettings"))
+                        {
+                                <div class="info-box-content">
+                                    <form asp-action="ChangeState" asp-route-id="@Model.student.Id" method="post">
+                                        <input type="submit" value="الحالة" class="btn" />
+                                    </form>
+                                </div>
+                        }
+                        else if (User.IsInRole("SuperUser") || User.IsInRole("PowerUser"))
                         {
                             @if (ViewData["ChangeState"] == "true")
                             {
@@ -288,8 +296,7 @@
                         }
                     }
 
-
-                    @if (ViewData["replyApplication"] == "true")
+                    @if (ViewData["replyApplication"] == "true" || User.IsInRole("AdminSettings"))
                     {
                         @*   أسترجاع سنة  *@
                         <div class="col-4">
@@ -304,6 +311,7 @@
                             </a>
                         </div>
                     }
+
                     @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
                     {
                         @*  تغير الصورة  *@

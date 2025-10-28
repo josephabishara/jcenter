@@ -1,4 +1,5 @@
 ﻿using JeCenterWeb.Data;
+using JeCenterWeb.Migrations;
 using JeCenterWeb.Models;
 using JeCenterWeb.Models.Repository;
 using JeCenterWeb.Models.Second;
@@ -16,6 +17,7 @@ using NuGet.Versioning;
 using System;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using static Azure.Core.HttpHeader;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -254,25 +256,47 @@ namespace JeCenterWeb.Areas.scp.Controllers
                 _context.Update(groupschedule);
                 await _context.SaveChangesAsync();
 
-                // get student list
 
-                //var studentListid = await _context.StudentGroup
-                //    .Where(s => s.GroupId == groupschedule.GroupId)
-                //    .ToListAsync();
+              // 1️⃣ جلب آخر 3 محاضرات مغلقة ومدفوعة في نفس المجموعة
+                var last3Lectures = await _context.CGroupSchedule
+                    .Where(s => s.GroupId == groupschedule.GroupId  && s.Paided)
+                    .OrderByDescending(s => s.LectureDate)
+                    .Take(3)
+                    .Select(s => s.GroupscheduleId)
+                    .ToListAsync();
+
+                if (last3Lectures.Any())
+                {
+                    // 2️⃣ جلب الطلاب المنتمين إلى هذه المجموعة
+                    var studentsInGroup = await _context.StudentGroup
+                        .Where(g => g.GroupId == groupschedule.GroupId)
+                        .ToListAsync();
+                    var studentsToRemove = new List<StudentGroup>();
+
+                    // 3️⃣ فحص حضور كل طالب في آخر 3 محاضرات
+                    foreach (var student in studentsInGroup)
+                    {
+                        int attendedCount = await _context.StudentLecture
+                            .Where(sl => sl.StudentID == student.StudentId &&
+                                         last3Lectures.Contains(sl.scheduleId))
+                            .CountAsync();
+
+                        // 🔸 لو الطالب ما حضرش أي من آخر 3 محاضرات
+                        if (attendedCount == 0)
+                        {
+                            studentsToRemove.Add(student);
+                        }
+                    }
+
+                    // 4️⃣ حذف الطلبة الغائبين
+                    if (studentsToRemove.Any())
+                    {
+                        _context.StudentGroup.RemoveRange(studentsToRemove);
+                        await _context.SaveChangesAsync();
+                    }
 
 
-                //// get count of LectureType = Paided
-                //var groupLecturePaided = await _context.CGroupSchedule
-                //    .Where(s => s.GroupId == groupschedule.GroupId  && s.Paided == true )
-                //    .ToListAsync();
-
-                //int countLectureTypePaided = groupLecturePaided.Count();
-
-                // get count of attend for each student
-                // foreach for each student and test if attend or not great than 3 and update status 
-
-
-
+                }
 
                 return RedirectToRoute(new { controller = "Teachers", action = "LectureTeacherDetails", area = "scp", id = groupschedule.GroupscheduleId });
 

@@ -11,7 +11,21 @@
         </a>
     </div>
     <div class="col-md-6 text-center">
-        @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings") || User.IsInRole("SuperUser"))
+        @if (User.IsInRole("AdminSettings"))
+        {
+            <form asp-action="returnValue" asp-controller="Students" asp-area="scp" method="post">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="hidden" name="id" value="@ViewBag.Id" />
+                        <input class="form-control text-center" name="Value" placeholder=" قيمة   " value="0" />
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" value="صرف" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+        }
+        else if (User.IsInRole("PowerUser") || User.IsInRole("SuperUser"))
         {
             @if (ViewData["returnValue"] == "true")
             {

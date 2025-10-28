@@ -74,7 +74,7 @@
         </div>
 
     </div>
-
+    
 
     <div class="card-footer" style="direction: rtl; margin: 5px;">
 
@@ -87,7 +87,7 @@
         else if (Model.Closed == true & Model.Paided == false)
         {
             <a href="#" class="btn btn-warning" style="width:200px;">مغلقة وغير ممسددة</a>
-            @if (ViewData["OpenLecture"] == "true")
+            @if (ViewData["OpenLecture"] == "true" || User.IsInRole("AdminSettings"))
             {
                 <a asp-action="OpenLecture" asp-area="scp" asp-controller="Teachers" asp-route-id="@Model.LectureId" class="btn btn-secondary" style="width:200px;">إعادة فتح الحصة</a>
             }

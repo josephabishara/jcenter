@@ -628,13 +628,16 @@ namespace JeCenterWeb.Areas.scp.Controllers
         [Authorize(Roles = "AdminSettings")]
         public async Task<IActionResult> ApprovePayment(int id)
         {
+            DateTime day = DateTime.Today;
             var financialDocuments = await _context.FinancialDocuments.FindAsync(id);
+            day = financialDocuments.JournalEntryDate;
             financialDocuments.Approve = 1;
             financialDocuments.UpdatedDate = DateTime.Now;
             _context.Update(financialDocuments);
             await _context.SaveChangesAsync();
             await createTransformationrJournalEntryLine(financialDocuments);
-            return RedirectToRoute(new { action = "Payments" });
+            // return RedirectToRoute(new { action = "Payments" });
+            return RedirectToRoute(new { action = "Paymentday" , date = day.ToString("yyyy-MM-dd") });
         }
 
         //   RejectPayment
@@ -642,13 +645,16 @@ namespace JeCenterWeb.Areas.scp.Controllers
         [Authorize(Roles = "AdminSettings")]
         public async Task<IActionResult> RejectPayment(int id)
         {
+            DateTime day = DateTime.Today;
             var financialDocuments = await _context.FinancialDocuments.FindAsync(id);
+            day = financialDocuments.JournalEntryDate;
             financialDocuments.Approve = 2;
             financialDocuments.UpdatedDate = DateTime.Now;
             _context.Update(financialDocuments);
             await _context.SaveChangesAsync();
             // await createTransformationrJournalEntryLine(financialDocuments);
-            return RedirectToRoute(new { action = "Payments" });
+            // return RedirectToRoute(new { action = "Payments" });
+            return RedirectToRoute(new { action = "Paymentday", date = day.ToString("yyyy-MM-dd") });
         }
 
 
