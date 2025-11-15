@@ -9,16 +9,27 @@
     @foreach (var item in Model)
     {
         <div class="col-4">
-            <a asp-action="CloseExam" asp-route-id="@item.Id">
-                <div class="info-box">
-                    <span class="info-box-icon">
-                     @*    <img src="~/@item.imgurl" height="65"> *@
-                    </span>
-                    <div class="info-box-content">
-                        <span class="info-box-text"> @item.FullName </span>
+            <div class="info-box">
+                <div class="info-box-content">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="info-box-text"> @item.FullName </h5>
+                            <p>
+                                @item.Note
+                            </p>
+                        </div>
+                        <div class="col-4">
+                            <a asp-action="CloseExam" asp-route-id="@item.Id" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i>
+                            </a>
+
+                            <a asp-controller="Teachers" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     }
 </div>

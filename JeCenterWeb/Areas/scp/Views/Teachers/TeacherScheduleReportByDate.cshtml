@@ -70,7 +70,7 @@
                     }
                 </h5>
             </div>
-            <div class="card-body">
+           @*  <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
 
@@ -91,7 +91,42 @@
 
                     </div>
                 </div>
+            </div> *@
+           
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-12 text-center">
+
+                        <div class="d-flex justify-content-center align-items-end flex-wrap" style="gap: 20px;">
+
+                            @foreach (var item in Model)
+                            {
+                                decimal dv = item.Count * 100;
+                                string height = (dv / max).ToString() + "%";
+
+                                <div class="progress-group text-center">
+                                    <div class="progress progress-vertical mx-auto" style="height:150px; width:30px;">
+                                        <div class="progress-bar bg-primary" style="height:@height; width:100%;"></div>
+                                    </div>
+
+                                    <small class="d-block mt-2">
+                                        @item.LectureDate.ToString("MM-dd")<br />
+                                        <b>@item.SyllabusName</b><br />
+                                        @item.PhaseName<br />
+                                        <b>سعر: @item.LecturePrice</b><br />
+                                        <span><b>@item.Count</b>/@max</span>
+                                    </small>
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
+
+
+
         </div>
     </div>
 </div>

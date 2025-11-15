@@ -157,6 +157,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
             //ViewData["Gender"] = new SelectList(_context.ResourceGender, "GenderId", "GenderName", addUserViewModel.Gender);
             return View();
         }
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> Edit(int id)
         {
             ViewData["AppName"] = AppName;
@@ -179,6 +180,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> Edit([Bind("id,FullName,Mobile")] EditTeacherViewModel teacherViewModel)
         {
             var user = await _context.Users.FindAsync(teacherViewModel.id);
@@ -199,6 +201,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> ChangeState(int id)
         {
             ApplicationUser user = await _userManager.FindByIdAsync(id.ToString());
@@ -246,6 +249,37 @@ namespace JeCenterWeb.Areas.scp.Controllers
             teacher.TeacherStudent = await _context.StudentGroup.Where(s => s.CGroups.TeacherId == id).CountAsync();
             teacher.TeacherVideos = await _context.TeachesVideos.Where(s => s.TeacherId == id).CountAsync();
             teacher.TeacherDiscount = await _context.StudentDiscount.Where(d => d.TeacherId == id).CountAsync();
+
+            var teacherComments = await _context.StudentComments
+                   .Where(p => p.StudentID == id && p.ParentId == 0)
+                   .OrderByDescending(s => s.StudentCommentId)
+                   .ToListAsync();
+            List<CommentsViewModel> commentsViewModels = new List<CommentsViewModel>();
+
+            foreach (var comment in teacherComments)
+            {
+                CommentsViewModel commentsViewModel = new CommentsViewModel();
+
+
+                if (comment.CreateId == 0)
+                {
+                    commentsViewModel.CreateName = "N/A";
+                    commentsViewModel.imgurl = "images/StudentUsers/default.png";
+                }
+                else
+                {
+                    var commentermodel = await _context.Users.Where(c => c.Id == comment.CreateId).FirstOrDefaultAsync();
+                    commentsViewModel.CreateName = commentermodel.FullName;
+                    commentsViewModel.imgurl = commentermodel.imgurl;
+                }
+
+                commentsViewModel.Note = comment.Note;
+                commentsViewModel.CreatedDate = comment.CreatedDate;
+                commentsViewModel.Id = comment.StudentCommentId;
+                commentsViewModels.Add(commentsViewModel);
+            }
+            teacher.CommentsViewModel = commentsViewModels;
+
             return View(teacher);
         }
         [HttpGet]
@@ -262,6 +296,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
 
             return View(Teachers);
         }
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> Groups(int id)
         {
             ViewData["AppName"] = AppName;
@@ -282,6 +317,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
                 .ToListAsync();
             return View(groups);
         }
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> Reviews(int id)
         {
             ViewData["AppName"] = AppName;
@@ -300,6 +336,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
                 .ToListAsync();
             return View(Reviews);
         }
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> Exams(int id)
         {
             ViewData["AppName"] = AppName;
@@ -825,6 +862,8 @@ namespace JeCenterWeb.Areas.scp.Controllers
             //   LectureSch.
             return RedirectToRoute(new { action = "GroupSchedule", id = LectureSch.GroupId });
         }
+
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> Syllabus(int id)
         {
             ViewData["AppName"] = AppName;
@@ -841,7 +880,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
                 .ToListAsync();
             return View(teacherSyllabus);
         }
-
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> EditSyllabus(int id)
         {
             ViewData["AppName"] = AppName;
@@ -970,6 +1009,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
             }
             return daystate;
         }
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> DiscountTeacher(int id)
         {
             ViewData["AppName"] = AppName;
@@ -1084,6 +1124,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> UpdateImage(int id)
         {
             ViewData["AppName"] = AppName;
@@ -1101,6 +1142,7 @@ namespace JeCenterWeb.Areas.scp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "AdminSettings,PowerUser")]
         public async Task<IActionResult> UpdateImage(int id, [Bind("Id,FullName,imgurl")] UpdateImageStudentUserViewModel model)
         {
             ViewData["AppName"] = AppName;
@@ -1301,6 +1343,35 @@ namespace JeCenterWeb.Areas.scp.Controllers
                 }));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ChangeNote([Bind("id,Note")] StudentNoteViewModel model)
+        {
+            ViewData["AppName"] = AppName;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            int uid = Convert.ToInt32(userId);
+
+            var student = await _context.Users.FindAsync(model.id);
+
+            student.Note = model.Note;
+            _context.Update(student);
+            await _context.SaveChangesAsync();
+
+            StudentComments studentComments = new StudentComments()
+            {
+                StudentID = model.id,
+                Note = model.Note,
+                CreateId = uid,
+                CreatedDate = DateTime.Now,
+                Active = true,
+                ParentId = 0
+            };
+            _context.Add(studentComments);
+            await _context.SaveChangesAsync();
+
+            return RedirectToRoute(new { controller = "Teachers", action = "Details", area = "scp", id = model.id });
+
+        }
 
         public async Task<bool> Isaccessright(int userid, int accessid)
         {

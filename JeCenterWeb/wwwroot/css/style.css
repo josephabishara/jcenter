@@ -1,4 +1,4 @@
-/******************************************
+﻿/******************************************
 IMPORT
 ******************************************/
 
@@ -2313,3 +2313,17 @@ RESPONSIVE
         padding: 1em 0.7em;
     }
 }
+
+.progress-vertical {
+    display: flex;
+    flex-direction: column-reverse; /* ✅ عكس الاتجاه لتبدأ من الأسفل */
+    align-items: center;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+    .progress-vertical .progress-bar {
+        transition: height 0.6s ease;
+        width: 100%;
+    }

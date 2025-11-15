@@ -8,6 +8,8 @@
 </style>
 <div class="row">
     <div class="col-md-8">
+        @if (User.IsInRole("PowerUser") || User.IsInRole("AdminSettings"))
+        {
         <div class="row">
             @*المناهج*@
             <div class="col-4">
@@ -55,7 +57,6 @@
             </div>
 
         </div>
-      
         <div class="row">
             @*المجموعات*@
             <div class="col-4">
@@ -122,22 +123,22 @@
                 </a>
             </div>
             @*  تعديل البيانات *@
-            <div class="col-4">
-                <a asp-action="Edit" asp-route-id="@Model.Teacher.Id">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-info"><i class="fa fa-book"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">تعديل بيانات </span>
-                            <span class="info-box-number"></span>
-                        </div>
+        <div class="col-4">
+            <a asp-action="Edit" asp-route-id="@Model.Teacher.Id">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="fa fa-book"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">تعديل بيانات </span>
+                        <span class="info-box-number"></span>
                     </div>
-                </a>
-            </div>
-        
+                </div>
+            </a>
         </div>
 
+        </div>
 
-     @*
+        }
+@*
         <div class="col-4">
         <div class="info-box">
             <span class="info-box-icon bg-orange"><i class="fa fa-restroom"></i></span>
@@ -212,6 +213,43 @@
                 </div>
             </div>
         </form>*@
+
+        <div class="card card-body" style="height:300px;overflow-y:scroll;">
+            <h5 class="text-center text-info"> ملاحظات المدرس </h5>
+            <form asp-action="ChangeNote" asp-controller="Teachers" asp-area="scp" method="post">
+                <div class="row text-center">
+                    <input type="hidden" name="id" value="@Model.Teacher.Id" />
+                    <div class="col-8">
+                        <input class="form-control text-center" name="Note" placeholder=" اكتب ملحوظة " />
+                    </div>
+                    <br /> <br />
+                    <div class="col-4">
+                        <input type="submit" value=" اضافة ملحوظة" class="btn btn-info  btn-block" />
+                    </div>
+                </div>
+            </form>
+            <br />
+
+            @foreach (var item in Model.CommentsViewModel)
+            {
+                <div class="row">
+                    <div class="col-1">
+                        <img src="~/@item.imgurl" class="img-circle elevation-2" width="100%" />
+                    </div>
+                    <div class="col-2">
+                        @item.CreateName
+                    </div>
+                    <div class="col-7">
+                        @item.Note
+                    </div>
+                    <div class="col-2 text-center">
+                        @Convert.ToDateTime(item.CreatedDate).ToString("yyyy-MM-dd")
+                    </div>
+                </div>
+                <br />
+            }
+
+        </div>
 
     </div>
     <div class="col-md-4">
